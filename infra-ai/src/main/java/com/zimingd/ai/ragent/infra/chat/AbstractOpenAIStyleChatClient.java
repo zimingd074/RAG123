@@ -23,8 +23,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.zimingd.ai.ragent.framework.convention.ChatMessage;
 import com.zimingd.ai.ragent.framework.convention.ChatRequest;
-import com.zimingd.ai.ragent.framework.trace.RagStreamTraceSupport;
-import com.zimingd.ai.ragent.framework.trace.RagStreamTraceSupport.StreamSpan;
 import com.zimingd.ai.ragent.infra.config.AIModelProperties;
 import com.zimingd.ai.ragent.infra.enums.ModelCapability;
 import com.zimingd.ai.ragent.infra.http.HttpMediaTypes;
@@ -41,7 +39,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okio.BufferedSource;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.util.List;
@@ -54,16 +51,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Slf4j
 public abstract class AbstractOpenAIStyleChatClient implements ChatClient {
 
-    @Autowired
-    private OkHttpClient syncHttpClient;
-    @Autowired
-    private OkHttpClient streamingHttpClient;
-    @Autowired
-    private Executor modelStreamExecutor;
-    @Autowired
-    private RagStreamTraceSupport streamTraceSupport;
+    protected final OkHttpClient syncHttpClient;
+    protected final OkHttpClient streamingHttpClient;
+    protected final Executor modelStreamExecutor;
+    protected final Gson gson = new Gson();
 
-    protected Gson gson = new Gson();
+    protected AbstractOpenAIStyleChatClient(OkHttpClient syncHttpClient,
+                                            OkHttpClient streamingHttpClient,
+                                            Executor modelStreamExecutor) {
+        this.syncHttpClient = syncHttpClient;
+        this.streamingHttpClient = streamingHttpClient;
+        this.modelStreamExecutor = modelStreamExecutor;
+    }
 
     // ==================== 子类钩子方法 ====================
 
@@ -141,30 +140,12 @@ public abstract class AbstractOpenAIStyleChatClient implements ChatClient {
 
         Call call = streamingHttpClient.newCall(streamRequest);
         boolean reasoningEnabled = isReasoningEnabledForStream(request);
-
-        // 在调用线程开 stream span，使后续 first-packet 子节点能正确归属父节点；
-        // 该 span 由 SSE 终态（onComplete / onError）或 cancel 时收尾，记录真实端到端耗时
-        StreamSpan span = streamTraceSupport.beginStreamNode(provider() + "-stream-chat", "LLM_PROVIDER");
-        StreamSpanCallback wrappedCallback;
-        try {
-            wrappedCallback = new StreamSpanCallback(callback, span);
-            StreamCancellationHandle inner = StreamAsyncExecutor.submit(
-                    modelStreamExecutor,
-                    call,
-                    wrappedCallback,
-                    cancelled -> doStream(call, wrappedCallback, cancelled, reasoningEnabled)
-            );
-            return () -> {
-                try {
-                    inner.cancel();
-                } finally {
-                    wrappedCallback.onCancel();
-                }
-            };
-        } finally {
-            // 同步部分结束：把节点从当前线程的 NODE_STACK 弹出，避免污染兄弟节点的父节点链
-            span.detach();
-        }
+        return StreamAsyncExecutor.submit(
+                modelStreamExecutor,
+                call,
+                callback,
+                cancelled -> doStream(call, callback, cancelled, reasoningEnabled)
+        );
     }
 
     private void doStream(Call call, StreamCallback callback, AtomicBoolean cancelled, boolean reasoningEnabled) {

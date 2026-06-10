@@ -20,29 +20,24 @@ package com.zimingd.ai.ragent.infra.http;
 import lombok.Getter;
 
 /**
- * 模型客户端异常类
- * 用于封装模型调用过程中的各类异常信息
+ * 模型客户端统一异常。
+ * 用来把 HTTP 状态异常、响应结构异常和底层网络异常封装成统一类型。
  */
 @Getter
 public class ModelClientException extends RuntimeException {
 
     /**
-     * 错误类型
+     * 归一化后的错误类型，便于上层记录和决策。
      */
     private final ModelClientErrorType errorType;
 
     /**
-     * HTTP状态码
+     * 如果失败来自 HTTP 响应，则记录状态码；否则可能为空。
      */
     private final Integer statusCode;
 
     /**
-     * 构造带原因的模型客户端异常
-     *
-     * @param message    异常消息
-     * @param errorType  错误类型
-     * @param statusCode HTTP状态码
-     * @param cause      原始异常
+     * 包装底层异常时使用，例如 I/O 异常或 JSON 解析异常。
      */
     public ModelClientException(String message, ModelClientErrorType errorType, Integer statusCode, Throwable cause) {
         super(message, cause);
@@ -51,11 +46,7 @@ public class ModelClientException extends RuntimeException {
     }
 
     /**
-     * 构造模型客户端异常
-     *
-     * @param message    异常消息
-     * @param errorType  错误类型
-     * @param statusCode HTTP状态码
+     * 根据已知错误信息直接构造异常。
      */
     public ModelClientException(String message, ModelClientErrorType errorType, Integer statusCode) {
         super(message);

@@ -22,11 +22,21 @@ import com.zimingd.ai.ragent.framework.trace.RagTraceNode;
 import com.zimingd.ai.ragent.infra.enums.ModelProvider;
 import com.zimingd.ai.ragent.infra.model.ModelTarget;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.OkHttpClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.Executor;
 
 @Slf4j
 @Service
 public class OllamaChatClient extends AbstractOpenAIStyleChatClient {
+
+    public OllamaChatClient(@Qualifier("syncHttpClient") OkHttpClient syncHttpClient,
+                            @Qualifier("streamingHttpClient") OkHttpClient streamingHttpClient,
+                            @Qualifier("modelStreamExecutor") Executor modelStreamExecutor) {
+        super(syncHttpClient, streamingHttpClient, modelStreamExecutor);
+    }
 
     @Override
     public String provider() {

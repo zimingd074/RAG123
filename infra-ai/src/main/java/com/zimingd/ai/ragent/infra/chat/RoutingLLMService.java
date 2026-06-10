@@ -77,6 +77,11 @@ public class RoutingLLMService implements LLMService {
     @Override
     @RagTraceNode(name = "llm-chat-routing", type = "LLM_ROUTING")
     public String chat(ChatRequest request) {
+        // 数据流入口：
+        // 1. 上层业务把完整的 ChatRequest 传到路由服务。
+        // 2. selector 先按能力、优先级、健康状态选出候选 ModelTarget。
+        // 3. clientResolver 根据 target.candidate().getProvider() 找到具体 ChatClient 实现。
+        // 4. caller lambda 捕获当前 request，后续在执行器里真正调用 client.chat(request, target)。
         return executor.executeWithFallback(
                 ModelCapability.CHAT,
                 selector.selectChatCandidates(Boolean.TRUE.equals(request.getThinking())),
@@ -90,6 +95,7 @@ public class RoutingLLMService implements LLMService {
         if (!StringUtils.hasText(modelId)) {
             return chat(request);
         }
+        // 指定 modelId 时仍然走同一条执行链，只是候选列表被收敛成单个 target。
         return executor.executeWithFallback(
                 ModelCapability.CHAT,
                 List.of(resolveTarget(modelId, Boolean.TRUE.equals(request.getThinking()))),
@@ -118,10 +124,14 @@ public class RoutingLLMService implements LLMService {
                 continue;
             }
 
+            // 流式场景不复用 ModelRoutingExecutor，因为这里要先发起请求，再等待首包探测结果，
+            // 只有首包成功才算 HALF_OPEN 探测成功。
             ProbeStreamBridge bridge = new ProbeStreamBridge(callback);
 
             StreamCancellationHandle handle;
             try {
+                // 这里真正把 request 和 target 交给 provider client。
+                // 后续 client 会把 request 转成 HTTP body，把 target 转成 URL / model / 鉴权信息。
                 handle = client.streamChat(request, bridge, target);
             } catch (Exception e) {
                 healthStore.markFailure(target.id());

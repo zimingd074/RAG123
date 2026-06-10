@@ -28,8 +28,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * HTTP 响应处理工具类
- * 集中管理 OkHttp 响应读取、JSON 解析以及模型目标校验等公共逻辑
+ * HTTP 响应处理工具。
+ * 集中封装响应体读取、JSON 解析，以及请求发起前的目标配置校验。
  */
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public final class HttpResponseHelper {
@@ -37,7 +37,8 @@ public final class HttpResponseHelper {
     private static final Gson GSON = new Gson();
 
     /**
-     * 读取响应体原始字符串
+     * 读取响应体原文。
+     * 这里显式按 UTF-8 解码，便于稳定记录上游错误信息。
      */
     public static String readBody(ResponseBody body) throws IOException {
         if (body == null) {
@@ -47,11 +48,8 @@ public final class HttpResponseHelper {
     }
 
     /**
-     * 将响应体解析为 JsonObject
-     *
-     * @param body  OkHttp 响应体
-     * @param label 提供商标签，用于异常消息
-     * @return 解析后的 JsonObject
+     * 将响应体解析成 JSON。
+     * 如果 body 为空，直接归类为无效响应。
      */
     public static JsonObject parseJson(ResponseBody body, String label) throws IOException {
         if (body == null) {
@@ -62,7 +60,7 @@ public final class HttpResponseHelper {
     }
 
     /**
-     * 校验并返回提供商配置
+     * 确保当前路由目标已经绑定 provider 配置。
      */
     public static AIModelProperties.ProviderConfig requireProvider(ModelTarget target, String label) {
         if (target == null || target.provider() == null) {
@@ -72,7 +70,8 @@ public final class HttpResponseHelper {
     }
 
     /**
-     * 校验提供商 API 密钥
+     * 校验 provider 的 API Key。
+     * 本地 provider 可以不调用这个方法，云服务调用前通常必须通过校验。
      */
     public static void requireApiKey(AIModelProperties.ProviderConfig provider, String label) {
         if (provider.getApiKey() == null || provider.getApiKey().isBlank()) {
@@ -81,7 +80,8 @@ public final class HttpResponseHelper {
     }
 
     /**
-     * 校验并返回模型名称
+     * 返回实际传给上游接口的模型名。
+     * 注意这里取的是 candidate.model，不是路由层内部 id。
      */
     public static String requireModel(ModelTarget target, String label) {
         if (target == null || target.candidate() == null || target.candidate().getModel() == null) {

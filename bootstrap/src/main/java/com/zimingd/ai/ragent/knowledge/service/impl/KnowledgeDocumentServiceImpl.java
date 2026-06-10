@@ -160,16 +160,19 @@ public class KnowledgeDocumentServiceImpl implements KnowledgeDocumentService {
 
     @Override
     public void startChunk(String docId) {
+        //创建一个“文档分块事件”对象
         KnowledgeDocumentChunkEvent event = KnowledgeDocumentChunkEvent.builder()
                 .docId(docId)
                 .operator(UserContext.getUsername())
                 .build();
 
+        //消息发送和后面的本地数据库操作会绑定在一起
         messageQueueProducer.sendInTransaction(
                 chunkTopic,
                 docId,
                 "文档分块",
                 event,
+                //事务消息的本地事务回调(发送事务消息时，需要先执行这里的数据库操作.如果这里执行成功，消息才算可以提交)
                 arg -> {
                     int updated = documentMapper.update(
                             new LambdaUpdateWrapper<KnowledgeDocumentDO>()
@@ -183,8 +186,11 @@ public class KnowledgeDocumentServiceImpl implements KnowledgeDocumentService {
                         Assert.notNull(documentDO, () -> new ClientException("文档不存在"));
                         throw new ClientException("文档分块操作正在进行中，请稍后再试");
                     }
+                    //如果状态更新成功，再查一次文档完整信息。
                     KnowledgeDocumentDO documentDO = documentMapper.selectById(docId);
+                    //把文档所属知识库 ID 设置到事件对象中
                     event.setKbId(documentDO.getKbId());
+                    //创建或更新调度记录
                     scheduleService.upsertSchedule(documentDO);
                 }
         );
@@ -301,19 +307,31 @@ public class KnowledgeDocumentServiceImpl implements KnowledgeDocumentService {
      * 4 阶段中的前 3 阶段：Extract → Chunk → Embed
      */
     private ChunkProcessResult runChunkProcess(KnowledgeDocumentDO documentDO) {
+        //从文档对象中获取分块策略
         ChunkingMode chunkingMode = ChunkingMode.fromValue(documentDO.getChunkStrategy());
+        //根据文档里的知识库 ID 查询知识库信息
         KnowledgeBaseDO kbDO = knowledgeBaseMapper.selectById(documentDO.getKbId());
+        //从知识库配置里拿到 embedding 模型名称
         String embeddingModel = kbDO.getEmbeddingModel();
+        //根据分块模式和文档配置，构造分块参数
         ChunkingOptions config = buildChunkingOptions(chunkingMode, documentDO);
 
+        //记录文本提取开始时间
         long extractStart = System.currentTimeMillis();
+        //从文件存储服务中打开文档文件流
         try (InputStream is = fileStorageService.openStream(documentDO.getFileUrl())) {
+            //选择文档解析器，并把文件流解析成纯文本
             String text = parserSelector.select(ParserType.TIKA.getType()).extractText(is, documentDO.getDocName());
+            //计算文本提取耗时
             long extractDuration = System.currentTimeMillis() - extractStart;
 
+            //根据分块模式获取对应的分块策略实现
             ChunkingStrategy chunkingStrategy = chunkingStrategyFactory.requireStrategy(chunkingMode);
+            //记录分块开始时间
             long chunkStart = System.currentTimeMillis();
+            //执行真正的文本分块
             List<VectorChunk> chunks = chunkingStrategy.chunk(text, config);
+            //计算分块耗时
             long chunkDuration = System.currentTimeMillis() - chunkStart;
 
             long embedStart = System.currentTimeMillis();

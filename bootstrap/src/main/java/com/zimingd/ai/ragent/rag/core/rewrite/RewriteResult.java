@@ -19,6 +19,7 @@ package com.zimingd.ai.ragent.rag.core.rewrite;
 
 import java.util.List;
 
+// rewrittenQuestion：改写后的主查询。- subQuestions：用于后续独立检索/意图识别的子问题列表
 public record RewriteResult(String rewrittenQuestion, List<String> subQuestions) {
 
 }

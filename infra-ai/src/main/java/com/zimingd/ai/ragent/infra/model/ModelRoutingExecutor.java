@@ -50,6 +50,8 @@ public class ModelRoutingExecutor {
 
         Throwable last = null;
         for (ModelTarget target : targets) {
+            // 先把当前候选模型 target 映射成具体客户端。
+            // 以 chat 为例，这里通常会拿到 SiliconFlowChatClient / BaiLianChatClient / OllamaChatClient。
             C client = clientResolver.apply(target);
             if (client == null) {
                 log.warn("{} provider client missing: provider={}, modelId={}", label, target.candidate().getProvider(), target.id());
@@ -60,6 +62,16 @@ public class ModelRoutingExecutor {
             }
 
             try {
+                // caller 不是“发一条探测专用消息”，而是执行一次正常业务请求。
+                // 在 RoutingLLMService.chat(...) 中传进来的 caller 实际上是：
+                // (client, target) -> client.chat(request, target)
+                //
+                // 也就是说这里的入参数据是：
+                // - client: 具体厂商的 ChatClient 实现
+                // - target: 当前选中的模型配置（provider、modelId、模型名、路由配置）
+                // - request: 被 lambda 捕获的原始 ChatRequest（消息列表、temperature、maxTokens 等）
+                //
+                // 真正的出站请求会在 client.chat(...) 内部继续把 request + target 编码成 HTTP 请求。
                 T response = caller.call(client, target);
                 healthStore.markSuccess(target.id());
                 return response;

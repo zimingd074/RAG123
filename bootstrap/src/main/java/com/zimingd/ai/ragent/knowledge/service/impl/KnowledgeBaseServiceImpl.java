@@ -70,9 +70,12 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
         String name = requestParam.getName().replaceAll("\\s+", "");
         Long count = knowledgeBaseMapper.selectCount(
                 new LambdaQueryWrapper<KnowledgeBaseDO>()
+                        //查询数据库中 name 字段等于处理后名称的记录
                         .eq(KnowledgeBaseDO::getName, name)
+                        //查询未被逻辑删除的记录
                         .eq(KnowledgeBaseDO::getDeleted, 0)
         );
+        //查询到的记录数大于0，说明同名知识库已存在
         if (count > 0) {
             throw new ServiceException("知识库名称已存在：" + requestParam.getName());
         }
@@ -88,6 +91,7 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
 
         knowledgeBaseMapper.insert(kbDO);
 
+        //将请求参数中的 collectionName 作为 S3 存储桶（Bucket）的名称
         String bucketName = requestParam.getCollectionName();
         try {
             s3Client.createBucket(builder -> builder.bucket(bucketName));
@@ -101,12 +105,14 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
             throw new ServiceException("存储桶名称已被占用：" + bucketName);
         }
 
+        //构建一个用于创建向量空间的规格说明对象
         VectorSpaceSpec spaceSpec = VectorSpaceSpec.builder()
                 .spaceId(VectorSpaceId.builder()
                         .logicalName(requestParam.getCollectionName())
                         .build())
                 .remark(requestParam.getName())
                 .build();
+        //调用向量存储管理服务 (vectorStoreAdmin) 来确保一个符合 spaceSpec 规格的向量空间被创建
         vectorStoreAdmin.ensureVectorSpace(spaceSpec);
 
         return String.valueOf(kbDO.getId());

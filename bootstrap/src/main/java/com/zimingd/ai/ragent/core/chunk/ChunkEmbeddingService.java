@@ -42,18 +42,23 @@ public class ChunkEmbeddingService {
      * @param embeddingModel 嵌入模型 ID，null 时使用系统默认模型
      */
     public void embed(List<VectorChunk> chunks, String embeddingModel) {
+        // 1. 入参为空或没有任何分块时，不需要调用嵌入服务。
         if (chunks == null || chunks.isEmpty()) {
             return;
         }
+        // 2. 如果所有分块都已经有向量，则直接复用现有结果，避免重复计算。
         if (chunks.stream().allMatch(c -> c.getEmbedding() != null && c.getEmbedding().length > 0)) {
             return;
         }
+        // 3. 提取每个分块的文本内容；内容为 null 时用空字符串兜底，保证批量请求数量与 chunks 一致。
         List<String> texts = chunks.stream()
                 .map(c -> c.getContent() == null ? "" : c.getContent())
                 .toList();
+        // 4. 有指定模型时按指定 embeddingModel 调用；否则使用 embeddingService 的默认模型。
         List<List<Float>> vectors = StringUtils.hasText(embeddingModel)
                 ? embeddingService.embedBatch(texts, embeddingModel)
                 : embeddingService.embedBatch(texts);
+        // 5. 将返回的 List<Float> 向量逐个转换并写回对应的 VectorChunk。
         applyEmbeddings(chunks, vectors);
     }
 

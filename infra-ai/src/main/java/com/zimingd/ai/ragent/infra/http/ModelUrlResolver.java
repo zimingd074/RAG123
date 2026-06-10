@@ -24,21 +24,17 @@ import lombok.NoArgsConstructor;
 import java.util.Map;
 
 /**
- * 模型URL解析器
- * 用于解析AI模型的完整URL地址，支持从候选模型配置或提供商配置中获取URL
+ * 模型请求 URL 解析器。
+ * 把 provider 基础地址、能力端点和候选模型覆盖配置合成为最终请求地址。
  */
 @NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class ModelUrlResolver {
 
     /**
-     * 解析模型URL地址
-     * 优先级：候选模型URL > 提供商基础URL + 端点路径
-     *
-     * @param provider   提供商配置，包含基础URL和端点配置
-     * @param candidate  候选模型配置，可能包含自定义URL
-     * @param capability 模型能力类型，用于确定使用哪个端点
-     * @return 完整的模型URL地址
-     * @throws IllegalStateException 当提供商基础URL缺失或端点配置缺失时抛出
+     * 解析最终请求 URL。
+     * 优先级：
+     * 1. candidate.url
+     * 2. provider.url + provider.endpoints[capability]
      */
     public static String resolveUrl(
             AIModelProperties.ProviderConfig provider,
@@ -62,12 +58,7 @@ public class ModelUrlResolver {
     }
 
     /**
-     * 拼接基础URL和路径
-     * 智能处理URL和路径之间的斜杠，确保拼接结果正确
-     *
-     * @param baseUrl 基础URL
-     * @param path    路径
-     * @return 拼接后的完整URL
+     * 用一个斜杠规范拼接基础地址和路径。
      */
     private static String joinUrl(String baseUrl, String path) {
         if (baseUrl.endsWith("/") && path.startsWith("/")) {

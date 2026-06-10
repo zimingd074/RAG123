@@ -18,53 +18,48 @@
 package com.zimingd.ai.ragent.infra.http;
 
 /**
- * 模型客户端错误类型枚举
- * <p>
- * 定义了与AI模型服务交互过程中可能遇到的各种错误类型，
- * 用于统一错误分类和处理策略
+ * 模型客户端错误分类。
+ * 这层分类用于统一日志、路由降级和后续重试策略，不追求覆盖所有细节。
  */
 public enum ModelClientErrorType {
 
     /**
-     * 未授权错误 - 认证失败或令牌无效
+     * 鉴权失败，例如 API Key 无效或无权限。
      */
     UNAUTHORIZED,
 
     /**
-     * 速率限制错误 - 请求频率超过限制
+     * 请求频率超限。
      */
     RATE_LIMITED,
 
     /**
-     * 服务器错误 - 模型服务端内部错误
+     * 上游服务端 5xx 错误。
      */
     SERVER_ERROR,
 
     /**
-     * 客户端错误 - 请求参数或格式错误
+     * 调用参数、请求格式等客户端侧错误。
      */
     CLIENT_ERROR,
 
     /**
-     * 网络错误 - 网络连接或超时问题
+     * 网络连接、超时、I/O 等传输失败。
      */
     NETWORK_ERROR,
 
     /**
-     * 无效响应 - 模型返回的响应格式不正确
+     * 上游返回成功，但响应体结构不符合预期。
      */
     INVALID_RESPONSE,
 
     /**
-     * 供应商错误 - 模型提供商服务错误
+     * 供应商业务层报错，但不一定能直接映射到标准 HTTP 状态。
      */
     PROVIDER_ERROR;
 
     /**
-     * 根据 HTTP 状态码推断错误类型
-     *
-     * @param status HTTP 状态码
-     * @return 对应的错误类型
+     * 根据 HTTP 状态码做粗粒度映射。
      */
     public static ModelClientErrorType fromHttpStatus(int status) {
         if (status == 401 || status == 403) {
