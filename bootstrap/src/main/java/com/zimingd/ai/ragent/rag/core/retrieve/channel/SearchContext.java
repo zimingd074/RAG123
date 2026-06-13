@@ -18,6 +18,7 @@
 package com.zimingd.ai.ragent.rag.core.retrieve.channel;
 
 import com.zimingd.ai.ragent.rag.dto.SubQuestionIntent;
+import com.zimingd.ai.ragent.rag.core.retrieve.scope.RetrievalScope;
 import lombok.Builder;
 import lombok.Data;
 
@@ -58,6 +59,8 @@ public class SearchContext {
      * 期望返回的结果数量
      */
     private int topK;
+
+    private RetrievalScope retrievalScope;
 
     /**
      * 扩展元数据

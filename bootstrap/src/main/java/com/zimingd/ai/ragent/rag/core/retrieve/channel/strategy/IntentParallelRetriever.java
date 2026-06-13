@@ -25,6 +25,7 @@ import com.zimingd.ai.ragent.rag.core.retrieve.RetrieverService;
 import com.zimingd.ai.ragent.rag.core.retrieve.channel.AbstractParallelRetriever;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.Executor;
 
@@ -37,7 +38,7 @@ public class IntentParallelRetriever extends AbstractParallelRetriever<IntentPar
 
     private final RetrieverService retrieverService;
 
-    public record IntentTask(NodeScore nodeScore, int intentTopK) {
+    public record IntentTask(NodeScore nodeScore, String collectionName, int intentTopK) {
     }
 
     public IntentParallelRetriever(RetrieverService retrieverService,
@@ -54,10 +55,12 @@ public class IntentParallelRetriever extends AbstractParallelRetriever<IntentPar
                                                          int fallbackTopK,
                                                          int topKMultiplier) {
         List<IntentTask> intentTasks = targets.stream()
-                .map(nodeScore -> new IntentTask(
-                        nodeScore,
-                        resolveIntentTopK(nodeScore, fallbackTopK, topKMultiplier)
-                ))
+                .flatMap(nodeScore -> resolveCollectionNames(nodeScore.getNode()).stream()
+                        .map(collectionName -> new IntentTask(
+                                nodeScore,
+                                collectionName,
+                                resolveIntentTopK(nodeScore, fallbackTopK, topKMultiplier)
+                        )))
                 .toList();
         return super.executeParallelRetrieval(question, intentTasks, fallbackTopK);
     }
@@ -69,14 +72,14 @@ public class IntentParallelRetriever extends AbstractParallelRetriever<IntentPar
         try {
             return retrieverService.retrieve(
                     RetrieveRequest.builder()
-                            .collectionName(node.getCollectionName())
+                            .collectionName(task.collectionName())
                             .query(question)
                             .topK(task.intentTopK())
                             .build()
             );
         } catch (Exception e) {
             log.error("意图检索失败 - 意图ID: {}, 意图名称: {}, Collection: {}, 错误: {}",
-                    node.getId(), node.getName(), node.getCollectionName(), e.getMessage(), e);
+                    node.getId(), node.getName(), task.collectionName(), e.getMessage(), e);
             return List.of();
         }
     }
@@ -85,7 +88,23 @@ public class IntentParallelRetriever extends AbstractParallelRetriever<IntentPar
     protected String getTargetIdentifier(IntentTask task) {
         NodeScore nodeScore = task.nodeScore();
         IntentNode node = nodeScore.getNode();
-        return String.format("意图ID: %s, 意图名称: %s", node.getId(), node.getName());
+        return String.format(
+                "意图ID: %s, 意图名称: %s, Collection: %s",
+                node.getId(), node.getName(), task.collectionName());
+    }
+
+    private List<String> resolveCollectionNames(IntentNode node) {
+        LinkedHashSet<String> names = new LinkedHashSet<>();
+        if (node.getCollectionNames() != null) {
+            node.getCollectionNames().stream()
+                    .filter(name -> name != null && !name.isBlank())
+                    .forEach(names::add);
+        }
+        if (names.isEmpty() && node.getCollectionName() != null
+                && !node.getCollectionName().isBlank()) {
+            names.add(node.getCollectionName());
+        }
+        return List.copyOf(names);
     }
 
     @Override

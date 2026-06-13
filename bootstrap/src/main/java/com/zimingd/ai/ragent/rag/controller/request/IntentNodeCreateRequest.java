@@ -31,6 +31,7 @@ import java.util.List;
 public class IntentNodeCreateRequest {
 
     private String kbId;
+    private List<String> kbIds;
     private String intentCode;
     private String name;
     /**

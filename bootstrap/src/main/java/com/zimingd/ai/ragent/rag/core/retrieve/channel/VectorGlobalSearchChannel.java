@@ -18,40 +18,27 @@
 package com.zimingd.ai.ragent.rag.core.retrieve.channel;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.zimingd.ai.ragent.framework.convention.RetrievedChunk;
-import com.zimingd.ai.ragent.knowledge.dao.entity.KnowledgeBaseDO;
-import com.zimingd.ai.ragent.knowledge.dao.mapper.KnowledgeBaseMapper;
 import com.zimingd.ai.ragent.rag.config.SearchChannelProperties;
-import com.zimingd.ai.ragent.rag.core.intent.NodeScore;
 import com.zimingd.ai.ragent.rag.core.retrieve.RetrieverService;
 import com.zimingd.ai.ragent.rag.core.retrieve.channel.strategy.CollectionParallelRetriever;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Executor;
 
-/**
- * 向量全局检索通道
- */
 @Slf4j
 @Component
 public class VectorGlobalSearchChannel implements SearchChannel {
 
     private final SearchChannelProperties properties;
-    private final KnowledgeBaseMapper knowledgeBaseMapper;
     private final CollectionParallelRetriever parallelRetriever;
 
     public VectorGlobalSearchChannel(RetrieverService retrieverService,
                                      SearchChannelProperties properties,
-                                     KnowledgeBaseMapper knowledgeBaseMapper,
                                      Executor innerRetrievalExecutor) {
         this.properties = properties;
-        this.knowledgeBaseMapper = knowledgeBaseMapper;
         this.parallelRetriever = new CollectionParallelRetriever(retrieverService, innerRetrievalExecutor);
     }
 
@@ -62,90 +49,38 @@ public class VectorGlobalSearchChannel implements SearchChannel {
 
     @Override
     public int getPriority() {
-        return 10;  // 较低优先级
+        return 10;
     }
 
     @Override
     public boolean isEnabled(SearchContext context) {
-        // 检查配置是否启用
-        if (!properties.getChannels().getVectorGlobal().isEnabled()) {
-            return false;
-        }
-
-        // 意图定向检索关闭时，全局检索必须兜底，否则无通道可用
-        if (!properties.getChannels().getIntentDirected().isEnabled()) {
-            return true;
-        }
-
-        List<NodeScore> allScores = context.getIntents().stream()
-                .flatMap(si -> si.nodeScores().stream())
-                .toList();
-        if (CollUtil.isEmpty(allScores)) {
-            log.info("未识别出任何意图，启用全局检索");
-            return true;
-        }
-
-        double maxScore = allScores.stream()
-                .mapToDouble(NodeScore::getScore)
-                .max()
-                .orElse(0.0);
-
-        double threshold = properties.getChannels().getVectorGlobal().getConfidenceThreshold();
-        if (maxScore < threshold) {
-            log.info("意图置信度过低（{}），启用全局检索", maxScore);
-            return true;
-        }
-
-        double supplementThreshold = properties.getChannels().getVectorGlobal().getSingleIntentSupplementThreshold();
-        if (allScores.size() == 1 && maxScore < supplementThreshold) {
-            log.info("单一中等置信度意图（{}），启用补充全局检索", maxScore);
-            return true;
-        }
-
-        return false;
+        return properties.getChannels().getVectorGlobal().isEnabled()
+                && context.getRetrievalScope() != null
+                && context.getRetrievalScope().isGlobal()
+                && CollUtil.isNotEmpty(context.getRetrievalScope().collectionNames());
     }
 
     @Override
     public SearchChannelResult search(SearchContext context) {
         long startTime = System.currentTimeMillis();
-
         try {
-            log.info("执行向量全局检索，问题：{}", context.getMainQuestion());
-
-            // 获取所有 KB 类型的 collection
-            List<String> collections = getAllKBCollections();
-
-            if (collections.isEmpty()) {
-                log.warn("未找到任何 KB collection，跳过全局检索");
-                return SearchChannelResult.builder()
-                        .channelType(SearchChannelType.VECTOR_GLOBAL)
-                        .channelName(getName())
-                        .chunks(List.of())
-                        .latencyMs(System.currentTimeMillis() - startTime)
-                        .build();
-            }
-
-            // 并行在所有 collection 中检索
-            int topKMultiplier = properties.getChannels().getVectorGlobal().getTopKMultiplier();
-            List<RetrievedChunk> allChunks = retrieveFromAllCollections(
+            List<String> collections = context.getRetrievalScope().collectionNames();
+            int multiplier = properties.getChannels().getVectorGlobal().getTopKMultiplier();
+            List<RetrievedChunk> chunks = parallelRetriever.executeParallelRetrieval(
                     context.getMainQuestion(),
                     collections,
-                    context.getTopK() * topKMultiplier
+                    context.getTopK() * multiplier
             );
-
             long latency = System.currentTimeMillis() - startTime;
-
-            log.info("向量全局检索完成，检索到 {} 个 Chunk，耗时 {}ms", allChunks.size(), latency);
-
+            log.info("Global vector retrieval completed, chunks={}, latencyMs={}", chunks.size(), latency);
             return SearchChannelResult.builder()
                     .channelType(SearchChannelType.VECTOR_GLOBAL)
                     .channelName(getName())
-                    .chunks(allChunks)
+                    .chunks(chunks)
                     .latencyMs(latency)
                     .build();
-
         } catch (Exception e) {
-            log.error("向量全局检索失败", e);
+            log.error("Global vector retrieval failed", e);
             return SearchChannelResult.builder()
                     .channelType(SearchChannelType.VECTOR_GLOBAL)
                     .channelName(getName())
@@ -153,38 +88,6 @@ public class VectorGlobalSearchChannel implements SearchChannel {
                     .latencyMs(System.currentTimeMillis() - startTime)
                     .build();
         }
-    }
-
-    /**
-     * 获取所有 KB 类型的 collection
-     */
-    private List<String> getAllKBCollections() {
-        Set<String> collections = new HashSet<>();
-
-        // 从知识库表获取全量 collection（全局检索兜底）
-        List<KnowledgeBaseDO> kbList = knowledgeBaseMapper.selectList(
-                Wrappers.lambdaQuery(KnowledgeBaseDO.class)
-                        .select(KnowledgeBaseDO::getCollectionName)
-                        .eq(KnowledgeBaseDO::getDeleted, 0)
-        );
-        for (KnowledgeBaseDO kb : kbList) {
-            String collectionName = kb.getCollectionName();
-            if (collectionName != null && !collectionName.isBlank()) {
-                collections.add(collectionName);
-            }
-        }
-
-        return new ArrayList<>(collections);
-    }
-
-    /**
-     * 并行在所有 collection 中检索
-     */
-    private List<RetrievedChunk> retrieveFromAllCollections(String question,
-                                                            List<String> collections,
-                                                            int topK) {
-        // 使用模板方法执行并行检索
-        return parallelRetriever.executeParallelRetrieval(question, collections, topK);
     }
 
     @Override

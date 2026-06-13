@@ -51,6 +51,8 @@ public class SearchChannelProperties {
          * 意图定向检索配置
          */
         private IntentDirected intentDirected = new IntentDirected();
+
+        private KeywordPg keywordPg = new KeywordPg();
     }
 
     @Data
@@ -71,6 +73,7 @@ public class SearchChannelProperties {
          * 单意图补充检索阈值
          * 当仅识别出一个意图且分数低于此阈值时，启用全局检索作为安全网
          */
+        @Deprecated
         private double singleIntentSupplementThreshold = 0.8;
 
         /**
@@ -98,5 +101,33 @@ public class SearchChannelProperties {
          * TopK 倍数
          */
         private int topKMultiplier = 2;
+    }
+
+    @Data
+    public static class KeywordPg {
+
+        private boolean enabled = true;
+
+        private int topKMultiplier = 3;
+    }
+
+    private Fusion fusion = new Fusion();
+
+    @Data
+    public static class Fusion {
+
+        private Rrf rrf = new Rrf();
+    }
+
+    @Data
+    public static class Rrf {
+
+        private boolean enabled = true;
+
+        private int k = 60;
+
+        private double vectorWeight = 1.0D;
+
+        private double keywordWeight = 1.0D;
     }
 }

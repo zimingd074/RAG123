@@ -28,6 +28,7 @@ import com.zimingd.ai.ragent.rag.controller.request.IntentNodeUpdateRequest;
 import com.zimingd.ai.ragent.rag.controller.vo.IntentNodeTreeVO;
 import com.zimingd.ai.ragent.rag.dao.entity.IntentNodeDO;
 import com.zimingd.ai.ragent.rag.dao.mapper.IntentNodeMapper;
+import com.zimingd.ai.ragent.knowledge.dao.entity.KnowledgeBaseDO;
 import com.zimingd.ai.ragent.knowledge.dao.mapper.KnowledgeBaseMapper;
 import com.zimingd.ai.ragent.rag.enums.IntentKind;
 import com.zimingd.ai.ragent.rag.enums.IntentLevel;
@@ -47,6 +48,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -90,6 +92,7 @@ public class IntentTreeServiceImpl extends ServiceImpl<IntentNodeMapper, IntentN
     private IntentNodeTreeVO buildTree(IntentNodeDO current,
                                        Map<String, List<IntentNodeDO>> parentMap) {
         IntentNodeTreeVO result = BeanUtil.toBean(current, IntentNodeTreeVO.class);
+        result.setKbIds(parseJsonList(current.getKbIdsJson(), current.getKbId()));
         List<IntentNodeDO> children = parentMap.getOrDefault(current.getIntentCode(), Collections.emptyList());
 
         if (!CollectionUtils.isEmpty(children)) {
@@ -113,20 +116,20 @@ public class IntentTreeServiceImpl extends ServiceImpl<IntentNodeMapper, IntentN
             throw new ClientException("意图标识已存在: " + requestParam.getIntentCode());
         }
 
+        KnowledgeBaseSelection knowledgeBases = resolveKnowledgeBases(
+                requestParam.getKbIds(), requestParam.getKbId());
         if (Objects.equals(requestParam.getLevel(), IntentLevel.TOPIC.getCode())
                 && Objects.equals(requestParam.getKind(), IntentKind.KB.getCode())
-                && StrUtil.isBlank(requestParam.getKbId())) {
+                && knowledgeBases.kbIds().isEmpty()) {
             throw new ClientException("TOPIC级别的RAG检索节点必须指定目标知识库");
         }
 
         IntentNodeDO node = IntentNodeDO.builder()
                 .intentCode(requestParam.getIntentCode())
-                .kbId(
-                        StrUtil.isNotBlank(requestParam.getKbId()) ? requestParam.getKbId() : null
-                )
-                .collectionName(
-                        StrUtil.isNotBlank(requestParam.getKbId()) ? knowledgeBaseMapper.selectById(requestParam.getKbId()).getCollectionName() : null
-                )
+                .kbId(knowledgeBases.primaryKbId())
+                .kbIdsJson(toJsonOrNull(knowledgeBases.kbIds()))
+                .collectionName(knowledgeBases.primaryCollectionName())
+                .collectionNamesJson(toJsonOrNull(knowledgeBases.collectionNames()))
                 .name(requestParam.getName())
                 .level(requestParam.getLevel())
                 .parentCode(requestParam.getParentCode())
@@ -185,6 +188,13 @@ public class IntentTreeServiceImpl extends ServiceImpl<IntentNodeMapper, IntentN
         }
         if (req.getCollectionName() != null) {
             node.setCollectionName(req.getCollectionName());
+        }
+        if (req.getKbIds() != null) {
+            KnowledgeBaseSelection knowledgeBases = resolveKnowledgeBases(req.getKbIds(), null);
+            node.setKbId(knowledgeBases.primaryKbId());
+            node.setKbIdsJson(toJsonOrNull(knowledgeBases.kbIds()));
+            node.setCollectionName(knowledgeBases.primaryCollectionName());
+            node.setCollectionNamesJson(toJsonOrNull(knowledgeBases.collectionNames()));
         }
         if (req.getTopK() != null) {
             node.setTopK(normalizeTopK(req.getTopK()));
@@ -320,6 +330,7 @@ public class IntentTreeServiceImpl extends ServiceImpl<IntentNodeMapper, IntentN
 
             IntentNodeCreateRequest nodeCreateRequest = IntentNodeCreateRequest.builder()
                     .kbId(node.getKbId())
+                    .kbIds(node.getKbIds())
                     .intentCode(node.getId())
                     .name(node.getName())
                     .level(mapLevel(node.getLevel()))
@@ -388,6 +399,79 @@ public class IntentTreeServiceImpl extends ServiceImpl<IntentNodeMapper, IntentN
                         .eq(IntentNodeDO::getIntentCode, intentCode)
                         .eq(IntentNodeDO::getDeleted, 0)
         ) > 0;
+    }
+
+    private KnowledgeBaseSelection resolveKnowledgeBases(List<String> kbIds, String legacyKbId) {
+        List<String> normalized = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(kbIds)) {
+            kbIds.stream()
+                    .filter(StrUtil::isNotBlank)
+                    .map(String::trim)
+                    .distinct()
+                    .forEach(normalized::add);
+        }
+        if (normalized.isEmpty() && StrUtil.isNotBlank(legacyKbId)) {
+            normalized.add(legacyKbId.trim());
+        }
+        if (normalized.isEmpty()) {
+            return new KnowledgeBaseSelection(List.of(), List.of());
+        }
+
+        Map<String, KnowledgeBaseDO> byId = knowledgeBaseMapper.selectBatchIds(normalized)
+                .stream()
+                .collect(Collectors.toMap(
+                        KnowledgeBaseDO::getId,
+                        item -> item,
+                        (left, right) -> left,
+                        LinkedHashMap::new
+                ));
+        List<String> missing = normalized.stream()
+                .filter(id -> !byId.containsKey(id))
+                .toList();
+        if (CollectionUtils.isNotEmpty(missing)) {
+            throw new ClientException("知识库不存在: " + String.join(", ", missing));
+        }
+        List<String> collectionNames = normalized.stream()
+                .map(byId::get)
+                .map(KnowledgeBaseDO::getCollectionName)
+                .filter(StrUtil::isNotBlank)
+                .toList();
+        return new KnowledgeBaseSelection(List.copyOf(normalized), collectionNames);
+    }
+
+    private List<String> parseJsonList(String json, String fallback) {
+        if (StrUtil.isNotBlank(json)) {
+            try {
+                List<String> values = GSON.fromJson(
+                        json,
+                        new com.google.gson.reflect.TypeToken<List<String>>() {
+                        }.getType()
+                );
+                if (CollectionUtils.isNotEmpty(values)) {
+                    return values;
+                }
+            } catch (Exception ignored) {
+                // Legacy rows may not contain valid JSON; fall back to kbId.
+            }
+        }
+        return StrUtil.isNotBlank(fallback) ? List.of(fallback) : List.of();
+    }
+
+    private String toJsonOrNull(List<String> values) {
+        return CollectionUtils.isEmpty(values) ? null : GSON.toJson(values);
+    }
+
+    private record KnowledgeBaseSelection(
+            List<String> kbIds,
+            List<String> collectionNames
+    ) {
+        private String primaryKbId() {
+            return kbIds.isEmpty() ? null : kbIds.get(0);
+        }
+
+        private String primaryCollectionName() {
+            return collectionNames.isEmpty() ? null : collectionNames.get(0);
+        }
     }
 
     /**

@@ -97,6 +97,15 @@ rag:
       intent-directed:
         min-intent-score: 0.4
         top-k-multiplier: 2
+      keyword-pg:
+        enabled: true
+        top-k-multiplier: 3
+    fusion:
+      rrf:
+        enabled: true
+        k: 60
+        vector-weight: 1.0
+        keyword-weight: 1.0
 
   trace:
     enabled: true

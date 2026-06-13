@@ -46,6 +46,12 @@ public class IntentNodeDO {
     private String kbId;
 
     /**
+     * 知识库 ID 列表（JSON 数组）；kbId 保留为首库兼容字段
+     */
+    @TableField("kb_ids")
+    private String kbIdsJson;
+
+    /**
      * 业务唯一标识，如 group-hr / biz-oa-intro
      */
     private String intentCode;
@@ -79,6 +85,12 @@ public class IntentNodeDO {
      * Milvus Collection 名称（仅对 kind=0 有意义）
      */
     private String collectionName;
+
+    /**
+     * Milvus Collection 列表（JSON 数组）
+     */
+    @TableField("collection_names")
+    private String collectionNamesJson;
 
     /**
      * MCP 工具 ID（仅对 kind=2 有意义）

@@ -41,6 +41,12 @@ public class IntentNode {
     private String kbId;
 
     /**
+     * 知识库 ID 列表；为空时回退 kbId
+     */
+    @Builder.Default
+    private List<String> kbIds = new ArrayList<>();
+
+    /**
      * 展示名称，如「人事」「OA系统」「数据安全」
      */
     private String name;
@@ -96,6 +102,12 @@ public class IntentNode {
      * Milvus Collection 名称（仅对 kind=KB 有意义）
      */
     private String collectionName;
+
+    /**
+     * Milvus Collection 列表；为空时回退 collectionName
+     */
+    @Builder.Default
+    private List<String> collectionNames = new ArrayList<>();
 
     /**
      * MCP 工具 ID（仅对 kind=MCP 有意义）

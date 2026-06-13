@@ -15,36 +15,29 @@
  * limitations under the License.
  */
 
-package com.zimingd.ai.ragent.rag.core.retrieve.channel;
+package com.nageoffer.ai.ragent.rag.core.retrieve.channel;
 
-/**
- * 检索通道类型枚举
- */
-public enum SearchChannelType {
+import org.junit.jupiter.api.Test;
 
-    /**
-     * 向量全局检索
-     * 在所有知识库中进行向量检索
-     */
-    VECTOR_GLOBAL,
+import java.util.List;
 
-    /**
-     * 意图定向检索
-     * 基于意图识别结果，在特定知识库中检索
-     */
-    INTENT_DIRECTED,
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    /**
-     * ES 关键词检索
-     * 基于 Elasticsearch 的关键词分词检索
-     */
-    KEYWORD_ES,
+class PostgresKeywordSearchChannelTest {
 
-    KEYWORD_PG,
+    @Test
+    void extractsProductVersionAndErrorIdentifiers() {
+        List<String> tokens = PostgresKeywordSearchChannel.extractIdentifierTokens(
+                "Check AB-1234 on v2.3.1, error ERR_001. and plain words"
+        );
 
-    /**
-     * 混合检索
-     * 结合多种检索策略
-     */
-    HYBRID
+        assertEquals(List.of("ab-1234", "v2.3.1", "err_001"), tokens);
+    }
+
+    @Test
+    void ignoresWordsWithoutDigits() {
+        assertEquals(List.of(), PostgresKeywordSearchChannel.extractIdentifierTokens(
+                "printer cartridge replacement"
+        ));
+    }
 }

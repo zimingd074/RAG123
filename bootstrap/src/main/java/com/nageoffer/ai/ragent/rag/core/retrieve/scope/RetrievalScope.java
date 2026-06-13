@@ -15,36 +15,26 @@
  * limitations under the License.
  */
 
-package com.zimingd.ai.ragent.rag.core.retrieve.channel;
+package com.nageoffer.ai.ragent.rag.core.retrieve.scope;
 
-/**
- * 检索通道类型枚举
- */
-public enum SearchChannelType {
+import java.util.List;
 
-    /**
-     * 向量全局检索
-     * 在所有知识库中进行向量检索
-     */
-    VECTOR_GLOBAL,
+public record RetrievalScope(Type type, List<String> collectionNames) {
 
-    /**
-     * 意图定向检索
-     * 基于意图识别结果，在特定知识库中检索
-     */
-    INTENT_DIRECTED,
+    public enum Type {
+        INTENT_DIRECTED,
+        GLOBAL
+    }
 
-    /**
-     * ES 关键词检索
-     * 基于 Elasticsearch 的关键词分词检索
-     */
-    KEYWORD_ES,
+    public RetrievalScope {
+        collectionNames = collectionNames == null ? List.of() : List.copyOf(collectionNames);
+    }
 
-    KEYWORD_PG,
+    public boolean isIntentDirected() {
+        return type == Type.INTENT_DIRECTED;
+    }
 
-    /**
-     * 混合检索
-     * 结合多种检索策略
-     */
-    HYBRID
+    public boolean isGlobal() {
+        return type == Type.GLOBAL;
+    }
 }

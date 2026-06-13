@@ -281,6 +281,13 @@ public class DefaultIntentClassifier implements IntentClassifier, IntentNodeRegi
             node.setParentId(each.getParentCode());
             node.setMcpToolId(each.getMcpToolId());
             node.setParamPromptTemplate(each.getParamPromptTemplate());
+            node.setKbIds(parseJsonList(each.getKbIdsJson(), each.getKbId()));
+            node.setCollectionNames(
+                    parseJsonList(
+                            each.getCollectionNamesJson(),
+                            each.getCollectionName()
+                    )
+            );
             // 确保 children 不为 null（避免后面 add NPE）
             if (node.getChildren() == null) {
                 node.setChildren(new ArrayList<>());
@@ -316,6 +323,24 @@ public class DefaultIntentClassifier implements IntentClassifier, IntentNodeRegi
         fillFullPath(roots, null);
 
         return roots;
+    }
+
+    private List<String> parseJsonList(String json, String fallback) {
+        if (json != null && !json.isBlank()) {
+            try {
+                JsonElement parsed = JsonParser.parseString(json);
+                if (parsed.isJsonArray()) {
+                    List<String> values = new ArrayList<>();
+                    parsed.getAsJsonArray().forEach(item -> values.add(item.getAsString()));
+                    if (!values.isEmpty()) {
+                        return values.stream().distinct().toList();
+                    }
+                }
+            } catch (Exception ignored) {
+                // Keep compatibility with rows created before multi-KB support.
+            }
+        }
+        return fallback == null || fallback.isBlank() ? List.of() : List.of(fallback);
     }
 
     /**

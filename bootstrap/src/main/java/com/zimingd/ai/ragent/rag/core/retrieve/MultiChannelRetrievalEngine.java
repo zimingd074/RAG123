@@ -24,6 +24,7 @@ import com.zimingd.ai.ragent.rag.core.retrieve.channel.SearchChannel;
 import com.zimingd.ai.ragent.rag.core.retrieve.channel.SearchChannelResult;
 import com.zimingd.ai.ragent.rag.core.retrieve.channel.SearchContext;
 import com.zimingd.ai.ragent.rag.core.retrieve.postprocessor.SearchResultPostProcessor;
+import com.zimingd.ai.ragent.rag.core.retrieve.scope.RetrievalScopeResolver;
 import com.zimingd.ai.ragent.rag.dto.SubQuestionIntent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +54,7 @@ public class MultiChannelRetrievalEngine {
     private final List<SearchChannel> searchChannels;
     private final List<SearchResultPostProcessor> postProcessors;
     private final Executor ragRetrievalExecutor;
+    private final RetrievalScopeResolver retrievalScopeResolver;
 
     /**
      * 执行多通道检索（仅 KB 场景）
@@ -214,6 +216,7 @@ public class MultiChannelRetrievalEngine {
                 .rewrittenQuestion(question)
                 .intents(subIntents)
                 .topK(topK)
+                .retrievalScope(retrievalScopeResolver.resolve(subIntents))
                 .build();
     }
 }
