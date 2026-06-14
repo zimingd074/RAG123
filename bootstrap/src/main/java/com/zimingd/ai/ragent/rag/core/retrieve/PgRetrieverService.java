@@ -19,6 +19,7 @@ package com.zimingd.ai.ragent.rag.core.retrieve;
 
 import com.zimingd.ai.ragent.framework.convention.RetrievedChunk;
 import com.zimingd.ai.ragent.infra.embedding.EmbeddingService;
+import com.zimingd.ai.ragent.rag.config.RAGConfigProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -35,12 +36,20 @@ public class PgRetrieverService implements RetrieverService {
 
     private final JdbcTemplate jdbcTemplate;
     private final EmbeddingService embeddingService;
+    private final RAGConfigProperties ragConfigProperties;
 
     @Override
     public List<RetrievedChunk> retrieve(RetrieveRequest request) {
-        List<Float> embedding = embeddingService.embed(request.getQuery());
-        float[] vector = normalize(toArray(embedding));
-        return retrieveByVector(vector, request);
+        return retrieveByVector(embedQuery(request.getQuery()), request);
+    }
+
+    @Override
+    public float[] embedQuery(String query) {
+        List<Float> embedding = embeddingService.embed(
+                query,
+                ragConfigProperties.getEmbeddingModelId()
+        );
+        return normalize(toArray(embedding));
     }
 
     @Override

@@ -59,4 +59,9 @@ public class SearchChannelResult {
      */
     @Builder.Default
     private Map<String, Object> metadata = new HashMap<>();
+
+    @Builder.Default
+    private boolean success = true;
+
+    private String errorMessage;
 }

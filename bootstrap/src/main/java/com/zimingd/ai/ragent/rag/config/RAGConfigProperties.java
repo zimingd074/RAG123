@@ -57,4 +57,22 @@ public class RAGConfigProperties {
      */
     @Value("${rag.rerank.enabled:true}")
     private Boolean rerankEnabled;
+
+    @Value("${rag.rerank.candidate-limit:15}")
+    private Integer rerankCandidateLimit;
+
+    @Value("${rag.rerank.document-max-chars:3000}")
+    private Integer rerankDocumentMaxChars;
+
+    @Value("${rag.rerank.timeout-ms:2500}")
+    private Integer rerankTimeoutMs;
+
+    @Value("${rag.rerank.fallback-to-rrf:true}")
+    private Boolean rerankFallbackToRrf;
+
+    /**
+     * 查询向量必须使用与知识库索引相同的模型，禁止跨模型降级。
+     */
+    @Value("${rag.embedding.model-id:qwen-emb-8b}")
+    private String embeddingModelId;
 }

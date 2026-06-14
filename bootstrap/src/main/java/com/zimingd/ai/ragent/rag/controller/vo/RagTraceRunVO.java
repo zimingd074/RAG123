@@ -52,4 +52,6 @@ public class RagTraceRunVO {
     private Date startTime;
 
     private Date endTime;
+
+    private String extraData;
 }

@@ -25,7 +25,9 @@ import com.zimingd.ai.ragent.rag.core.retrieve.channel.strategy.CollectionParall
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 @Slf4j
@@ -33,12 +35,14 @@ import java.util.concurrent.Executor;
 public class VectorGlobalSearchChannel implements SearchChannel {
 
     private final SearchChannelProperties properties;
+    private final RetrieverService retrieverService;
     private final CollectionParallelRetriever parallelRetriever;
 
     public VectorGlobalSearchChannel(RetrieverService retrieverService,
                                      SearchChannelProperties properties,
                                      Executor innerRetrievalExecutor) {
         this.properties = properties;
+        this.retrieverService = retrieverService;
         this.parallelRetriever = new CollectionParallelRetriever(retrieverService, innerRetrievalExecutor);
     }
 
@@ -66,18 +70,28 @@ public class VectorGlobalSearchChannel implements SearchChannel {
         try {
             List<String> collections = context.getRetrievalScope().collectionNames();
             int multiplier = properties.getChannels().getVectorGlobal().getTopKMultiplier();
+            long embeddingStart = System.currentTimeMillis();
+            float[] queryVector = retrieverService.embedQuery(context.getMainQuestion());
+            long embeddingLatency = System.currentTimeMillis() - embeddingStart;
+            long vectorSearchStart = System.currentTimeMillis();
             List<RetrievedChunk> chunks = parallelRetriever.executeParallelRetrieval(
-                    context.getMainQuestion(),
+                    queryVector,
                     collections,
                     context.getTopK() * multiplier
             );
+            long vectorSearchLatency = System.currentTimeMillis() - vectorSearchStart;
             long latency = System.currentTimeMillis() - startTime;
             log.info("Global vector retrieval completed, chunks={}, latencyMs={}", chunks.size(), latency);
+            Map<String, Object> metadata = new LinkedHashMap<>();
+            metadata.put("collectionCount", collections.size());
+            metadata.put("embeddingLatencyMs", embeddingLatency);
+            metadata.put("vectorSearchLatencyMs", vectorSearchLatency);
             return SearchChannelResult.builder()
                     .channelType(SearchChannelType.VECTOR_GLOBAL)
                     .channelName(getName())
                     .chunks(chunks)
                     .latencyMs(latency)
+                    .metadata(metadata)
                     .build();
         } catch (Exception e) {
             log.error("Global vector retrieval failed", e);
@@ -86,6 +100,8 @@ public class VectorGlobalSearchChannel implements SearchChannel {
                     .channelName(getName())
                     .chunks(List.of())
                     .latencyMs(System.currentTimeMillis() - startTime)
+                    .success(false)
+                    .errorMessage(e.getMessage())
                     .build();
         }
     }

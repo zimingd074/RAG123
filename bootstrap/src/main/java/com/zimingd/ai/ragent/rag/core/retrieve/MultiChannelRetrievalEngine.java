@@ -26,26 +26,20 @@ import com.zimingd.ai.ragent.rag.core.retrieve.channel.SearchContext;
 import com.zimingd.ai.ragent.rag.core.retrieve.postprocessor.SearchResultPostProcessor;
 import com.zimingd.ai.ragent.rag.core.retrieve.scope.RetrievalScopeResolver;
 import com.zimingd.ai.ragent.rag.dto.SubQuestionIntent;
+import com.zimingd.ai.ragent.rag.trace.RetrievalTraceRecorder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
-/**
- * 多通道检索引擎
- * <p>
- * 负责协调多个检索通道和后置处理器：
- * 1. 并行执行所有启用的检索通道
- * 2. 依次执行后置处理器链
- * 3. 返回最终的检索结果
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -55,145 +49,95 @@ public class MultiChannelRetrievalEngine {
     private final List<SearchResultPostProcessor> postProcessors;
     private final Executor ragRetrievalExecutor;
     private final RetrievalScopeResolver retrievalScopeResolver;
+    private final RetrievalTraceRecorder traceRecorder;
 
-    /**
-     * 执行多通道检索（仅 KB 场景）
-     *
-     * @param subIntents 子问题意图列表
-     * @param topK       期望返回的结果数量
-     * @return 检索到的 Chunk 列表
-     */
     @RagTraceNode(name = "multi-channel-retrieval", type = "RETRIEVE_CHANNEL")
     public List<RetrievedChunk> retrieveKnowledgeChannels(List<SubQuestionIntent> subIntents, int topK) {
-        // 构建检索上下文
         SearchContext context = buildSearchContext(subIntents, topK);
-
-        // 【阶段1：多通道并行检索】
         List<SearchChannelResult> channelResults = executeSearchChannels(context);
         if (CollUtil.isEmpty(channelResults)) {
             return List.of();
         }
-
-        // 【阶段2：后置处理器链】
         return executePostProcessors(channelResults, context);
     }
 
-    /**
-     * 执行所有启用的检索通道
-     */
     private List<SearchChannelResult> executeSearchChannels(SearchContext context) {
-        // 过滤启用的通道
         List<SearchChannel> enabledChannels = searchChannels.stream()
                 .filter(channel -> channel.isEnabled(context))
                 .sorted(Comparator.comparingInt(SearchChannel::getPriority))
                 .toList();
-
         if (enabledChannels.isEmpty()) {
             return List.of();
         }
 
-        log.info("启用的检索通道：{}",
-                enabledChannels.stream().map(SearchChannel::getName).toList());
-
         List<CompletableFuture<SearchChannelResult>> futures = enabledChannels.stream()
                 .map(channel -> CompletableFuture.supplyAsync(
-                        () -> {
-                            try {
-                                log.info("执行检索通道：{}", channel.getName());
-                                return channel.search(context);
-                            } catch (Exception e) {
-                                log.error("检索通道 {} 执行失败", channel.getName(), e);
-                                return emptyResult(channel);
-                            }
-                        },
+                        () -> executeSearchChannel(channel, context),
                         ragRetrievalExecutor
                 ))
                 .toList();
-
-        // 等待所有通道完成并统计
-        int successCount = 0;
-        int failureCount = 0;
-        int totalChunks = 0;
-
-        List<SearchChannelResult> results = futures.stream()
+        return futures.stream()
                 .map(CompletableFuture::join)
                 .filter(Objects::nonNull)
                 .toList();
-
-        // 打印详细统计信息
-        for (SearchChannelResult result : results) {
-            int chunkCount = result.getChunks().size();
-            totalChunks += chunkCount;
-
-            if (chunkCount > 0) {
-                successCount++;
-                log.info("通道 {} 完成 ✓ - 检索到 {} 个 Chunk，耗时：{}ms",
-                        result.getChannelName(),
-                        chunkCount,
-                        result.getLatencyMs()
-                );
-            } else {
-                failureCount++;
-                log.warn("通道 {} 完成但无结果 - 耗时：{}ms",
-                        result.getChannelName(),
-                        result.getLatencyMs()
-                );
-            }
-        }
-
-        log.info("多通道检索统计 - 总通道数: {}, 有结果: {}, 无结果: {}, Chunk 总数: {}",
-                enabledChannels.size(), successCount, failureCount, totalChunks);
-
-        return results;
     }
 
-    /**
-     * 执行后置处理器链
-     */
+    private SearchChannelResult executeSearchChannel(SearchChannel channel, SearchContext context) {
+        RetrievalTraceRecorder.Span span = traceRecorder.begin(
+                channelTraceName(channel),
+                "RETRIEVE_CHANNEL",
+                channelInitialData(channel, context)
+        );
+        try {
+            SearchChannelResult result = channel.search(context);
+            Map<String, Object> data = channelResultData(result);
+            if (result.isSuccess()) {
+                span.success(data);
+            } else {
+                span.error(new IllegalStateException(result.getErrorMessage()), data);
+            }
+            return result;
+        } catch (Exception e) {
+            log.error("Search channel {} failed", channel.getName(), e);
+            span.error(e, Map.of("channel", channel.getName(), "candidateCount", 0));
+            return emptyResult(channel);
+        }
+    }
+
     private List<RetrievedChunk> executePostProcessors(List<SearchChannelResult> results,
                                                        SearchContext context) {
-        // 过滤启用的处理器并排序
         List<SearchResultPostProcessor> enabledProcessors = postProcessors.stream()
                 .filter(processor -> processor.isEnabled(context))
                 .sorted(Comparator.comparingInt(SearchResultPostProcessor::getOrder))
                 .toList();
-
         if (enabledProcessors.isEmpty()) {
-            log.warn("没有启用的后置处理器，直接返回原始结果");
             return results.stream()
-                    .flatMap(r -> r.getChunks().stream())
+                    .flatMap(result -> result.getChunks().stream())
                     .collect(Collectors.toList());
         }
 
-        // 初始 Chunk 列表（所有通道的结果合并）
         List<RetrievedChunk> chunks = results.stream()
-                .flatMap(r -> r.getChunks().stream())
+                .flatMap(result -> result.getChunks().stream())
                 .collect(Collectors.toList());
-
-        int initialSize = chunks.size();
-
-        // 依次执行处理器
         for (SearchResultPostProcessor processor : enabledProcessors) {
+            int beforeSize = chunks.size();
+            RetrievalTraceRecorder.Span span = traceRecorder.begin(
+                    processorTraceName(processor),
+                    "POST_PROCESSOR",
+                    Map.of("processor", processor.getName(), "inputCandidates", beforeSize)
+            );
             try {
-                int beforeSize = chunks.size();
                 chunks = processor.process(chunks, results, context);
-                int afterSize = chunks.size();
-
-                log.info("后置处理器 {} 完成 - 输入: {} 个 Chunk, 输出: {} 个 Chunk, 变化: {}",
-                        processor.getName(),
-                        beforeSize,
-                        afterSize,
-                        (afterSize - beforeSize > 0 ? "+" : "") + (afterSize - beforeSize)
-                );
+                span.success(processorTraceData(processor, context, beforeSize, chunks.size()));
             } catch (Exception e) {
-                log.error("后置处理器 {} 执行失败，跳过该处理器", processor.getName(), e);
-                // 继续执行下一个处理器，不中断整个链
+                log.error("Post processor {} failed; preserving previous ranking", processor.getName(), e);
+                span.error(e, Map.of(
+                        "processor", processor.getName(),
+                        "inputCandidates", beforeSize,
+                        "outputCandidates", chunks.size()
+                ));
             }
         }
-
-        log.info("后置处理器链执行完成 - 初始: {} 个 Chunk, 最终: {} 个 Chunk",
-                initialSize, chunks.size());
-
         return chunks;
     }
 
@@ -202,21 +146,100 @@ public class MultiChannelRetrievalEngine {
                 .channelType(channel.getType())
                 .channelName(channel.getName())
                 .chunks(List.of())
+                .success(false)
+                .errorMessage("Unhandled channel exception")
                 .build();
     }
 
-    /**
-     * 构建检索上下文
-     */
     private SearchContext buildSearchContext(List<SubQuestionIntent> subIntents, int topK) {
         String question = CollUtil.isEmpty(subIntents) ? "" : subIntents.get(0).subQuestion();
+        RetrievalTraceRecorder.Span span = traceRecorder.begin(
+                "retrieval-scope-resolve",
+                "RETRIEVE_SCOPE",
+                Map.of("intentCount", subIntents == null ? 0 : subIntents.size())
+        );
+        try {
+            var scope = retrievalScopeResolver.resolve(subIntents);
+            span.success(Map.of(
+                    "scopeType", scope.type().name(),
+                    "collectionCount", scope.collectionNames().size(),
+                    "collections", scope.collectionNames()
+            ));
+            return SearchContext.builder()
+                    .originalQuestion(question)
+                    .rewrittenQuestion(question)
+                    .intents(subIntents)
+                    .topK(topK)
+                    .retrievalScope(scope)
+                    .build();
+        } catch (RuntimeException e) {
+            span.error(e, Map.of());
+            throw e;
+        }
+    }
 
-        return SearchContext.builder()
-                .originalQuestion(question)
-                .rewrittenQuestion(question)
-                .intents(subIntents)
-                .topK(topK)
-                .retrievalScope(retrievalScopeResolver.resolve(subIntents))
-                .build();
+    private String channelTraceName(SearchChannel channel) {
+        return switch (channel.getType()) {
+            case INTENT_DIRECTED -> "vector-intent-search";
+            case VECTOR_GLOBAL -> "vector-global-search";
+            case KEYWORD_PG -> "keyword-pg-search";
+            default -> channel.getName();
+        };
+    }
+
+    private Map<String, Object> channelInitialData(SearchChannel channel, SearchContext context) {
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("channel", channel.getName());
+        data.put("topK", context.getTopK());
+        if (context.getRetrievalScope() != null) {
+            data.put("scopeType", context.getRetrievalScope().type().name());
+            data.put("collectionCount", context.getRetrievalScope().collectionNames().size());
+        }
+        return data;
+    }
+
+    private Map<String, Object> channelResultData(SearchChannelResult result) {
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("channel", result.getChannelName());
+        data.put("candidateCount", result.getChunks().size());
+        data.put("latencyMs", result.getLatencyMs());
+        data.put("success", result.isSuccess());
+        if (result.getErrorMessage() != null) {
+            data.put("errorMessage", result.getErrorMessage());
+        }
+        data.putAll(result.getMetadata());
+        data.put("chunkIds", result.getChunks().stream().map(RetrievedChunk::getId).toList());
+        return data;
+    }
+
+    private String processorTraceName(SearchResultPostProcessor processor) {
+        return switch (processor.getName()) {
+            case "RrfFusion" -> "rrf-fusion";
+            case "Deduplication" -> "chunk-deduplication";
+            case "Rerank" -> "rerank";
+            case "FinalTopK" -> "final-topk";
+            default -> processor.getName();
+        };
+    }
+
+    private Map<String, Object> processorTraceData(SearchResultPostProcessor processor,
+                                                   SearchContext context,
+                                                   int beforeSize,
+                                                   int afterSize) {
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("processor", processor.getName());
+        data.put("inputCandidates", beforeSize);
+        data.put("outputCandidates", afterSize);
+        String metadataKey = switch (processor.getName()) {
+            case "RrfFusion" -> "rrf";
+            case "Deduplication" -> "deduplication";
+            case "Rerank" -> "rerank";
+            case "FinalTopK" -> "finalTopK";
+            default -> null;
+        };
+        if (metadataKey != null && context.getMetadata().get(metadataKey) instanceof Map<?, ?> details) {
+            details.forEach((key, value) -> data.put(String.valueOf(key), value));
+        }
+        return data;
     }
 }

@@ -19,6 +19,7 @@ package com.zimingd.ai.ragent.rag.core.retrieve.postprocessor;
 
 import com.zimingd.ai.ragent.framework.convention.RetrievedChunk;
 import com.zimingd.ai.ragent.infra.rerank.RerankService;
+import com.zimingd.ai.ragent.infra.config.AIModelProperties;
 import com.zimingd.ai.ragent.rag.config.RAGConfigProperties;
 import com.zimingd.ai.ragent.rag.core.retrieve.channel.SearchChannelResult;
 import com.zimingd.ai.ragent.rag.core.retrieve.channel.SearchContext;
@@ -27,6 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.io.InterruptedIOException;
 
 /**
  * Rerank 后置处理器
@@ -41,6 +45,7 @@ public class RerankPostProcessor implements SearchResultPostProcessor {
 
     private final RerankService rerankService;
     private final RAGConfigProperties ragConfigProperties;
+    private final AIModelProperties aiModelProperties;
 
     @Override
     public String getName() {
@@ -66,10 +71,82 @@ public class RerankPostProcessor implements SearchResultPostProcessor {
             return chunks;
         }
 
-        return rerankService.rerank(
-                context.getMainQuestion(),
-                chunks,
-                context.getTopK()
+        int topK = context.getTopK();
+        int candidateLimit = Math.min(
+                Math.max(1, ragConfigProperties.getRerankCandidateLimit()),
+                Math.max(1, topK * 3)
         );
+        List<RetrievedChunk> candidates = chunks.stream().limit(candidateLimit).toList();
+        long totalTextChars = candidates.stream()
+                .map(RetrievedChunk::getText)
+                .filter(text -> text != null)
+                .mapToLong(text -> Math.min(text.length(), ragConfigProperties.getRerankDocumentMaxChars()))
+                .sum();
+        long start = System.currentTimeMillis();
+        Map<String, Object> metadata = new LinkedHashMap<>();
+        metadata.put("model", aiModelProperties.getRerank().getDefaultModel());
+        metadata.put("inputCandidates", candidates.size());
+        metadata.put("candidateLimit", candidateLimit);
+        metadata.put("documentMaxChars", ragConfigProperties.getRerankDocumentMaxChars());
+        metadata.put("requestTextChars", totalTextChars);
+        metadata.put("timeoutMs", ragConfigProperties.getRerankTimeoutMs());
+
+        try {
+            List<RetrievedChunk> reranked = rerankService.rerank(
+                    context.getMainQuestion(),
+                    candidates,
+                    topK
+            );
+            metadata.put("latencyMs", System.currentTimeMillis() - start);
+            metadata.put("fallbackToRrf", false);
+            metadata.put("rankingChanges", rankingChanges(candidates, reranked));
+            context.getMetadata().put("rerank", metadata);
+            return reranked;
+        } catch (Exception e) {
+            if (!Boolean.TRUE.equals(ragConfigProperties.getRerankFallbackToRrf())) {
+                throw e instanceof RuntimeException runtimeException
+                        ? runtimeException
+                        : new IllegalStateException(e);
+            }
+            metadata.put("latencyMs", System.currentTimeMillis() - start);
+            metadata.put("fallbackToRrf", true);
+            metadata.put("timedOut", isTimeout(e));
+            metadata.put("errorType", e.getClass().getSimpleName());
+            metadata.put("errorMessage", e.getMessage());
+            context.getMetadata().put("rerank", metadata);
+            log.warn("Rerank failed, fallback to RRF ranking", e);
+            return candidates.stream().limit(topK).toList();
+        }
+    }
+
+    private List<Map<String, Object>> rankingChanges(List<RetrievedChunk> before,
+                                                      List<RetrievedChunk> after) {
+        Map<String, Integer> beforeRanks = new LinkedHashMap<>();
+        for (int index = 0; index < before.size(); index++) {
+            beforeRanks.put(before.get(index).getId(), index + 1);
+        }
+        java.util.ArrayList<Map<String, Object>> changes = new java.util.ArrayList<>();
+        for (int index = 0; index < after.size(); index++) {
+            RetrievedChunk chunk = after.get(index);
+            Map<String, Object> change = new LinkedHashMap<>();
+            change.put("chunkId", chunk.getId());
+            change.put("rrfRank", beforeRanks.get(chunk.getId()));
+            change.put("rerankRank", index + 1);
+            change.put("rerankScore", chunk.getScore());
+            changes.add(change);
+        }
+        return changes;
+    }
+
+    private boolean isTimeout(Throwable error) {
+        Throwable current = error;
+        while (current != null) {
+            if (current instanceof InterruptedIOException
+                    || current.getClass().getSimpleName().toLowerCase().contains("timeout")) {
+                return true;
+            }
+            current = current.getCause();
+        }
+        return false;
     }
 }

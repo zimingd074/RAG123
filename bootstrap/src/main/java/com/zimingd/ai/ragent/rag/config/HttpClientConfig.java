@@ -21,6 +21,7 @@ import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.Duration;
 
@@ -56,6 +57,32 @@ public class HttpClientConfig {
                 .readTimeout(Duration.ofSeconds(30))
                 .callTimeout(Duration.ofSeconds(45))
                 .retryOnConnectionFailure(true)
+                .build();
+    }
+
+    @Bean
+    public OkHttpClient rerankHttpClient(
+            @Value("${rag.rerank.timeout-ms:2500}") long timeoutMs) {
+        Duration timeout = Duration.ofMillis(timeoutMs);
+        return new OkHttpClient.Builder()
+                .connectTimeout(timeout)
+                .writeTimeout(timeout)
+                .readTimeout(timeout)
+                .callTimeout(timeout)
+                .retryOnConnectionFailure(false)
+                .build();
+    }
+
+    @Bean
+    public OkHttpClient embeddingHttpClient(
+            @Value("${rag.embedding.timeout-ms:5000}") long timeoutMs) {
+        Duration timeout = Duration.ofMillis(timeoutMs);
+        return new OkHttpClient.Builder()
+                .connectTimeout(timeout)
+                .writeTimeout(timeout)
+                .readTimeout(timeout)
+                .callTimeout(timeout)
+                .retryOnConnectionFailure(false)
                 .build();
     }
 }

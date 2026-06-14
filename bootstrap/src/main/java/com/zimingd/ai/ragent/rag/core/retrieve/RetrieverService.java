@@ -45,6 +45,11 @@ import java.util.List;
 public interface RetrieverService {
 
     /**
+     * Compute and normalize one query vector for reuse across collections.
+     */
+    float[] embedQuery(String query);
+
+    /**
      * 根据自然语言 Query 进行检索
      * <p>
      * 说明：

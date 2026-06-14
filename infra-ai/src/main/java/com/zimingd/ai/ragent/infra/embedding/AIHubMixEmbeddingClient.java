@@ -19,13 +19,15 @@ package com.zimingd.ai.ragent.infra.embedding;
 
 import com.zimingd.ai.ragent.infra.enums.ModelProvider;
 import okhttp3.OkHttpClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AIHubMixEmbeddingClient extends AbstractOpenAIStyleEmbeddingClient {
 
-    public AIHubMixEmbeddingClient(OkHttpClient syncHttpClient) {
-        super(syncHttpClient);
+    public AIHubMixEmbeddingClient(
+            @Qualifier("embeddingHttpClient") OkHttpClient embeddingHttpClient) {
+        super(embeddingHttpClient);
     }
 
     @Override

@@ -115,6 +115,7 @@ public class RagTraceQueryServiceImpl implements RagTraceQueryService {
                 .durationMs(run.getDurationMs())
                 .startTime(run.getStartTime())
                 .endTime(run.getEndTime())
+                .extraData(run.getExtraData())
                 .build();
     }
 
@@ -167,6 +168,16 @@ public class RagTraceQueryServiceImpl implements RagTraceQueryService {
                 .durationMs(node.getDurationMs())
                 .startTime(node.getStartTime())
                 .endTime(node.getEndTime())
+                .extraData(node.getExtraData())
                 .build();
+    }
+
+    @Override
+    public RagTraceDetailVO detailByTaskId(String taskId) {
+        RagTraceRunDO run = runMapper.selectOne(Wrappers.lambdaQuery(RagTraceRunDO.class)
+                .eq(RagTraceRunDO::getTaskId, taskId)
+                .orderByDesc(RagTraceRunDO::getStartTime)
+                .last("limit 1"));
+        return run == null ? null : detail(run.getTraceId());
     }
 }

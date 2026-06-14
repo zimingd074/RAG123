@@ -57,6 +57,11 @@ public class RagTraceController {
         return Results.success(ragTraceQueryService.detail(traceId));
     }
 
+    @GetMapping("/rag/traces/tasks/{taskId}")
+    public Result<RagTraceDetailVO> detailByTaskId(@PathVariable String taskId) {
+        return Results.success(ragTraceQueryService.detailByTaskId(taskId));
+    }
+
     /**
      * 仅查询链路节点
      */

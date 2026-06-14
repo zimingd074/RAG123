@@ -67,9 +67,21 @@ public class DeduplicationPostProcessor implements SearchResultPostProcessor {
         if (properties.getFusion().getRrf().isEnabled()) {
             Map<String, RetrievedChunk> currentOrder = new LinkedHashMap<>();
             chunks.forEach(chunk -> currentOrder.putIfAbsent(chunkKey(chunk), chunk));
-            return new ArrayList<>(currentOrder.values());
+            List<RetrievedChunk> output = new ArrayList<>(currentOrder.values());
+            context.getMetadata().put("deduplication", Map.of(
+                    "inputCandidates", chunks.size(),
+                    "outputCandidates", output.size(),
+                    "duplicatesRemoved", chunks.size() - output.size()
+            ));
+            return output;
         }
-        return new ArrayList<>(chunkMap.values());
+        List<RetrievedChunk> output = new ArrayList<>(chunkMap.values());
+        context.getMetadata().put("deduplication", Map.of(
+                "inputCandidates", chunks.size(),
+                "outputCandidates", output.size(),
+                "duplicatesRemoved", chunks.size() - output.size()
+        ));
+        return output;
     }
 
     private void merge(Map<String, RetrievedChunk> chunks, RetrievedChunk candidate) {

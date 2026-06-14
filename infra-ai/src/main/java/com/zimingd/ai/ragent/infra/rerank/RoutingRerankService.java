@@ -18,9 +18,9 @@
 package com.zimingd.ai.ragent.infra.rerank;
 
 import com.zimingd.ai.ragent.framework.convention.RetrievedChunk;
-import com.zimingd.ai.ragent.infra.enums.ModelCapability;
-import com.zimingd.ai.ragent.infra.model.ModelRoutingExecutor;
 import com.zimingd.ai.ragent.infra.model.ModelSelector;
+import com.zimingd.ai.ragent.infra.model.ModelTarget;
+import com.zimingd.ai.ragent.framework.exception.RemoteException;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -40,23 +40,25 @@ import java.util.stream.Collectors;
 public class RoutingRerankService implements RerankService {
 
     private final ModelSelector selector;
-    private final ModelRoutingExecutor executor;
     private final Map<String, RerankClient> clientsByProvider;
 
-    public RoutingRerankService(ModelSelector selector, ModelRoutingExecutor executor, List<RerankClient> clients) {
+    public RoutingRerankService(ModelSelector selector, List<RerankClient> clients) {
         this.selector = selector;
-        this.executor = executor;
         this.clientsByProvider = clients.stream()
                 .collect(Collectors.toMap(RerankClient::provider, Function.identity()));
     }
 
     @Override
     public List<RetrievedChunk> rerank(String query, List<RetrievedChunk> candidates, int topN) {
-        return executor.executeWithFallback(
-                ModelCapability.RERANK,
-                selector.selectRerankCandidates(),
-                target -> clientsByProvider.get(target.candidate().getProvider()),
-                (client, target) -> client.rerank(query, candidates, topN, target)
-        );
+        List<ModelTarget> targets = selector.selectRerankCandidates();
+        if (targets.isEmpty()) {
+            throw new RemoteException("No Rerank model candidates available");
+        }
+        ModelTarget target = targets.get(0);
+        RerankClient client = clientsByProvider.get(target.candidate().getProvider());
+        if (client == null) {
+            throw new RemoteException("Rerank provider client missing: " + target.candidate().getProvider());
+        }
+        return client.rerank(query, candidates, topN, target);
     }
 }

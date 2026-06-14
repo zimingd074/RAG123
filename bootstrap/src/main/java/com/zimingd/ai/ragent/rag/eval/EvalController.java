@@ -25,7 +25,10 @@ import com.zimingd.ai.ragent.knowledge.dao.entity.KnowledgeDocumentDO;
 import com.zimingd.ai.ragent.knowledge.dao.mapper.KnowledgeChunkMapper;
 import com.zimingd.ai.ragent.knowledge.dao.mapper.KnowledgeDocumentMapper;
 import com.zimingd.ai.ragent.rag.config.SearchChannelProperties;
+import com.zimingd.ai.ragent.rag.core.intent.IntentNode;
+import com.zimingd.ai.ragent.rag.core.intent.IntentNodeRegistry;
 import com.zimingd.ai.ragent.rag.core.intent.IntentResolver;
+import com.zimingd.ai.ragent.rag.core.intent.NodeScore;
 import com.zimingd.ai.ragent.rag.core.retrieve.RetrievalEngine;
 import com.zimingd.ai.ragent.rag.core.rewrite.QueryRewriteService;
 import com.zimingd.ai.ragent.rag.core.rewrite.RewriteResult;
@@ -34,6 +37,8 @@ import com.zimingd.ai.ragent.rag.dto.SubQuestionIntent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import com.zimingd.ai.ragent.framework.convention.Result;
+import com.zimingd.ai.ragent.framework.trace.RagTraceContext;
+import com.zimingd.ai.ragent.framework.trace.RagTraceRoot;
 import com.zimingd.ai.ragent.framework.web.Results;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,20 +61,34 @@ public class EvalController {
 
     private final QueryRewriteService queryRewriteService;
     private final IntentResolver intentResolver;
+    private final IntentNodeRegistry intentNodeRegistry;
     private final RetrievalEngine retrievalEngine;
     private final SearchChannelProperties searchProperties;
     private final KnowledgeChunkMapper knowledgeChunkMapper;
     private final KnowledgeDocumentMapper knowledgeDocumentMapper;
 
     @GetMapping("/rag/eval")
-    public Result<EvalResponse> chat(@RequestParam String question) {
+    @RagTraceRoot(name = "rag-eval", conversationIdArg = "", taskIdArg = "")
+    public Result<EvalResponse> chat(@RequestParam String question,
+                                     @RequestParam(required = false) String intentLeafId) {
         long start = System.currentTimeMillis();
 
-        RewriteResult rewriteResult = queryRewriteService.rewriteWithSplit(question, List.of());
-        List<SubQuestionIntent> subIntents = intentResolver.resolve(rewriteResult);
+        List<SubQuestionIntent> subIntents = resolveIntents(question, intentLeafId);
         RetrievalContext rc = retrievalEngine.retrieve(subIntents, searchProperties.getDefaultTopK());
 
         return Results.success(buildResponse(rc, subIntents, System.currentTimeMillis() - start));
+    }
+
+    private List<SubQuestionIntent> resolveIntents(String question, String intentLeafId) {
+        if (StrUtil.isBlank(intentLeafId)) {
+            RewriteResult rewriteResult = queryRewriteService.rewriteWithSplit(question, List.of());
+            return intentResolver.resolve(rewriteResult);
+        }
+        IntentNode node = intentNodeRegistry.getNodeById(intentLeafId);
+        if (node == null || !node.isLeaf()) {
+            throw new IllegalArgumentException("Unknown intent leaf: " + intentLeafId);
+        }
+        return List.of(new SubQuestionIntent(question, List.of(new NodeScore(node, 1.0D))));
     }
 
     private EvalResponse buildResponse(RetrievalContext rc, List<SubQuestionIntent> subIntents, long latencyMs) {
@@ -98,6 +117,7 @@ public class EvalController {
                 .subIntents(extractSubIntents(subIntents))
                 .intentLeafIds(extractTopLeafIds(subIntents))
                 .latencyMs(latencyMs)
+                .traceId(RagTraceContext.getTraceId())
                 .build();
     }
 

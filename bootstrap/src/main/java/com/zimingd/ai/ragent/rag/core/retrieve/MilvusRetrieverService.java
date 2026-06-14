@@ -19,6 +19,7 @@ package com.zimingd.ai.ragent.rag.core.retrieve;
 
 import cn.hutool.core.util.StrUtil;
 import com.zimingd.ai.ragent.rag.config.RAGDefaultProperties;
+import com.zimingd.ai.ragent.rag.config.RAGConfigProperties;
 import com.zimingd.ai.ragent.framework.convention.RetrievedChunk;
 import com.zimingd.ai.ragent.infra.embedding.EmbeddingService;
 import io.milvus.v2.client.MilvusClientV2;
@@ -46,15 +47,20 @@ public class MilvusRetrieverService implements RetrieverService {
     private final EmbeddingService embeddingService;
     private final MilvusClientV2 milvusClient;
     private final RAGDefaultProperties ragDefaultProperties;
+    private final RAGConfigProperties ragConfigProperties;
 
     @Override
     public List<RetrievedChunk> retrieve(RetrieveRequest retrieveParam) {
-        List<Float> emb = embeddingService.embed(retrieveParam.getQuery());
-        float[] vec = toArray(emb);
+        return retrieveByVector(embedQuery(retrieveParam.getQuery()), retrieveParam);
+    }
 
-        float[] norm = normalize(vec);
-
-        return retrieveByVector(norm, retrieveParam);
+    @Override
+    public float[] embedQuery(String query) {
+        List<Float> embedding = embeddingService.embed(
+                query,
+                ragConfigProperties.getEmbeddingModelId()
+        );
+        return normalize(toArray(embedding));
     }
 
     @Override

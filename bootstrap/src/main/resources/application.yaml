@@ -54,6 +54,17 @@ rag:
   query-rewrite:
     enabled: true
 
+  embedding:
+    model-id: qwen-emb-8b
+    timeout-ms: 5000
+
+  rerank:
+    enabled: true
+    candidate-limit: 15
+    document-max-chars: 3000
+    timeout-ms: 2500
+    fallback-to-rrf: true
+
   rate-limit:
     global:
       enabled: true
@@ -99,13 +110,15 @@ rag:
         top-k-multiplier: 2
       keyword-pg:
         enabled: true
-        top-k-multiplier: 3
+        top-k-multiplier: 2
+        ordinary-fts-conditional: true
     fusion:
       rrf:
         enabled: true
-        k: 60
+        k: 20
         vector-weight: 1.0
-        keyword-weight: 1.0
+        keyword-weight: 0.7
+        exact-identifier-weight: 1.0
 
   trace:
     enabled: true

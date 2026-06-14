@@ -56,6 +56,22 @@ public class ModelSelector {
         return selectCandidates(properties.getEmbedding());
     }
 
+    public ModelTarget selectConfiguredEmbeddingTarget(String modelId) {
+        AIModelProperties.ModelGroup group = properties.getEmbedding();
+        if (group == null || group.getCandidates() == null) {
+            return null;
+        }
+        Map<String, AIModelProperties.ProviderConfig> providers = properties.getProviders();
+        return group.getCandidates().stream()
+                .filter(Objects::nonNull)
+                .filter(candidate -> !Boolean.FALSE.equals(candidate.getEnabled()))
+                .filter(candidate -> Objects.equals(resolveId(candidate), modelId))
+                .map(candidate -> buildModelTarget(candidate, providers, false))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
+    }
+
     public List<ModelTarget> selectRerankCandidates() {
         return selectCandidates(properties.getRerank());
     }
@@ -123,9 +139,16 @@ public class ModelSelector {
     }
 
     private ModelTarget buildModelTarget(AIModelProperties.ModelCandidate candidate, Map<String, AIModelProperties.ProviderConfig> providers) {
+        return buildModelTarget(candidate, providers, true);
+    }
+
+    private ModelTarget buildModelTarget(
+            AIModelProperties.ModelCandidate candidate,
+            Map<String, AIModelProperties.ProviderConfig> providers,
+            boolean checkHealth) {
         String modelId = resolveId(candidate);
 
-        if (healthStore.isUnavailable(modelId)) {
+        if (checkHealth && healthStore.isUnavailable(modelId)) {
             return null;
         }
 

@@ -50,7 +50,7 @@ public class IntentParallelRetriever extends AbstractParallelRetriever<IntentPar
     /**
      * 执行并行检索（重载方法，支持动态 TopK 计算）
      */
-    public List<RetrievedChunk> executeParallelRetrieval(String question,
+    public List<RetrievedChunk> executeParallelRetrieval(float[] queryVector,
                                                          List<NodeScore> targets,
                                                          int fallbackTopK,
                                                          int topKMultiplier) {
@@ -62,18 +62,18 @@ public class IntentParallelRetriever extends AbstractParallelRetriever<IntentPar
                                 resolveIntentTopK(nodeScore, fallbackTopK, topKMultiplier)
                         )))
                 .toList();
-        return super.executeParallelRetrieval(question, intentTasks, fallbackTopK);
+        return super.executeParallelRetrieval(queryVector, intentTasks, fallbackTopK);
     }
 
     @Override
-    protected List<RetrievedChunk> createRetrievalTask(String question, IntentTask task, int ignoredTopK) {
+    protected List<RetrievedChunk> createRetrievalTask(float[] queryVector, IntentTask task, int ignoredTopK) {
         NodeScore nodeScore = task.nodeScore();
         IntentNode node = nodeScore.getNode();
         try {
-            return retrieverService.retrieve(
+            return retrieverService.retrieveByVector(
+                    queryVector,
                     RetrieveRequest.builder()
                             .collectionName(task.collectionName())
-                            .query(question)
                             .topK(task.intentTopK())
                             .build()
             );

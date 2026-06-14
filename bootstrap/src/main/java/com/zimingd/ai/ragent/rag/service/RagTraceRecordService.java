@@ -33,5 +33,20 @@ public interface RagTraceRecordService {
 
     void startNode(RagTraceNodeDO node);
 
-    void finishNode(String traceId, String nodeId, String status, String errorMessage, Date endTime, long durationMs);
+    default void finishNode(String traceId,
+                            String nodeId,
+                            String status,
+                            String errorMessage,
+                            Date endTime,
+                            long durationMs) {
+        finishNode(traceId, nodeId, status, errorMessage, endTime, durationMs, null);
+    }
+
+    void finishNode(String traceId,
+                    String nodeId,
+                    String status,
+                    String errorMessage,
+                    Date endTime,
+                    long durationMs,
+                    String extraData);
 }

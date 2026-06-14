@@ -21,13 +21,15 @@ import com.google.gson.JsonObject;
 import com.zimingd.ai.ragent.infra.enums.ModelProvider;
 import com.zimingd.ai.ragent.infra.model.ModelTarget;
 import okhttp3.OkHttpClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OllamaEmbeddingClient extends AbstractOpenAIStyleEmbeddingClient {
 
-    public OllamaEmbeddingClient(OkHttpClient syncHttpClient) {
-        super(syncHttpClient);
+    public OllamaEmbeddingClient(
+            @Qualifier("embeddingHttpClient") OkHttpClient embeddingHttpClient) {
+        super(embeddingHttpClient);
     }
 
     @Override

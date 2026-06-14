@@ -19,13 +19,15 @@ package com.zimingd.ai.ragent.infra.embedding;
 
 import com.zimingd.ai.ragent.infra.enums.ModelProvider;
 import okhttp3.OkHttpClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SiliconFlowEmbeddingClient extends AbstractOpenAIStyleEmbeddingClient {
 
-    public SiliconFlowEmbeddingClient(OkHttpClient syncHttpClient) {
-        super(syncHttpClient);
+    public SiliconFlowEmbeddingClient(
+            @Qualifier("embeddingHttpClient") OkHttpClient embeddingHttpClient) {
+        super(embeddingHttpClient);
     }
 
     @Override

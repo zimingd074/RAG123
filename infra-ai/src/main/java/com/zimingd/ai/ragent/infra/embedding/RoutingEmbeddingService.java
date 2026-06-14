@@ -67,12 +67,8 @@ public class RoutingEmbeddingService implements EmbeddingService {
 
     @Override
     public List<Float> embed(String text, String modelId) {
-        return executor.executeWithFallback(
-                ModelCapability.EMBEDDING,
-                List.of(resolveTarget(modelId)),
-                this::resolveClient,
-                (client, target) -> client.embed(text, target)
-        );
+        ModelTarget target = resolveTarget(modelId);
+        return resolveRequiredClient(target).embed(text, target);
     }
 
     @Override
@@ -87,25 +83,31 @@ public class RoutingEmbeddingService implements EmbeddingService {
 
     @Override
     public List<List<Float>> embedBatch(List<String> texts, String modelId) {
-        return executor.executeWithFallback(
-                ModelCapability.EMBEDDING,
-                List.of(resolveTarget(modelId)),
-                this::resolveClient,
-                (client, target) -> client.embedBatch(texts, target)
-        );
+        ModelTarget target = resolveTarget(modelId);
+        return resolveRequiredClient(target).embedBatch(texts, target);
     }
 
     private EmbeddingClient resolveClient(ModelTarget target) {
         return clientsByProvider.get(target.candidate().getProvider());
     }
 
+    private EmbeddingClient resolveRequiredClient(ModelTarget target) {
+        EmbeddingClient client = resolveClient(target);
+        if (client == null) {
+            throw new RemoteException(
+                    "Embedding provider client missing: " + target.candidate().getProvider());
+        }
+        return client;
+    }
+
     private ModelTarget resolveTarget(String modelId) {
         if (!StringUtils.hasText(modelId)) {
             throw new RemoteException("Embedding 模型ID不能为空");
         }
-        return selector.selectEmbeddingCandidates().stream()
-                .filter(target -> modelId.equals(target.id()))
-                .findFirst()
-                .orElseThrow(() -> new RemoteException("Embedding 模型不可用: " + modelId));
+        ModelTarget target = selector.selectConfiguredEmbeddingTarget(modelId);
+        if (target == null) {
+            throw new RemoteException("Embedding model unavailable: " + modelId);
+        }
+        return target;
     }
 }

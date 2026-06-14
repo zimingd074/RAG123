@@ -80,4 +80,6 @@ public class EvalResponse {
      * 总耗时（毫秒）
      */
     private long latencyMs;
+
+    private String traceId;
 }

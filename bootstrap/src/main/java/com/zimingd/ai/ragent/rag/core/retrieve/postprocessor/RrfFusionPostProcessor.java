@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.LinkedHashMap;
 
 @Component
 @RequiredArgsConstructor
@@ -60,18 +61,24 @@ public class RrfFusionPostProcessor implements SearchResultPostProcessor {
                                         SearchContext context) {
         int k = Math.max(1, properties.getFusion().getRrf().getK());
         Map<String, FusedChunk> fused = new HashMap<>();
+        Map<String, Map<String, Object>> provenance = new HashMap<>();
+        int inputCandidates = 0;
 
         for (SearchChannelResult result : results) {
-            double weight = channelWeight(result.getChannelType());
             Set<String> seenInChannel = new HashSet<>();
             List<RetrievedChunk> rankedChunks = result.getChunks();
+            inputCandidates += rankedChunks.size();
             for (int index = 0; index < rankedChunks.size(); index++) {
                 RetrievedChunk chunk = rankedChunks.get(index);
                 String key = chunkKey(chunk);
                 if (!seenInChannel.add(key)) {
                     continue;
                 }
+                double weight = channelWeight(result, chunk);
                 double contribution = weight / (k + index + 1.0D);
+                Map<String, Object> ranks = provenance.computeIfAbsent(key, ignored -> new LinkedHashMap<>());
+                ranks.put(channelRankKey(result.getChannelType()), index + 1);
+                ranks.put("sources", sourceNames(ranks.get("sources"), result.getChannelName()));
                 fused.compute(key, (ignored, existing) -> {
                     if (existing == null) {
                         return new FusedChunk(chunk, contribution);
@@ -85,20 +92,60 @@ public class RrfFusionPostProcessor implements SearchResultPostProcessor {
         List<FusedChunk> ranked = new ArrayList<>(fused.values());
         ranked.sort(Comparator.comparingDouble(FusedChunk::score).reversed()
                 .thenComparing(entry -> chunkKey(entry.chunk)));
-        return ranked.stream()
-                .map(entry -> RetrievedChunk.builder()
-                        .id(entry.chunk.getId())
-                        .text(entry.chunk.getText())
-                        .score((float) entry.score)
-                        .build())
-                .toList();
+        List<RetrievedChunk> output = new ArrayList<>();
+        List<Map<String, Object>> ranking = new ArrayList<>();
+        for (int index = 0; index < ranked.size(); index++) {
+            FusedChunk entry = ranked.get(index);
+            String key = chunkKey(entry.chunk);
+            output.add(RetrievedChunk.builder()
+                    .id(entry.chunk.getId())
+                    .text(entry.chunk.getText())
+                    .score((float) entry.score)
+                    .build());
+            Map<String, Object> detail = new LinkedHashMap<>(provenance.getOrDefault(key, Map.of()));
+            detail.put("chunkId", entry.chunk.getId());
+            detail.put("rrfRank", index + 1);
+            detail.put("rrfScore", entry.score);
+            ranking.add(detail);
+        }
+        context.getMetadata().put("rrf", Map.of(
+                "rrfK", k,
+                "inputCandidates", inputCandidates,
+                "outputCandidates", output.size(),
+                "crossChannelDuplicates", Math.max(0, inputCandidates - output.size()),
+                "ranking", ranking
+        ));
+        return output;
     }
 
-    private double channelWeight(SearchChannelType type) {
+    private double channelWeight(SearchChannelResult result, RetrievedChunk chunk) {
+        SearchChannelType type = result.getChannelType();
         if (type == SearchChannelType.KEYWORD_PG || type == SearchChannelType.KEYWORD_ES) {
+            Object exactIds = result.getMetadata().get("exactIdentifierChunkIds");
+            if (exactIds instanceof List<?> ids && ids.contains(chunk.getId())) {
+                return properties.getFusion().getRrf().getExactIdentifierWeight();
+            }
             return properties.getFusion().getRrf().getKeywordWeight();
         }
         return properties.getFusion().getRrf().getVectorWeight();
+    }
+
+    private String channelRankKey(SearchChannelType type) {
+        return switch (type) {
+            case KEYWORD_ES, KEYWORD_PG -> "keywordRank";
+            default -> "vectorRank";
+        };
+    }
+
+    private List<String> sourceNames(Object existing, String source) {
+        List<String> values = new ArrayList<>();
+        if (existing instanceof List<?> list) {
+            list.stream().map(String::valueOf).forEach(values::add);
+        }
+        if (!values.contains(source)) {
+            values.add(source);
+        }
+        return values;
     }
 
     private String chunkKey(RetrievedChunk chunk) {

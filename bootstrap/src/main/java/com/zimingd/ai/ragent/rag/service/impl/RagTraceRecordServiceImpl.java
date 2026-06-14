@@ -61,12 +61,19 @@ public class RagTraceRecordServiceImpl implements RagTraceRecordService {
     }
 
     @Override
-    public void finishNode(String traceId, String nodeId, String status, String errorMessage, Date endTime, long durationMs) {
+    public void finishNode(String traceId,
+                           String nodeId,
+                           String status,
+                           String errorMessage,
+                           Date endTime,
+                           long durationMs,
+                           String extraData) {
         RagTraceNodeDO update = RagTraceNodeDO.builder()
                 .status(status)
                 .errorMessage(errorMessage)
                 .endTime(endTime)
                 .durationMs(durationMs)
+                .extraData(extraData)
                 .build();
         nodeMapper.update(update, Wrappers.lambdaUpdate(RagTraceNodeDO.class)
                 .eq(RagTraceNodeDO::getTraceId, traceId)

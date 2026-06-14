@@ -17,11 +17,15 @@
 
 package com.nageoffer.ai.ragent.rag.core.retrieve.channel;
 
+import com.nageoffer.ai.ragent.rag.config.SearchChannelProperties;
 import org.junit.jupiter.api.Test;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PostgresKeywordSearchChannelTest {
 
@@ -39,5 +43,25 @@ class PostgresKeywordSearchChannelTest {
         assertEquals(List.of(), PostgresKeywordSearchChannel.extractIdentifierTokens(
                 "printer cartridge replacement"
         ));
+    }
+
+    @Test
+    void detectsAsciiKeywordsForConditionalFts() {
+        assertTrue(PostgresKeywordSearchChannel.hasAsciiKeyword("APP 里怎么查清扫记录"));
+        assertTrue(PostgresKeywordSearchChannel.hasAsciiKeyword("RedmiBook Pro 14 适合剪视频吗"));
+        assertFalse(PostgresKeywordSearchChannel.hasAsciiKeyword("现在买和等双十一买哪个划算"));
+    }
+
+    @Test
+    void conditionalFtsSkipsPureChineseQueries() {
+        SearchChannelProperties properties = new SearchChannelProperties();
+        properties.getChannels().getKeywordPg().setOrdinaryFtsConditional(true);
+        PostgresKeywordSearchChannel channel = new PostgresKeywordSearchChannel(
+                new JdbcTemplate(),
+                properties
+        );
+
+        assertFalse(channel.shouldRunOrdinaryFts("现在买和等双十一买哪个划算"));
+        assertTrue(channel.shouldRunOrdinaryFts("APP 里怎么查清扫记录"));
     }
 }

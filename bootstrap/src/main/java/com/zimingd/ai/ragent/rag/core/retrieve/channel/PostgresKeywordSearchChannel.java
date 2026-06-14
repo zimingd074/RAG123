@@ -31,6 +31,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +44,7 @@ public class PostgresKeywordSearchChannel implements SearchChannel {
     private static final Pattern TOKEN_PATTERN = Pattern.compile("[\\p{L}\\p{N}][\\p{L}\\p{N}_.-]*");
     private static final Pattern DIGIT_PATTERN = Pattern.compile("\\d");
     private static final Pattern LETTER_OR_SEPARATOR_PATTERN = Pattern.compile("[\\p{L}_.-]");
+    private static final Pattern ASCII_KEYWORD_PATTERN = Pattern.compile("(?i)(?<![A-Z0-9])[A-Z][A-Z0-9_.-]*(?![A-Z0-9])");
     private static final Pattern TRAILING_SEPARATOR_PATTERN = Pattern.compile("[_.-]+$");
     private static final String SEARCH_SQL = """
             SELECT id,
@@ -85,15 +87,30 @@ public class PostgresKeywordSearchChannel implements SearchChannel {
             List<String> identifiers = extractIdentifierTokens(query);
             List<String> collections = context.getRetrievalScope().collectionNames();
             int topK = context.getTopK() * properties.getChannels().getKeywordPg().getTopKMultiplier();
-            List<RetrievedChunk> chunks = executeSearch(query, identifiers, collections, topK);
+            boolean ordinaryFtsEnabled = shouldRunOrdinaryFts(query);
+            List<RetrievedChunk> chunks = ordinaryFtsEnabled || !identifiers.isEmpty()
+                    ? executeSearch(query, identifiers, collections, topK)
+                    : List.of();
             long latency = System.currentTimeMillis() - startTime;
             log.info("PostgreSQL keyword retrieval completed, chunks={}, identifiers={}, latencyMs={}",
                     chunks.size(), identifiers.size(), latency);
+            List<String> exactChunkIds = identifiers.isEmpty()
+                    ? List.of()
+                    : chunks.stream()
+                            .filter(chunk -> chunk.getScore() != null && chunk.getScore() >= 1000.0F)
+                            .map(RetrievedChunk::getId)
+                            .toList();
             return SearchChannelResult.builder()
                     .channelType(SearchChannelType.KEYWORD_PG)
                     .channelName(getName())
                     .chunks(chunks)
                     .latencyMs(latency)
+                    .metadata(Map.of(
+                            "identifierCount", identifiers.size(),
+                            "exactIdentifierChunkIds", exactChunkIds,
+                            "collectionCount", collections.size(),
+                            "ordinaryFtsEnabled", ordinaryFtsEnabled
+                    ))
                     .build();
         } catch (Exception e) {
             log.error("PostgreSQL keyword retrieval failed", e);
@@ -102,6 +119,8 @@ public class PostgresKeywordSearchChannel implements SearchChannel {
                     .channelName(getName())
                     .chunks(List.of())
                     .latencyMs(System.currentTimeMillis() - startTime)
+                    .success(false)
+                    .errorMessage(e.getMessage())
                     .build();
         }
     }
@@ -132,7 +151,7 @@ public class PostgresKeywordSearchChannel implements SearchChannel {
         }, (rs, rowNum) -> RetrievedChunk.builder()
                 .id(rs.getString("id"))
                 .text(rs.getString("content"))
-                .score(rs.getFloat("exact_match") + rs.getFloat("text_rank"))
+                .score(rs.getFloat("exact_match") * 1000.0F + rs.getFloat("text_rank"))
                 .build());
     }
 
@@ -152,5 +171,14 @@ public class PostgresKeywordSearchChannel implements SearchChannel {
             }
         }
         return List.copyOf(tokens);
+    }
+
+    boolean shouldRunOrdinaryFts(String query) {
+        return !properties.getChannels().getKeywordPg().isOrdinaryFtsConditional()
+                || hasAsciiKeyword(query);
+    }
+
+    static boolean hasAsciiKeyword(String query) {
+        return query != null && ASCII_KEYWORD_PATTERN.matcher(query).find();
     }
 }

@@ -27,6 +27,7 @@ import com.zimingd.ai.ragent.rag.core.retrieve.channel.strategy.IntentParallelRe
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -36,12 +37,14 @@ import java.util.concurrent.Executor;
 public class IntentDirectedSearchChannel implements SearchChannel {
 
     private final SearchChannelProperties properties;
+    private final RetrieverService retrieverService;
     private final IntentParallelRetriever parallelRetriever;
 
     public IntentDirectedSearchChannel(RetrieverService retrieverService,
                                        SearchChannelProperties properties,
                                        Executor innerRetrievalExecutor) {
         this.properties = properties;
+        this.retrieverService = retrieverService;
         this.parallelRetriever = new IntentParallelRetriever(retrieverService, innerRetrievalExecutor);
     }
 
@@ -73,24 +76,33 @@ public class IntentDirectedSearchChannel implements SearchChannel {
             }
 
             int topKMultiplier = properties.getChannels().getIntentDirected().getTopKMultiplier();
+            long embeddingStart = System.currentTimeMillis();
+            float[] queryVector = retrieverService.embedQuery(context.getMainQuestion());
+            long embeddingLatency = System.currentTimeMillis() - embeddingStart;
+            long vectorSearchStart = System.currentTimeMillis();
             List<RetrievedChunk> chunks = parallelRetriever.executeParallelRetrieval(
-                    context.getMainQuestion(),
+                    queryVector,
                     kbIntents,
                     context.getTopK(),
                     topKMultiplier
             );
+            long vectorSearchLatency = System.currentTimeMillis() - vectorSearchStart;
             long latency = System.currentTimeMillis() - startTime;
             log.info("Intent-directed retrieval completed, chunks={}, latencyMs={}", chunks.size(), latency);
+            Map<String, Object> metadata = new LinkedHashMap<>();
+            metadata.put("intentCount", kbIntents.size());
+            metadata.put("embeddingLatencyMs", embeddingLatency);
+            metadata.put("vectorSearchLatencyMs", vectorSearchLatency);
             return SearchChannelResult.builder()
                     .channelType(SearchChannelType.INTENT_DIRECTED)
                     .channelName(getName())
                     .chunks(chunks)
                     .latencyMs(latency)
-                    .metadata(Map.of("intentCount", kbIntents.size()))
+                    .metadata(metadata)
                     .build();
         } catch (Exception e) {
             log.error("Intent-directed retrieval failed", e);
-            return emptyResult(startTime);
+            return failedResult(startTime, e);
         }
     }
 
@@ -113,6 +125,17 @@ public class IntentDirectedSearchChannel implements SearchChannel {
                 .channelName(getName())
                 .chunks(List.of())
                 .latencyMs(System.currentTimeMillis() - startTime)
+                .build();
+    }
+
+    private SearchChannelResult failedResult(long startTime, Exception error) {
+        return SearchChannelResult.builder()
+                .channelType(SearchChannelType.INTENT_DIRECTED)
+                .channelName(getName())
+                .chunks(List.of())
+                .latencyMs(System.currentTimeMillis() - startTime)
+                .success(false)
+                .errorMessage(error.getMessage())
                 .build();
     }
 }

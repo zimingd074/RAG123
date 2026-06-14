@@ -21,6 +21,7 @@ import com.zimingd.ai.ragent.framework.convention.RetrievedChunk;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -58,7 +59,7 @@ public abstract class AbstractParallelRetriever<T> {
      * @param topK     每个目标的 TopK
      * @return 合并后的检索结果
      */
-    public final List<RetrievedChunk> executeParallelRetrieval(String question,
+    public final List<RetrievedChunk> executeParallelRetrieval(float[] queryVector,
                                                                List<T> targets,
                                                                int topK) {
         // 1. 创建 Future 列表
@@ -68,7 +69,7 @@ public abstract class AbstractParallelRetriever<T> {
         List<RetrievalFuture<T>> futures = targets.stream()
                 .map(target -> {
                     CompletableFuture<List<RetrievedChunk>> future = CompletableFuture.supplyAsync(
-                            () -> createRetrievalTask(question, target, topK),
+                            () -> createRetrievalTask(queryVector, target, topK),
                             executor
                     );
                     return new RetrievalFuture<>(target, future);
@@ -95,7 +96,9 @@ public abstract class AbstractParallelRetriever<T> {
         log.info("{} 检索统计 - 总目标数: {}, 成功: {}, 失败: {}, 检索到 Chunk 总数: {}",
                 getStatisticsName(), targets.size(), successCount, failureCount, allChunks.size());
 
-        return allChunks;
+        return allChunks.stream()
+                .sorted(Comparator.comparingDouble(RetrievedChunk::getScore).reversed())
+                .toList();
     }
 
     /**
@@ -107,7 +110,7 @@ public abstract class AbstractParallelRetriever<T> {
      * @param topK     TopK
      * @return 检索结果列表
      */
-    protected abstract List<RetrievedChunk> createRetrievalTask(String question, T target, int topK);
+    protected abstract List<RetrievedChunk> createRetrievalTask(float[] queryVector, T target, int topK);
 
     /**
      * 获取目标标识（用于日志）

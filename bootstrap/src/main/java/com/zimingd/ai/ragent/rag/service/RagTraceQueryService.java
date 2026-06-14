@@ -34,5 +34,7 @@ public interface RagTraceQueryService {
 
     RagTraceDetailVO detail(String traceId);
 
+    RagTraceDetailVO detailByTaskId(String taskId);
+
     List<RagTraceNodeVO> listNodes(String traceId);
 }

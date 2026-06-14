@@ -23,6 +23,8 @@ import com.zimingd.ai.ragent.rag.core.retrieve.channel.SearchContext;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Component
 public class FinalTopKPostProcessor implements SearchResultPostProcessor {
@@ -46,6 +48,22 @@ public class FinalTopKPostProcessor implements SearchResultPostProcessor {
     public List<RetrievedChunk> process(List<RetrievedChunk> chunks,
                                         List<SearchChannelResult> results,
                                         SearchContext context) {
-        return chunks.stream().limit(context.getTopK()).toList();
+        List<RetrievedChunk> output = chunks.stream().limit(context.getTopK()).toList();
+        Map<String, Object> data = new LinkedHashMap<>();
+        data.put("topK", context.getTopK());
+        data.put("inputCandidates", chunks.size());
+        data.put("outputCandidates", output.size());
+        data.put("chunkIds", output.stream().map(RetrievedChunk::getId).toList());
+        Object rrf = context.getMetadata().get("rrf");
+        if (rrf instanceof Map<?, ?> rrfData) {
+            data.put("rrfRanking", rrfData.get("ranking"));
+        }
+        Object rerank = context.getMetadata().get("rerank");
+        if (rerank instanceof Map<?, ?> rerankData) {
+            data.put("rerankRankingChanges", rerankData.get("rankingChanges"));
+            data.put("rerankFallbackToRrf", rerankData.get("fallbackToRrf"));
+        }
+        context.getMetadata().put("finalTopK", data);
+        return output;
     }
 }

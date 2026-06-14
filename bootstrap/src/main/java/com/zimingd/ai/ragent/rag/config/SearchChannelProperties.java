@@ -109,6 +109,12 @@ public class SearchChannelProperties {
         private boolean enabled = true;
 
         private int topKMultiplier = 3;
+
+        /**
+         * 仅在查询包含型号、版本号、错误码或 ASCII 关键词时启用普通 FTS。
+         * 精确标识符检索不受此开关影响。
+         */
+        private boolean ordinaryFtsConditional = false;
     }
 
     private Fusion fusion = new Fusion();
@@ -128,6 +134,8 @@ public class SearchChannelProperties {
 
         private double vectorWeight = 1.0D;
 
-        private double keywordWeight = 1.0D;
+        private double keywordWeight = 0.7D;
+
+        private double exactIdentifierWeight = 1.0D;
     }
 }

@@ -17,6 +17,7 @@
 
 package com.nageoffer.ai.ragent.rag.core.retrieve.channel.strategy;
 
+import com.nageoffer.ai.ragent.framework.convention.RetrievedChunk;
 import com.nageoffer.ai.ragent.rag.core.intent.IntentNode;
 import com.nageoffer.ai.ragent.rag.core.intent.NodeScore;
 import com.nageoffer.ai.ragent.rag.core.retrieve.RetrieveRequest;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -38,7 +40,8 @@ class IntentParallelRetrieverTest {
     @Test
     void retrievesEveryConfiguredCollectionAndUsesNodeTopK() {
         RetrieverService retrieverService = mock(RetrieverService.class);
-        when(retrieverService.retrieve(any(RetrieveRequest.class))).thenReturn(List.of());
+        when(retrieverService.retrieveByVector(any(float[].class), any(RetrieveRequest.class)))
+                .thenReturn(List.of());
         IntentParallelRetriever retriever = new IntentParallelRetriever(
                 retrieverService,
                 Runnable::run
@@ -51,8 +54,9 @@ class IntentParallelRetrieverTest {
                 .topK(4)
                 .build();
 
+        float[] queryVector = {1.0F, 0.0F};
         retriever.executeParallelRetrieval(
-                "设备无法联网",
+                queryVector,
                 List.of(new NodeScore(node, 0.9D)),
                 5,
                 2
@@ -61,7 +65,8 @@ class IntentParallelRetrieverTest {
         ArgumentCaptor<RetrieveRequest> captor = ArgumentCaptor.forClass(
                 RetrieveRequest.class
         );
-        verify(retrieverService, times(2)).retrieve(captor.capture());
+        verify(retrieverService, times(2))
+                .retrieveByVector(same(queryVector), captor.capture());
         assertEquals(
                 List.of("kb-faq", "kb-manual"),
                 captor.getAllValues().stream()
@@ -74,7 +79,8 @@ class IntentParallelRetrieverTest {
     @Test
     void fallsBackToLegacyCollectionName() {
         RetrieverService retrieverService = mock(RetrieverService.class);
-        when(retrieverService.retrieve(any(RetrieveRequest.class))).thenReturn(List.of());
+        when(retrieverService.retrieveByVector(any(float[].class), any(RetrieveRequest.class)))
+                .thenReturn(List.of());
         IntentParallelRetriever retriever = new IntentParallelRetriever(
                 retrieverService,
                 Runnable::run
@@ -85,8 +91,9 @@ class IntentParallelRetrieverTest {
                 .collectionName("kb-product")
                 .build();
 
+        float[] queryVector = {1.0F, 0.0F};
         retriever.executeParallelRetrieval(
-                "参数是多少",
+                queryVector,
                 List.of(new NodeScore(node, 0.9D)),
                 5,
                 1
@@ -95,8 +102,41 @@ class IntentParallelRetrieverTest {
         ArgumentCaptor<RetrieveRequest> captor = ArgumentCaptor.forClass(
                 RetrieveRequest.class
         );
-        verify(retrieverService).retrieve(captor.capture());
+        verify(retrieverService).retrieveByVector(same(queryVector), captor.capture());
         assertEquals("kb-product", captor.getValue().getCollectionName());
         assertEquals(5, captor.getValue().getTopK());
+    }
+
+    @Test
+    void globallySortsScoresAcrossCollections() {
+        RetrieverService retrieverService = mock(RetrieverService.class);
+        when(retrieverService.retrieveByVector(any(float[].class), any(RetrieveRequest.class)))
+                .thenAnswer(invocation -> {
+                    RetrieveRequest request = invocation.getArgument(1);
+                    float score = "kb-first".equals(request.getCollectionName()) ? 0.4F : 0.9F;
+                    return List.of(RetrievedChunk.builder()
+                            .id(request.getCollectionName())
+                            .score(score)
+                            .build());
+                });
+        IntentParallelRetriever retriever = new IntentParallelRetriever(
+                retrieverService,
+                Runnable::run
+        );
+        IntentNode node = IntentNode.builder()
+                .id("test")
+                .name("test")
+                .collectionNames(List.of("kb-first", "kb-second"))
+                .build();
+
+        List<RetrievedChunk> result = retriever.executeParallelRetrieval(
+                new float[]{1.0F, 0.0F},
+                List.of(new NodeScore(node, 0.9D)),
+                5,
+                1
+        );
+
+        assertEquals(List.of("kb-second", "kb-first"),
+                result.stream().map(RetrievedChunk::getId).toList());
     }
 }

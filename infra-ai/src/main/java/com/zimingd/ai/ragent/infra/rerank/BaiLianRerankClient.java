@@ -38,6 +38,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -52,8 +53,11 @@ import java.util.Set;
 public class BaiLianRerankClient implements RerankClient {
 
     // 注入同步 OkHttp 客户端，用于向百炼 Rerank 接口发起阻塞式 HTTP 请求。
-    @Qualifier("syncHttpClient")
+    @Qualifier("rerankHttpClient")
     private final OkHttpClient httpClient;
+
+    @Value("${rag.rerank.document-max-chars:3000}")
+    private int documentMaxChars;
 
     @Override
     public String provider() {
@@ -109,7 +113,7 @@ public class BaiLianRerankClient implements RerankClient {
         JsonArray documentsArray = new JsonArray();
         for (RetrievedChunk each : candidates) {
             // 百炼接口需要字符串文档，片段文本为空时用空字符串占位，保证下标不偏移。
-            documentsArray.add(each.getText() == null ? "" : each.getText());
+            documentsArray.add(truncateDocument(each.getText()));
         }
         input.add("documents", documentsArray);
 
@@ -216,6 +220,14 @@ public class BaiLianRerankClient implements RerankClient {
 
         // 返回最终的重排列表。
         return reranked;
+    }
+
+    private String truncateDocument(String text) {
+        if (text == null) {
+            return "";
+        }
+        int maxChars = Math.max(1, documentMaxChars);
+        return text.length() <= maxChars ? text : text.substring(0, maxChars);
     }
 
     private JsonObject requireOutput(JsonObject respJson) {

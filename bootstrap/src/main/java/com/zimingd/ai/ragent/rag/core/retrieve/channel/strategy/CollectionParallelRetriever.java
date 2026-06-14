@@ -41,12 +41,12 @@ public class CollectionParallelRetriever extends AbstractParallelRetriever<Strin
     }
 
     @Override
-    protected List<RetrievedChunk> createRetrievalTask(String question, String collectionName, int topK) {
+    protected List<RetrievedChunk> createRetrievalTask(float[] queryVector, String collectionName, int topK) {
         try {
-            return retrieverService.retrieve(
+            return retrieverService.retrieveByVector(
+                    queryVector,
                     RetrieveRequest.builder()
                             .collectionName(collectionName)
-                            .query(question)
                             .topK(topK)
                             .build()
             );
