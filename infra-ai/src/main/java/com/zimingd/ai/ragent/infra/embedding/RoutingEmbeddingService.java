@@ -72,6 +72,22 @@ public class RoutingEmbeddingService implements EmbeddingService {
     }
 
     @Override
+    public List<Float> embedQuery(String text) {
+        return executor.executeWithFallback(
+                ModelCapability.EMBEDDING,
+                selector.selectEmbeddingCandidates(),
+                this::resolveClient,
+                (client, target) -> client.embedQuery(text, target)
+        );
+    }
+
+    @Override
+    public List<Float> embedQuery(String text, String modelId) {
+        ModelTarget target = resolveTarget(modelId);
+        return resolveRequiredClient(target).embedQuery(text, target);
+    }
+
+    @Override
     public List<List<Float>> embedBatch(List<String> texts) {
         return executor.executeWithFallback(
                 ModelCapability.EMBEDDING,
@@ -85,6 +101,22 @@ public class RoutingEmbeddingService implements EmbeddingService {
     public List<List<Float>> embedBatch(List<String> texts, String modelId) {
         ModelTarget target = resolveTarget(modelId);
         return resolveRequiredClient(target).embedBatch(texts, target);
+    }
+
+    @Override
+    public List<List<Float>> embedQueryBatch(List<String> texts) {
+        return executor.executeWithFallback(
+                ModelCapability.EMBEDDING,
+                selector.selectEmbeddingCandidates(),
+                this::resolveClient,
+                (client, target) -> client.embedQueryBatch(texts, target)
+        );
+    }
+
+    @Override
+    public List<List<Float>> embedQueryBatch(List<String> texts, String modelId) {
+        ModelTarget target = resolveTarget(modelId);
+        return resolveRequiredClient(target).embedQueryBatch(texts, target);
     }
 
     private EmbeddingClient resolveClient(ModelTarget target) {

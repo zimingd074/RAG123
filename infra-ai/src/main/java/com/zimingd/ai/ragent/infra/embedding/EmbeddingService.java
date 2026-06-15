@@ -60,6 +60,20 @@ public interface EmbeddingService {
     List<Float> embed(String text, String modelId);
 
     /**
+     * 对查询文本进行向量化。默认实现保持向后兼容，支持 query instruction 的实现可覆盖。
+     */
+    default List<Float> embedQuery(String text) {
+        return embed(text);
+    }
+
+    /**
+     * 使用指定模型对查询文本进行向量化。
+     */
+    default List<Float> embedQuery(String text, String modelId) {
+        return embed(text, modelId);
+    }
+
+    /**
      * 对多个文本进行批量向量化
      * <p>
      * 说明：
@@ -80,6 +94,20 @@ public interface EmbeddingService {
      * @return 向量列表
      */
     List<List<Float>> embedBatch(List<String> texts, String modelId);
+
+    /**
+     * 批量对查询文本进行向量化。
+     */
+    default List<List<Float>> embedQueryBatch(List<String> texts) {
+        return embedBatch(texts);
+    }
+
+    /**
+     * 使用指定模型批量对查询文本进行向量化。
+     */
+    default List<List<Float>> embedQueryBatch(List<String> texts, String modelId) {
+        return embedBatch(texts, modelId);
+    }
 
     /**
      * 返回向量维度（Embedding Dimension）

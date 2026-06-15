@@ -73,6 +73,6 @@ public class RAGConfigProperties {
     /**
      * 查询向量必须使用与知识库索引相同的模型，禁止跨模型降级。
      */
-    @Value("${rag.embedding.model-id:qwen-emb-8b}")
+    @Value("${rag.embedding.model-id:qwen-emb-06b}")
     private String embeddingModelId;
 }

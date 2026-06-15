@@ -34,6 +34,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,25 +82,40 @@ public abstract class AbstractOpenAIStyleEmbeddingClient implements EmbeddingCli
 
     @Override
     public List<Float> embed(String text, ModelTarget target) {
-        List<List<Float>> result = doEmbed(List.of(text), target);
+        List<List<Float>> result = doEmbed(List.of(text), target, false);
+        return result.get(0);
+    }
+
+    @Override
+    public List<Float> embedQuery(String text, ModelTarget target) {
+        List<List<Float>> result = doEmbed(List.of(text), target, true);
         return result.get(0);
     }
 
     @Override
     public List<List<Float>> embedBatch(List<String> texts, ModelTarget target) {
+        return embedBatch(texts, target, false);
+    }
+
+    @Override
+    public List<List<Float>> embedQueryBatch(List<String> texts, ModelTarget target) {
+        return embedBatch(texts, target, true);
+    }
+
+    private List<List<Float>> embedBatch(List<String> texts, ModelTarget target, boolean query) {
         if (CollUtil.isEmpty(texts)) {
             return Collections.emptyList();
         }
         int batch = maxBatchSize();
         if (batch <= 0 || texts.size() <= batch) {
-            return doEmbed(texts, target);
+            return doEmbed(texts, target, query);
         }
 
         List<List<Float>> results = new ArrayList<>(Collections.nCopies(texts.size(), null));
         for (int i = 0, n = texts.size(); i < n; i += batch) {
             int end = Math.min(i + batch, n);
             List<String> slice = texts.subList(i, end);
-            List<List<Float>> part = doEmbed(slice, target);
+            List<List<Float>> part = doEmbed(slice, target, query);
             for (int k = 0; k < part.size(); k++) {
                 results.set(i + k, part.get(k));
             }
@@ -112,7 +128,7 @@ public abstract class AbstractOpenAIStyleEmbeddingClient implements EmbeddingCli
     /**
      * 构建请求、发送 HTTP、解析 OpenAI 格式响应
      */
-    protected List<List<Float>> doEmbed(List<String> texts, ModelTarget target) {
+    protected List<List<Float>> doEmbed(List<String> texts, ModelTarget target, boolean query) {
         AIModelProperties.ProviderConfig provider = HttpResponseHelper.requireProvider(target, provider());
         if (requiresApiKey()) {
             HttpResponseHelper.requireApiKey(provider, provider());
@@ -120,15 +136,7 @@ public abstract class AbstractOpenAIStyleEmbeddingClient implements EmbeddingCli
 
         String url = ModelUrlResolver.resolveUrl(provider, target.candidate(), ModelCapability.EMBEDDING);
 
-        JsonObject body = new JsonObject();
-        body.addProperty("model", HttpResponseHelper.requireModel(target, provider()));
-        JsonArray inputArray = new JsonArray();
-        for (String text : texts) {
-            inputArray.add(text);
-        }
-        body.add("input", inputArray);
-        body.addProperty("dimensions", target.candidate().getDimension());
-        customizeRequestBody(body, target);
+        JsonObject body = buildRequestBody(texts, target, query);
 
         Request.Builder requestBuilder = new Request.Builder()
                 .url(url)
@@ -156,6 +164,35 @@ public abstract class AbstractOpenAIStyleEmbeddingClient implements EmbeddingCli
                     ModelClientErrorType.NETWORK_ERROR, null, e);
         }
 
+        return parseEmbeddings(json, target);
+    }
+
+    protected JsonObject buildRequestBody(List<String> texts, ModelTarget target, boolean query) {
+        JsonObject body = new JsonObject();
+        body.addProperty("model", HttpResponseHelper.requireModel(target, provider()));
+        JsonArray inputArray = new JsonArray();
+        for (String text : texts) {
+            inputArray.add(query ? formatQuery(text, target) : text);
+        }
+        body.add("input", inputArray);
+        Integer dimension = target.candidate().getDimension();
+        if (!Boolean.FALSE.equals(target.candidate().getSendDimensions())
+                && dimension != null && dimension > 0) {
+            body.addProperty("dimensions", dimension);
+        }
+        customizeRequestBody(body, target);
+        return body;
+    }
+
+    private String formatQuery(String text, ModelTarget target) {
+        String prefix = target.candidate().getQueryPrefix();
+        if (!StringUtils.hasText(prefix)) {
+            return text;
+        }
+        return prefix + text;
+    }
+
+    protected List<List<Float>> parseEmbeddings(JsonObject json, ModelTarget target) {
         if (json.has("error")) {
             JsonObject err = json.getAsJsonObject("error");
             String code = err.has("code") ? err.get("code").getAsString() : "unknown";
@@ -184,6 +221,14 @@ public abstract class AbstractOpenAIStyleEmbeddingClient implements EmbeddingCli
             List<Float> vector = new ArrayList<>(emb.size());
             for (JsonElement v : emb) {
                 vector.add(v.getAsFloat());
+            }
+            Integer expectedDimension = target.candidate().getDimension();
+            if (expectedDimension != null && expectedDimension > 0
+                    && vector.size() != expectedDimension) {
+                throw new ModelClientException(
+                        provider() + " embedding 维度不匹配: expected="
+                                + expectedDimension + ", actual=" + vector.size(),
+                        ModelClientErrorType.INVALID_RESPONSE, null);
             }
             results.add(vector);
         }

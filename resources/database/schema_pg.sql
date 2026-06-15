@@ -425,7 +425,7 @@ CREATE TABLE t_knowledge_vector (
     id                VARCHAR(20) PRIMARY KEY,
     content           TEXT,
     metadata          JSONB,
-    embedding         vector(1536),
+    embedding         vector(1024),
     search_vector     tsvector GENERATED ALWAYS AS (
         to_tsvector('simple', coalesce(content, ''))
     ) STORED,

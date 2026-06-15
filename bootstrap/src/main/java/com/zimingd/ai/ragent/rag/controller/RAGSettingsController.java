@@ -152,6 +152,8 @@ public class RAGSettingsController {
                                     .model(c.getModel())
                                     .url(c.getUrl())
                                     .dimension(c.getDimension())
+                                    .sendDimensions(c.getSendDimensions())
+                                    .queryPrefix(c.getQueryPrefix())
                                     .priority(c.getPriority())
                                     .enabled(c.getEnabled())
                                     .supportsThinking(c.getSupportsThinking())

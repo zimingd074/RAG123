@@ -47,7 +47,7 @@ rag:
 
   default:
     collection-name: rag_default_store
-    dimension: 1536
+    dimension: 1024
     metric-type: COSINE
     sse-timeout-ms: 300000  # SSE 全局超时（毫秒），默认 5 分钟
 
@@ -55,7 +55,7 @@ rag:
     enabled: true
 
   embedding:
-    model-id: qwen-emb-8b
+    model-id: qwen-emb-06b
     timeout-ms: 5000
 
   rerank:
@@ -185,17 +185,51 @@ ai:
         priority: 5
 
   embedding:
-    default-model: qwen-emb-8b
+    default-model: qwen-emb-06b
     candidates:
+      - id: qwen-emb-06b
+        provider: siliconflow
+        model: Qwen/Qwen3-Embedding-0.6B
+        dimension: ${rag.default.dimension}
+        send-dimensions: true
+        query-prefix: "Instruct: Given a user question, retrieve relevant passages from a Chinese e-commerce knowledge base that answer the question.\nQuery: "
+        priority: 1
       - id: qwen-emb-8b
         provider: siliconflow
         model: Qwen/Qwen3-Embedding-8B
         dimension: ${rag.default.dimension}
-        priority: 1
+        send-dimensions: true
+        query-prefix: "Instruct: Given a user question, retrieve relevant passages from a Chinese e-commerce knowledge base that answer the question.\nQuery: "
+        priority: 10
+      - id: qwen-emb-4b
+        provider: siliconflow
+        model: Qwen/Qwen3-Embedding-4B
+        dimension: ${rag.default.dimension}
+        send-dimensions: true
+        query-prefix: "Instruct: Given a user question, retrieve relevant passages from a Chinese e-commerce knowledge base that answer the question.\nQuery: "
+        enabled: ${QWEN_EMBEDDING_4B_ENABLED:false}
+        priority: 11
+      - id: bge-m3
+        provider: siliconflow
+        model: BAAI/bge-m3
+        dimension: 1024
+        send-dimensions: false
+        enabled: ${BGE_M3_ENABLED:false}
+        priority: 12
+      - id: bge-large-zh
+        provider: siliconflow
+        model: BAAI/bge-large-zh-v1.5
+        dimension: 1024
+        send-dimensions: false
+        query-prefix: "为这个句子生成表示以用于检索相关文章："
+        enabled: ${BGE_LARGE_ZH_ENABLED:false}
+        priority: 13
       - id: qwen-emb-local
         provider: ollama
         model: qwen3-embedding:8b-fp16
         dimension: ${rag.default.dimension}
+        send-dimensions: false
+        query-prefix: "Instruct: Given a user question, retrieve relevant passages from a Chinese e-commerce knowledge base that answer the question.\nQuery: "
         priority: 2
       - id: text-embedding-3-large
         provider: aihubmix

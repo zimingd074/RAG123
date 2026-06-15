@@ -44,6 +44,13 @@ public interface EmbeddingClient {
     List<Float> embed(String text, ModelTarget target);
 
     /**
+     * 将查询文本转换为向量。默认与文档向量化一致。
+     */
+    default List<Float> embedQuery(String text, ModelTarget target) {
+        return embed(text, target);
+    }
+
+    /**
      * 批量将多个文本转换为嵌入向量
      *
      * @param texts  待嵌入的文本列表
@@ -51,4 +58,11 @@ public interface EmbeddingClient {
      * @return 文本向量列表，每个文本对应一个向量（浮点数列表）
      */
     List<List<Float>> embedBatch(List<String> texts, ModelTarget target);
+
+    /**
+     * 批量将查询文本转换为向量。默认与文档向量化一致。
+     */
+    default List<List<Float>> embedQueryBatch(List<String> texts, ModelTarget target) {
+        return embedBatch(texts, target);
+    }
 }

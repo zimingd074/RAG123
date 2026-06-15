@@ -81,6 +81,14 @@ export function CreateKnowledgeBaseDialog({
         const candidates = settings.ai?.embedding?.candidates || [];
         const enabledModels = candidates.filter((item) => item.enabled !== false);
         setEmbeddingModels(enabledModels);
+        const defaultModel = settings.ai?.embedding?.defaultModel;
+        if (
+          !form.getValues("embeddingModel") &&
+          defaultModel &&
+          enabledModels.some((item) => item.id === defaultModel)
+        ) {
+          form.setValue("embeddingModel", defaultModel);
+        }
       })
       .catch(() => {
         if (active) {

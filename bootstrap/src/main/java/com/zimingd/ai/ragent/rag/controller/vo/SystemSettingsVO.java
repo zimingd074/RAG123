@@ -114,6 +114,8 @@ public class SystemSettingsVO {
             private String model;
             private String url;
             private Integer dimension;
+            private Boolean sendDimensions;
+            private String queryPrefix;
             private Integer priority;
             private Boolean enabled;
             private Boolean supportsThinking;

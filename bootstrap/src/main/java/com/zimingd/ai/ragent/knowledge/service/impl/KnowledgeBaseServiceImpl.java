@@ -34,6 +34,7 @@ import com.zimingd.ai.ragent.knowledge.dao.mapper.KnowledgeDocumentMapper;
 import com.zimingd.ai.ragent.framework.context.UserContext;
 import com.zimingd.ai.ragent.framework.exception.ClientException;
 import com.zimingd.ai.ragent.framework.exception.ServiceException;
+import com.zimingd.ai.ragent.rag.config.RAGConfigProperties;
 import com.zimingd.ai.ragent.rag.core.vector.VectorSpaceId;
 import com.zimingd.ai.ragent.rag.core.vector.VectorSpaceSpec;
 import com.zimingd.ai.ragent.rag.core.vector.VectorStoreAdmin;
@@ -62,6 +63,7 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
     private final KnowledgeDocumentMapper knowledgeDocumentMapper;
     private final VectorStoreAdmin vectorStoreAdmin;
     private final S3Client s3Client;
+    private final RAGConfigProperties ragConfigProperties;
 
     @Transactional
     @Override
@@ -82,7 +84,9 @@ public class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
 
         KnowledgeBaseDO kbDO = KnowledgeBaseDO.builder()
                 .name(requestParam.getName())
-                .embeddingModel(requestParam.getEmbeddingModel())
+                .embeddingModel(StringUtils.hasText(requestParam.getEmbeddingModel())
+                        ? requestParam.getEmbeddingModel()
+                        : ragConfigProperties.getEmbeddingModelId())
                 .collectionName(requestParam.getCollectionName())
                 .createdBy(UserContext.getUsername())
                 .updatedBy(UserContext.getUsername())

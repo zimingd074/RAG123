@@ -56,7 +56,7 @@ public class MilvusRetrieverService implements RetrieverService {
 
     @Override
     public float[] embedQuery(String query) {
-        List<Float> embedding = embeddingService.embed(
+        List<Float> embedding = embeddingService.embedQuery(
                 query,
                 ragConfigProperties.getEmbeddingModelId()
         );

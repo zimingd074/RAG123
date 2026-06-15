@@ -121,6 +121,16 @@ public class AIModelProperties {
         private Integer dimension;
 
         /**
+         * 是否向 OpenAI 兼容接口发送 dimensions 参数
+         */
+        private Boolean sendDimensions = true;
+
+        /**
+         * 查询向量使用的前缀；文档向量始终使用原文
+         */
+        private String queryPrefix;
+
+        /**
          * 模型优先级，数值越小优先级越高
          */
         private Integer priority = 100;
