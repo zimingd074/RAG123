@@ -50,4 +50,13 @@ public interface QueryRewriteService {
     default RewriteResult rewriteWithSplit(String userQuestion, List<ChatMessage> history) {
         return rewriteWithSplit(userQuestion);
     }
+
+    /**
+     * 评测场景可显式指定承担查询改写的模型。
+     */
+    default RewriteResult rewriteWithSplit(String userQuestion,
+                                           List<ChatMessage> history,
+                                           String modelId) {
+        return rewriteWithSplit(userQuestion, history);
+    }
 }

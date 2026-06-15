@@ -33,18 +33,24 @@ public class GuidanceDecision {
 
     private final Action action;
     private final String prompt;
+    private final String reason;
 
-    private GuidanceDecision(Action action, String prompt) {
+    private GuidanceDecision(Action action, String prompt, String reason) {
         this.action = action;
         this.prompt = prompt;
+        this.reason = reason;
     }
 
     public static GuidanceDecision none() {
-        return new GuidanceDecision(Action.NONE, null);
+        return new GuidanceDecision(Action.NONE, null, null);
     }
 
     public static GuidanceDecision prompt(String prompt) {
-        return new GuidanceDecision(Action.PROMPT, prompt);
+        return prompt(prompt, null);
+    }
+
+    public static GuidanceDecision prompt(String prompt, String reason) {
+        return new GuidanceDecision(Action.PROMPT, prompt, reason);
     }
 
     public boolean isPrompt() {

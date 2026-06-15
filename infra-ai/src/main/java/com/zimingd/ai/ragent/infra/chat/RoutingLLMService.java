@@ -107,7 +107,30 @@ public class RoutingLLMService implements LLMService {
     @Override
     @RagTraceNode(name = "llm-stream-routing", type = "LLM_ROUTING")
     public StreamCancellationHandle streamChat(ChatRequest request, StreamCallback callback) {
-        List<ModelTarget> targets = selector.selectChatCandidates(Boolean.TRUE.equals(request.getThinking()));
+        return streamChatTargets(
+                request,
+                callback,
+                selector.selectChatCandidates(Boolean.TRUE.equals(request.getThinking()))
+        );
+    }
+
+    @Override
+    public StreamCancellationHandle streamChat(ChatRequest request,
+                                               StreamCallback callback,
+                                               String modelId) {
+        if (!StringUtils.hasText(modelId)) {
+            return streamChat(request, callback);
+        }
+        return streamChatTargets(
+                request,
+                callback,
+                List.of(resolveTarget(modelId, Boolean.TRUE.equals(request.getThinking())))
+        );
+    }
+
+    private StreamCancellationHandle streamChatTargets(ChatRequest request,
+                                                       StreamCallback callback,
+                                                       List<ModelTarget> targets) {
         if (CollUtil.isEmpty(targets)) {
             throw new RemoteException(STREAM_NO_PROVIDER_MESSAGE);
         }

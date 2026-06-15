@@ -39,6 +39,13 @@ public interface IntentClassifier {
     List<NodeScore> classifyTargets(String question);
 
     /**
+     * 评测场景可显式指定承担意图分类的模型。
+     */
+    default List<NodeScore> classifyTargets(String question, String modelId) {
+        return classifyTargets(question);
+    }
+
+    /**
      * 取前 topN 个且 score >= minScore 的分类
      *
      * @param question 用户问题

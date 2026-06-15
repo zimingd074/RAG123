@@ -50,6 +50,10 @@ public class IntentResolver {
 
     @RagTraceNode(name = "intent-resolve", type = "INTENT")
     public List<SubQuestionIntent> resolve(RewriteResult rewriteResult) {
+        return resolve(rewriteResult, null);
+    }
+
+    public List<SubQuestionIntent> resolve(RewriteResult rewriteResult, String modelId) {
         List<String> subQuestions = CollUtil.isNotEmpty(rewriteResult.subQuestions())
                 ? rewriteResult.subQuestions()
                 : List.of(rewriteResult.rewrittenQuestion());
@@ -57,7 +61,7 @@ public class IntentResolver {
                 .map(q -> CompletableFuture.supplyAsync(
                         () -> {
                             try {
-                                return new SubQuestionIntent(q, classifyIntents(q));
+                                return new SubQuestionIntent(q, classifyIntents(q, modelId));
                             } catch (Exception e) {
                                 log.error("子问题意图分类失败，降级为空意图，question：{}", q, e);
                                 return new SubQuestionIntent(q, List.of());
@@ -88,8 +92,8 @@ public class IntentResolver {
                 && nodeScores.get(0).getNode().getKind() == SYSTEM;
     }
 
-    private List<NodeScore> classifyIntents(String question) {
-        List<NodeScore> scores = intentClassifier.classifyTargets(question);
+    private List<NodeScore> classifyIntents(String question, String modelId) {
+        List<NodeScore> scores = intentClassifier.classifyTargets(question, modelId);
         return scores.stream()
                 .filter(ns -> ns.getScore() >= INTENT_MIN_SCORE)
                 .limit(MAX_INTENT_COUNT)

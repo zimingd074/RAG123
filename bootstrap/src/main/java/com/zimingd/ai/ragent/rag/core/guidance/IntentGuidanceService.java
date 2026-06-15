@@ -53,20 +53,28 @@ public class IntentGuidanceService {
 
     @RagTraceNode(name = "guidance-detect", type = "GUIDANCE")
     public GuidanceDecision detectAmbiguity(String question, List<SubQuestionIntent> subIntents) {
+        return detectAmbiguity(question, subIntents, null);
+    }
+
+    public GuidanceDecision detectAmbiguity(String question,
+                                            List<SubQuestionIntent> subIntents,
+                                            String modelId) {
         if (!Boolean.TRUE.equals(guidanceProperties.getEnabled())) {
             return GuidanceDecision.none();
         }
 
-        AmbiguityGroup group = findAmbiguityGroup(question, subIntents);
+        AmbiguityGroup group = findAmbiguityGroup(question, subIntents, modelId);
         if (group == null || CollUtil.isEmpty(group.ranked())) {
             return GuidanceDecision.none();
         }
 
         String prompt = buildPrompt(group.topicName(), group.ranked());
-        return GuidanceDecision.prompt(prompt);
+        return GuidanceDecision.prompt(prompt, "multiple_intents_confirmed");
     }
 
-    private AmbiguityGroup findAmbiguityGroup(String question, List<SubQuestionIntent> subIntents) {
+    private AmbiguityGroup findAmbiguityGroup(String question,
+                                              List<SubQuestionIntent> subIntents,
+                                              String modelId) {
         if (CollUtil.isEmpty(subIntents) || subIntents.size() != 1) {
             return null;
         }
@@ -96,7 +104,7 @@ public class IntentGuidanceService {
             return null;
         }
 
-        if (!confirmAmbiguity(question, ranked)) {
+        if (!confirmAmbiguity(question, ranked, modelId)) {
             return null;
         }
 
@@ -141,7 +149,7 @@ public class IntentGuidanceService {
         return false;
     }
 
-    private boolean confirmAmbiguity(String question, List<NodeScore> ranked) {
+    private boolean confirmAmbiguity(String question, List<NodeScore> ranked, String modelId) {
         double top = ranked.get(0).getScore();
         double second = ranked.get(1).getScore();
         if (top <= 0) {
@@ -159,7 +167,7 @@ public class IntentGuidanceService {
 
         if (ratio >= threshold - margin) {
             log.info("分数比值(ratio={})在边界区间[{}, {}), 调 LLM 确认", ratio, threshold - margin, threshold);
-            return ambiguityLLMChecker.checkAmbiguity(question, ranked);
+            return ambiguityLLMChecker.checkAmbiguity(question, ranked, modelId);
         }
 
         // ratio < threshold - margin 但 > skipThreshold，不触发澄清

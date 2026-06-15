@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 
 /**
  * RAG 对话控制器
@@ -40,6 +42,9 @@ public class RAGChatController {
     private final RAGChatService ragChatService;
     private final RAGDefaultProperties ragDefaultProperties;
 
+    @Value("${app.eval.enabled:false}")
+    private boolean evalEnabled;
+
     /**
      * 发起 SSE 流式对话
      */
@@ -50,9 +55,21 @@ public class RAGChatController {
     @GetMapping(value = "/rag/v3/chat", produces = "text/event-stream;charset=UTF-8")
     public SseEmitter chat(@RequestParam String question,
                            @RequestParam(required = false) String conversationId,
-                           @RequestParam(required = false, defaultValue = "false") Boolean deepThinking) {
+                           @RequestParam(required = false, defaultValue = "false") Boolean deepThinking,
+                           @RequestParam(required = false) String routingModelId,
+                           @RequestParam(required = false) String answerModelId) {
+        if (!evalEnabled && (StringUtils.hasText(routingModelId) || StringUtils.hasText(answerModelId))) {
+            throw new IllegalArgumentException("Model overrides are only available when app.eval.enabled=true");
+        }
         SseEmitter emitter = new SseEmitter(ragDefaultProperties.getSseTimeoutMs());
-        ragChatService.streamChat(question, conversationId, deepThinking, emitter);
+        ragChatService.streamChat(
+                question,
+                conversationId,
+                deepThinking,
+                routingModelId,
+                answerModelId,
+                emitter
+        );
         return emitter;
     }
 

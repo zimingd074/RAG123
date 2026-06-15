@@ -30,6 +30,7 @@ import com.zimingd.ai.ragent.framework.convention.ChatRequest;
 import com.zimingd.ai.ragent.framework.trace.RagTraceNode;
 import com.zimingd.ai.ragent.infra.chat.LLMService;
 import com.zimingd.ai.ragent.rag.core.prompt.PromptTemplateLoader;
+import com.zimingd.ai.ragent.rag.eval.EvalTraceSnapshotRecorder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,7 @@ public class MultiQuestionRewriteService implements QueryRewriteService {
     private final RAGConfigProperties ragConfigProperties;
     private final QueryTermMappingService queryTermMappingService;
     private final PromptTemplateLoader promptTemplateLoader;
+    private final EvalTraceSnapshotRecorder evalTraceRecorder;
 
     @Override
     @RagTraceNode(name = "query-rewrite", type = "REWRITE")
@@ -68,6 +70,13 @@ public class MultiQuestionRewriteService implements QueryRewriteService {
     @Override
     @RagTraceNode(name = "query-rewrite-and-split", type = "REWRITE")
     public RewriteResult rewriteWithSplit(String userQuestion, List<ChatMessage> history) {
+        return rewriteWithSplit(userQuestion, history, null);
+    }
+
+    @Override
+    public RewriteResult rewriteWithSplit(String userQuestion,
+                                          List<ChatMessage> history,
+                                          String modelId) {
         if (!ragConfigProperties.getQueryRewriteEnabled()) {
             String normalized = queryTermMappingService.normalize(userQuestion);
             List<String> subs = ruleBasedSplit(normalized);
@@ -76,7 +85,7 @@ public class MultiQuestionRewriteService implements QueryRewriteService {
 
         String normalizedQuestion = queryTermMappingService.normalize(userQuestion);
 
-        return callLLMRewriteAndSplit(normalizedQuestion, userQuestion, history);
+        return callLLMRewriteAndSplit(normalizedQuestion, userQuestion, history, modelId);
     }
 
     /**
@@ -92,22 +101,34 @@ public class MultiQuestionRewriteService implements QueryRewriteService {
 
         String normalizedQuestion = queryTermMappingService.normalize(userQuestion);
 
-        return callLLMRewriteAndSplit(normalizedQuestion, userQuestion, List.of());
+        return callLLMRewriteAndSplit(normalizedQuestion, userQuestion, List.of(), null);
 
         // 兜底：使用归一化结果 + 规则拆分
     }
 
     private RewriteResult callLLMRewriteAndSplit(String normalizedQuestion,
                                                  String originalQuestion,
-                                                 List<ChatMessage> history) {
+                                                 List<ChatMessage> history,
+                                                 String modelId) {
         String systemPrompt = promptTemplateLoader.load(QUERY_REWRITE_AND_SPLIT_PROMPT_PATH);
         ChatRequest req = buildRewriteRequest(systemPrompt, normalizedQuestion, history);
+        long startedAt = System.currentTimeMillis();
 
         try {
-            String raw = llmService.chat(req);
+            String raw = llmService.chat(req, modelId);
             RewriteResult parsed = parseRewriteAndSplit(raw);
 
             if (parsed != null) {
+                evalTraceRecorder.recordLlmStep(
+                        "query-rewrite",
+                        modelId,
+                        req,
+                        raw,
+                        true,
+                        false,
+                        null,
+                        System.currentTimeMillis() - startedAt
+                );
                 log.info("""
                         RAG用户问题查询改写+拆分：
                         原始问题：{}
@@ -118,8 +139,28 @@ public class MultiQuestionRewriteService implements QueryRewriteService {
                 return parsed;
             }
 
+            evalTraceRecorder.recordLlmStep(
+                    "query-rewrite",
+                    modelId,
+                    req,
+                    raw,
+                    false,
+                    true,
+                    "parse_failed",
+                    System.currentTimeMillis() - startedAt
+            );
             log.warn("查询改写+拆分解析失败，使用归一化问题兜底 - normalizedQuestion={}", normalizedQuestion);
         } catch (Exception e) {
+            evalTraceRecorder.recordLlmStep(
+                    "query-rewrite",
+                    modelId,
+                    req,
+                    null,
+                    false,
+                    true,
+                    e.getClass().getSimpleName() + ": " + e.getMessage(),
+                    System.currentTimeMillis() - startedAt
+            );
             log.warn("查询改写+拆分 LLM 调用失败，使用归一化问题兜底 - question={}，normalizedQuestion={}", originalQuestion, normalizedQuestion, e);
         }
 

@@ -174,15 +174,35 @@ ai:
         model: qwen3-max
         supports-thinking: true
         priority: 3
+      - id: qwen3.7-max
+        provider: bailian
+        model: qwen3.7-max
+        priority: 4
+      - id: qwen3.7-plus
+        provider: bailian
+        model: qwen3.7-plus
+        priority: 5
+      - id: qwen3.6-flash
+        provider: bailian
+        model: qwen3.6-flash
+        priority: 6
+      - id: deepseek-v4-pro
+        provider: bailian
+        model: deepseek-v4-pro
+        priority: 7
+      - id: deepseek-v4-flash
+        provider: bailian
+        model: deepseek-v4-flash
+        priority: 8
       - id: glm-4.7
         provider: siliconflow
         model: Pro/zai-org/GLM-4.7
         supports-thinking: true
-        priority: 4
+        priority: 9
       - id: gpt-5.4
         provider: aihubmix
         model: gpt-5.4
-        priority: 5
+        priority: 10
 
   embedding:
     default-model: qwen-emb-06b
@@ -266,4 +286,4 @@ sa-token:
 app:
   demo-mode: false
   eval:
-    enabled: true
+    enabled: ${RAGENT_EVAL_ENABLED:false}

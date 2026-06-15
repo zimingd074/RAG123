@@ -32,6 +32,7 @@ import com.zimingd.ai.ragent.framework.convention.ChatMessage;
 import com.zimingd.ai.ragent.framework.convention.ChatRequest;
 import com.zimingd.ai.ragent.infra.chat.LLMService;
 import com.zimingd.ai.ragent.rag.core.prompt.PromptTemplateLoader;
+import com.zimingd.ai.ragent.rag.eval.EvalTraceSnapshotRecorder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,7 @@ public class DefaultIntentClassifier implements IntentClassifier, IntentNodeRegi
     private final IntentNodeMapper intentNodeMapper;
     private final PromptTemplateLoader promptTemplateLoader;
     private final IntentTreeCacheManager intentTreeCacheManager;
+    private final EvalTraceSnapshotRecorder evalTraceRecorder;
 
     /**
      * 从Redis加载意图树并构建内存结构
@@ -135,6 +137,11 @@ public class DefaultIntentClassifier implements IntentClassifier, IntentNodeRegi
      */
     @Override
     public List<NodeScore> classifyTargets(String question) {
+        return classifyTargets(question, null);
+    }
+
+    @Override
+    public List<NodeScore> classifyTargets(String question, String modelId) {
         // 每次都从Redis读取最新数据
         IntentTreeData data = loadIntentTreeData();
 
@@ -149,9 +156,10 @@ public class DefaultIntentClassifier implements IntentClassifier, IntentNodeRegi
                 .thinking(false)
                 .build();
 
-        String raw = llmService.chat(request);
-
+        String raw = null;
+        long startedAt = System.currentTimeMillis();
         try {
+            raw = llmService.chat(request, modelId);
             // 移除可能的 markdown 代码块标记
             String cleanedRaw = LLMResponseCleaner.stripMarkdownCodeFence(raw);
 
@@ -164,6 +172,16 @@ public class DefaultIntentClassifier implements IntentClassifier, IntentNodeRegi
                 // 容错：如果模型外面又包了一层 { "results": [...] }
                 arr = root.getAsJsonObject().getAsJsonArray("results");
             } else {
+                evalTraceRecorder.recordLlmStep(
+                        "intent-classify",
+                        modelId,
+                        request,
+                        raw,
+                        false,
+                        true,
+                        "unexpected_json_shape",
+                        System.currentTimeMillis() - startedAt
+                );
                 log.warn("LLM 返回了非预期的 JSON 格式, 原始响应: {}", raw);
                 return List.of();
             }
@@ -189,6 +207,16 @@ public class DefaultIntentClassifier implements IntentClassifier, IntentNodeRegi
 
             // 降序排序
             scores.sort(Comparator.comparingDouble(NodeScore::getScore).reversed());
+            evalTraceRecorder.recordLlmStep(
+                    "intent-classify",
+                    modelId,
+                    request,
+                    raw,
+                    true,
+                    scores.isEmpty(),
+                    null,
+                    System.currentTimeMillis() - startedAt
+            );
 
             log.info("当前问题：{}\n意图识别树如下所示：{}\n",
                     question,
@@ -201,6 +229,16 @@ public class DefaultIntentClassifier implements IntentClassifier, IntentNodeRegi
             );
             return scores;
         } catch (Exception e) {
+            evalTraceRecorder.recordLlmStep(
+                    "intent-classify",
+                    modelId,
+                    request,
+                    raw,
+                    false,
+                    true,
+                    e.getClass().getSimpleName() + ": " + e.getMessage(),
+                    System.currentTimeMillis() - startedAt
+            );
             log.warn("解析 LLM 响应失败, 原始内容: {}", raw, e);
             return List.of();
         }

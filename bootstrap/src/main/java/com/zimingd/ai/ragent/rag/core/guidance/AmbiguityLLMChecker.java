@@ -27,6 +27,7 @@ import com.zimingd.ai.ragent.infra.util.LLMResponseCleaner;
 import com.zimingd.ai.ragent.rag.core.intent.IntentNode;
 import com.zimingd.ai.ragent.rag.core.intent.NodeScore;
 import com.zimingd.ai.ragent.rag.core.prompt.PromptTemplateLoader;
+import com.zimingd.ai.ragent.rag.eval.EvalTraceSnapshotRecorder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -48,11 +49,16 @@ public class AmbiguityLLMChecker {
 
     private final LLMService llmService;
     private final PromptTemplateLoader promptTemplateLoader;
+    private final EvalTraceSnapshotRecorder evalTraceRecorder;
 
     /**
      * 调用 LLM 确认是否存在歧义
      */
     public boolean checkAmbiguity(String question, List<NodeScore> ranked) {
+        return checkAmbiguity(question, ranked, null);
+    }
+
+    public boolean checkAmbiguity(String question, List<NodeScore> ranked, String modelId) {
         String candidatesText = buildCandidatesText(ranked);
         String prompt = promptTemplateLoader.render(
                 GUIDANCE_AMBIGUITY_CHECK_PROMPT_PATH,
@@ -71,12 +77,23 @@ public class AmbiguityLLMChecker {
                 .thinking(false)
                 .build();
 
+        long startedAt = System.currentTimeMillis();
         try {
-            String raw = llmService.chat(request);
+            String raw = llmService.chat(request, modelId);
             String cleaned = LLMResponseCleaner.stripMarkdownCodeFence(raw);
             JsonElement root = JsonParser.parseString(cleaned);
 
             if (!root.isJsonObject()) {
+                evalTraceRecorder.recordLlmStep(
+                        "ambiguity-check",
+                        modelId,
+                        request,
+                        raw,
+                        false,
+                        true,
+                        "not_json_object",
+                        System.currentTimeMillis() - startedAt
+                );
                 log.warn("歧义确认 LLM 返回非 JSON 对象: {}", raw);
                 return true;
             }
@@ -85,13 +102,43 @@ public class AmbiguityLLMChecker {
             if (obj.has("ambiguous")) {
                 boolean ambiguous = obj.get("ambiguous").getAsBoolean();
                 String reason = obj.has("reason") ? obj.get("reason").getAsString() : "";
+                evalTraceRecorder.recordLlmStep(
+                        "ambiguity-check",
+                        modelId,
+                        request,
+                        raw,
+                        true,
+                        false,
+                        null,
+                        System.currentTimeMillis() - startedAt
+                );
                 log.info("LLM 歧义确认结果: ambiguous={}, reason={}, question={}", ambiguous, reason, question);
                 return ambiguous;
             }
 
+            evalTraceRecorder.recordLlmStep(
+                    "ambiguity-check",
+                    modelId,
+                    request,
+                    raw,
+                    false,
+                    true,
+                    "missing_ambiguous",
+                    System.currentTimeMillis() - startedAt
+            );
             log.warn("歧义确认 LLM 返回缺少 ambiguous 字段: {}", raw);
             return true;
         } catch (Exception e) {
+            evalTraceRecorder.recordLlmStep(
+                    "ambiguity-check",
+                    modelId,
+                    request,
+                    null,
+                    false,
+                    true,
+                    e.getClass().getSimpleName() + ": " + e.getMessage(),
+                    System.currentTimeMillis() - startedAt
+            );
             log.warn("歧义确认 LLM 调用失败, 降级为触发澄清, question={}", question, e);
             return true;
         }

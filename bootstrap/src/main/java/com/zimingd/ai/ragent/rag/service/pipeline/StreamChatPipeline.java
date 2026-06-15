@@ -37,6 +37,7 @@ import com.zimingd.ai.ragent.rag.core.rewrite.RewriteResult;
 import com.zimingd.ai.ragent.rag.dto.IntentGroup;
 import com.zimingd.ai.ragent.rag.dto.RetrievalContext;
 import com.zimingd.ai.ragent.rag.dto.SubQuestionIntent;
+import com.zimingd.ai.ragent.rag.eval.EvalTraceSnapshotRecorder;
 import com.zimingd.ai.ragent.rag.config.SearchChannelProperties;
 import com.zimingd.ai.ragent.rag.service.handler.StreamTaskManager;
 import lombok.RequiredArgsConstructor;
@@ -71,11 +72,13 @@ public class StreamChatPipeline {
     private final RAGPromptService promptBuilder;
     private final PromptTemplateLoader promptTemplateLoader;
     private final StreamTaskManager taskManager;
+    private final EvalTraceSnapshotRecorder evalTraceRecorder;
 
     /**
      * 执行流式对话管道
      */
     public void execute(StreamChatContext ctx) {
+        evalTraceRecorder.recordModels(ctx.getRoutingModelId(), ctx.getAnswerModelId());
         loadMemory(ctx);
         rewriteQuery(ctx);
         resolveIntents(ctx);
@@ -107,20 +110,31 @@ public class StreamChatPipeline {
     }
 
     private void rewriteQuery(StreamChatContext ctx) {
-        RewriteResult rewriteResult = queryRewriteService.rewriteWithSplit(ctx.getQuestion(), ctx.getHistory());
+        RewriteResult rewriteResult = queryRewriteService.rewriteWithSplit(
+                ctx.getQuestion(),
+                ctx.getHistory(),
+                ctx.getRoutingModelId()
+        );
         ctx.setRewriteResult(rewriteResult);
+        evalTraceRecorder.recordRewrite(ctx.getQuestion(), rewriteResult, ctx.getRoutingModelId());
     }
 
     private void resolveIntents(StreamChatContext ctx) {
-        List<SubQuestionIntent> subIntents = intentResolver.resolve(ctx.getRewriteResult());
+        List<SubQuestionIntent> subIntents = intentResolver.resolve(
+                ctx.getRewriteResult(),
+                ctx.getRoutingModelId()
+        );
         ctx.setSubIntents(subIntents);
+        evalTraceRecorder.recordIntents(subIntents, ctx.getRoutingModelId());
     }
 
     private boolean handleGuidance(StreamChatContext ctx) {
         GuidanceDecision decision = guidanceService.detectAmbiguity(
                 ctx.getRewriteResult().rewrittenQuestion(),
-                ctx.getSubIntents()
+                ctx.getSubIntents(),
+                ctx.getRoutingModelId()
         );
+        evalTraceRecorder.recordGuidance(decision, ctx.getRoutingModelId());
         if (!decision.isPrompt()) {
             return false;
         }
@@ -154,7 +168,12 @@ public class StreamChatPipeline {
     }
 
     private RetrievalContext retrieve(StreamChatContext ctx) {
-        return retrievalEngine.retrieve(ctx.getSubIntents(), searchProperties.getDefaultTopK());
+        RetrievalContext result = retrievalEngine.retrieve(
+                ctx.getSubIntents(),
+                searchProperties.getDefaultTopK()
+        );
+        evalTraceRecorder.recordRetrieval(result);
+        return result;
     }
 
     private boolean handleEmptyRetrieval(StreamChatContext ctx, RetrievalContext retrievalCtx) {
@@ -177,6 +196,7 @@ public class StreamChatPipeline {
                 mergedGroup,
                 ctx.getHistory(),
                 ctx.isDeepThinking(),
+                ctx.getAnswerModelId(),
                 ctx.getCallback()
         );
         taskManager.bindHandle(ctx.getTaskId(), handle);
@@ -207,7 +227,8 @@ public class StreamChatPipeline {
 
     private StreamCancellationHandle streamLLMResponse(RewriteResult rewriteResult, RetrievalContext ctx,
                                                        IntentGroup intentGroup, List<ChatMessage> history,
-                                                       boolean deepThinking, StreamCallback callback) {
+                                                       boolean deepThinking, String answerModelId,
+                                                       StreamCallback callback) {
         PromptContext promptContext = PromptContext.builder()
                 .question(rewriteResult.rewrittenQuestion())
                 .mcpContext(ctx.getMcpContext())
@@ -230,6 +251,12 @@ public class StreamChatPipeline {
                 .topP(ctx.hasMcp() ? 0.8D : 1D)
                 .build();
 
-        return llmService.streamChat(chatRequest, callback);
+        StreamCallback tracedCallback = evalTraceRecorder.traceGeneration(
+                messages,
+                ctx,
+                answerModelId,
+                callback
+        );
+        return llmService.streamChat(chatRequest, tracedCallback, answerModelId);
     }
 }
