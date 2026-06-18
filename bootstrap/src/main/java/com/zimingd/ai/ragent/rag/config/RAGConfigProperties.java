@@ -75,4 +75,7 @@ public class RAGConfigProperties {
      */
     @Value("${rag.embedding.model-id:qwen-emb-06b}")
     private String embeddingModelId;
+
+    @Value("${rag.vector.pg.hnsw-ef-search:200}")
+    private Integer pgHnswEfSearch;
 }

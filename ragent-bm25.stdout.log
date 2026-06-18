@@ -1,0 +1,192 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.7)
+
+2026-06-18T11:50:27.942+08:00  INFO 23140 --- [ragent-service] [           main] c.nageoffer.ai.ragent.RagentApplication  : Starting RagentApplication using Java 17.0.18 with PID 23140 (D:\JavaPackage\repository\ragent\bootstrap\target\bootstrap-0.0.1-SNAPSHOT.jar started by 23589 in D:\JavaPackage\repository\ragent)
+2026-06-18T11:50:27.947+08:00  INFO 23140 --- [ragent-service] [           main] c.nageoffer.ai.ragent.RagentApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T11:50:30.730+08:00  INFO 23140 --- [ragent-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-06-18T11:50:30.739+08:00  INFO 23140 --- [ragent-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-06-18T11:50:30.875+08:00  INFO 23140 --- [ragent-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 93 ms. Found 0 Redis repository interfaces.
+2026-06-18T11:50:35.517+08:00  INFO 23140 --- [ragent-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9090 (http)
+2026-06-18T11:50:35.558+08:00  INFO 23140 --- [ragent-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T11:50:35.558+08:00  INFO 23140 --- [ragent-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2026-06-18T11:50:35.717+08:00  INFO 23140 --- [ragent-service] [           main] o.a.c.c.C.[.[localhost].[/api/ragent]    : Initializing Spring embedded WebApplicationContext
+2026-06-18T11:50:35.720+08:00  INFO 23140 --- [ragent-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7669 ms
+2026-06-18T11:50:35.937+08:00  INFO 23140 --- [ragent-service] [           main] org.redisson.Version                     : Redisson 4.0.0
+2026-06-18T11:50:37.307+08:00  INFO 23140 --- [ragent-service] [isson-netty-1-4] o.redisson.connection.ConnectionsHolder  : 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+2026-06-18T11:50:37.477+08:00  INFO 23140 --- [ragent-service] [sson-netty-1-19] o.redisson.connection.ConnectionsHolder  : 24 connections initialized for 127.0.0.1/127.0.0.1:6379
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.14 
+2026-06-18T11:50:45.443+08:00  INFO 23140 --- [ragent-service] [           main] com.zaxxer.hikari.HikariDataSource       : RagentHikariPool - Starting...
+2026-06-18T11:50:46.054+08:00  INFO 23140 --- [ragent-service] [           main] com.zaxxer.hikari.pool.HikariPool        : RagentHikariPool - Added connection org.postgresql.jdbc.PgConnection@78b3f926
+2026-06-18T11:50:46.063+08:00  INFO 23140 --- [ragent-service] [           main] com.zaxxer.hikari.HikariDataSource       : RagentHikariPool - Start completed.
+2026-06-18T11:50:47.307+08:00  INFO 23140 --- [ragent-service] [           main] c.n.a.r.k.config.SemaphoreInitializer    : Initialized document upload semaphore: name=rag:document:upload, maxConcurrent=10
+2026-06-18T11:50:50.029+08:00  INFO 23140 --- [ragent-service] [           main] o.a.r.s.a.RocketMQAutoConfiguration      : a producer (ragent-producer_pg) init on namesrv 127.0.0.1:9876
+2026-06-18T11:50:53.195+08:00  INFO 23140 --- [ragent-service] [           main] ocketMQMessageListenerContainerRegistrar : Register the listener to container, listenerBeanName:knowledgeDocumentChunkConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2026-06-18T11:50:53.746+08:00  INFO 23140 --- [ragent-service] [           main] c.n.a.r.r.c.mcp.DefaultMcpToolRegistry   : MCP 工具注册跳过, 未发现任何工具执行器
+2026-06-18T11:50:53.746+08:00  INFO 23140 --- [ragent-service] [           main] c.n.a.r.r.c.mcp.DefaultMcpToolRegistry   : MCP 工具自动注册完成, 共注册 0 个工具
+2026-06-18T11:50:54.100+08:00  INFO 23140 --- [ragent-service] [           main] c.n.a.r.r.c.m.McpClientAutoConfiguration : 连接 MCP Server: name=default, url=http://localhost:9099
+2026-06-18T11:50:55.533+08:00  WARN 23140 --- [ragent-service] [onPool-worker-1] i.m.client.LifecycleInitializer          : Handling exception
+
+java.net.ConnectException: null
+	at java.net.http/jdk.internal.net.http.common.Utils.toConnectException(Utils.java:1107) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:203) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.checkRetryConnect(PlainHttpConnection.java:238) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.lambda$connectAsync$1(PlainHttpConnection.java:214) ~[java.net.http:na]
+	at java.base/java.util.concurrent.CompletableFuture.uniHandle(CompletableFuture.java:934) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture$UniHandle.tryFire(CompletableFuture.java:911) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1773) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+Caused by: java.nio.channels.ClosedChannelException: null
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpen(SocketChannelImpl.java:195) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.beginConnect(SocketChannelImpl.java:760) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:848) ~[na:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.lambda$connectAsync$0(PlainHttpConnection.java:187) ~[java.net.http:na]
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569) ~[na:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:189) ~[java.net.http:na]
+	... 9 common frames omitted
+
+2026-06-18T11:50:55.541+08:00 ERROR 23140 --- [ragent-service] [           main] c.n.a.r.r.c.m.McpClientAutoConfiguration : 连接 MCP Server [default] 失败，跳过工具注册，reason=Client failed to initialize by explicit API call
+2026-06-18T11:50:56.214+08:00  INFO 23140 --- [ragent-service] [           main] ocketMQMessageListenerContainerRegistrar : Register the listener to container, listenerBeanName:messageFeedbackConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2026-06-18T11:50:56.361+08:00  INFO 23140 --- [ragent-service] [           main] c.n.a.r.f.d.SnowflakeIdInitializer       : 分布式Snowflake初始化完成, workerId: 4, datacenterId: 0
+2026-06-18T11:50:57.299+08:00  INFO 23140 --- [ragent-service] [           main] m.e.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@fd46303
+2026-06-18T11:50:57.881+08:00  INFO 23140 --- [ragent-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9090 (http) with context path '/api/ragent'
+2026-06-18T11:51:01.596+08:00  INFO 23140 --- [ragent-service] [           main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='knowledge-document-chunk_cg', namespace='', namespaceV2='', nameServer='127.0.0.1:9876', topic='knowledge-document-chunk_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false, instanceName=DEFAULT}
+2026-06-18T11:51:05.172+08:00  INFO 23140 --- [ragent-service] [           main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='message-feedback_cg', namespace='', namespaceV2='', nameServer='127.0.0.1:9876', topic='message-feedback_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false, instanceName=DEFAULT}
+2026-06-18T11:51:05.201+08:00  INFO 23140 --- [ragent-service] [           main] c.nageoffer.ai.ragent.RagentApplication  : Started RagentApplication in 38.307 seconds (process running for 39.915)
+2026-06-18T11:51:09.734+08:00  INFO 23140 --- [ragent-service] [nio-9090-exec-1] o.a.c.c.C.[.[localhost].[/api/ragent]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-18T11:51:09.735+08:00  INFO 23140 --- [ragent-service] [nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-18T11:51:09.739+08:00  INFO 23140 --- [ragent-service] [nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-06-18T11:51:26.646+08:00  INFO 23140 --- [ragent-service] [nio-9090-exec-5] c.n.a.r.r.c.i.IntentTreeCacheManager     : 意图树缓存不存在，需要从数据库加载
+2026-06-18T11:51:26.888+08:00  INFO 23140 --- [ragent-service] [nio-9090-exec-5] c.n.a.r.r.c.i.IntentTreeCacheManager     : 意图树已保存到Redis缓存，根节点数: 7
+2026-06-18T11:51:27.514+08:00  INFO 23140 --- [ragent-service] [eval_executor_0] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=20, identifiers=0, latencyMs=509
+2026-06-18T11:51:27.715+08:00  INFO 23140 --- [ragent-service] [eval_executor_1] .n.a.r.r.c.r.c.AbstractParallelRetriever : 全局检索 检索统计 - 总目标数: 5, 成功: 5, 失败: 0, 检索到 Chunk 总数: 92
+2026-06-18T11:51:27.718+08:00  INFO 23140 --- [ragent-service] [eval_executor_1] .n.a.r.r.c.r.c.VectorGlobalSearchChannel : Global vector retrieval completed, chunks=92, latencyMs=706
+2026-06-18T11:51:28.717+08:00  INFO 23140 --- [ragent-service] [eval_executor_3] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=4
+2026-06-18T11:51:28.821+08:00  INFO 23140 --- [ragent-service] [eval_executor_2] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:28.822+08:00  INFO 23140 --- [ragent-service] [eval_executor_2] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=108
+2026-06-18T11:51:29.520+08:00  INFO 23140 --- [ragent-service] [eval_executor_4] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:29.521+08:00  INFO 23140 --- [ragent-service] [eval_executor_4] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=100
+2026-06-18T11:51:29.651+08:00  INFO 23140 --- [ragent-service] [eval_executor_5] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=229
+2026-06-18T11:51:30.259+08:00  INFO 23140 --- [ragent-service] [eval_executor_7] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=6
+2026-06-18T11:51:30.342+08:00  INFO 23140 --- [ragent-service] [eval_executor_6] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:30.343+08:00  INFO 23140 --- [ragent-service] [eval_executor_6] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=93
+2026-06-18T11:51:30.963+08:00  INFO 23140 --- [ragent-service] [eval_executor_9] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=6
+2026-06-18T11:51:31.066+08:00  INFO 23140 --- [ragent-service] [eval_executor_8] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:31.067+08:00  INFO 23140 --- [ragent-service] [eval_executor_8] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=111
+2026-06-18T11:51:31.663+08:00  INFO 23140 --- [ragent-service] [val_executor_11] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=4
+2026-06-18T11:51:31.768+08:00  INFO 23140 --- [ragent-service] [val_executor_10] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T11:51:31.769+08:00  INFO 23140 --- [ragent-service] [val_executor_10] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=111
+2026-06-18T11:51:32.420+08:00  INFO 23140 --- [ragent-service] [val_executor_13] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=15
+2026-06-18T11:51:32.495+08:00  INFO 23140 --- [ragent-service] [val_executor_12] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:32.496+08:00  INFO 23140 --- [ragent-service] [val_executor_12] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=92
+2026-06-18T11:51:33.067+08:00  INFO 23140 --- [ragent-service] [val_executor_15] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=6
+2026-06-18T11:51:33.173+08:00  INFO 23140 --- [ragent-service] [val_executor_14] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:33.173+08:00  INFO 23140 --- [ragent-service] [val_executor_14] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=110
+2026-06-18T11:51:33.796+08:00  INFO 23140 --- [ragent-service] [val_executor_17] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=4
+2026-06-18T11:51:33.884+08:00  INFO 23140 --- [ragent-service] [val_executor_16] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:33.884+08:00  INFO 23140 --- [ragent-service] [val_executor_16] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=94
+2026-06-18T11:51:34.506+08:00  INFO 23140 --- [ragent-service] [val_executor_19] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=11
+2026-06-18T11:51:34.585+08:00  INFO 23140 --- [ragent-service] [val_executor_18] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:34.586+08:00  INFO 23140 --- [ragent-service] [val_executor_18] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=91
+2026-06-18T11:51:35.257+08:00  INFO 23140 --- [ragent-service] [val_executor_21] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=6
+2026-06-18T11:51:35.343+08:00  INFO 23140 --- [ragent-service] [val_executor_20] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:35.344+08:00  INFO 23140 --- [ragent-service] [val_executor_20] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=91
+2026-06-18T11:51:35.919+08:00  INFO 23140 --- [ragent-service] [val_executor_23] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=5
+2026-06-18T11:51:36.009+08:00  INFO 23140 --- [ragent-service] [val_executor_22] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:36.009+08:00  INFO 23140 --- [ragent-service] [val_executor_22] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=95
+2026-06-18T11:51:36.617+08:00  INFO 23140 --- [ragent-service] [val_executor_25] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=4
+2026-06-18T11:51:36.789+08:00  INFO 23140 --- [ragent-service] [val_executor_24] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:36.791+08:00  INFO 23140 --- [ragent-service] [val_executor_24] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=179
+2026-06-18T11:51:37.362+08:00  INFO 23140 --- [ragent-service] [val_executor_27] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=4
+2026-06-18T11:51:37.439+08:00  INFO 23140 --- [ragent-service] [val_executor_26] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:37.440+08:00  INFO 23140 --- [ragent-service] [val_executor_26] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=81
+2026-06-18T11:51:38.028+08:00  INFO 23140 --- [ragent-service] [val_executor_29] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=6
+2026-06-18T11:51:38.133+08:00  INFO 23140 --- [ragent-service] [val_executor_28] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:38.134+08:00  INFO 23140 --- [ragent-service] [val_executor_28] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=111
+2026-06-18T11:51:38.754+08:00  INFO 23140 --- [ragent-service] [val_executor_31] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=5
+2026-06-18T11:51:38.851+08:00  INFO 23140 --- [ragent-service] [val_executor_30] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:38.852+08:00  INFO 23140 --- [ragent-service] [val_executor_30] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=105
+2026-06-18T11:51:39.430+08:00  INFO 23140 --- [ragent-service] [val_executor_33] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=4
+2026-06-18T11:51:39.506+08:00  INFO 23140 --- [ragent-service] [val_executor_32] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:39.506+08:00  INFO 23140 --- [ragent-service] [val_executor_32] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=80
+2026-06-18T11:51:40.064+08:00  INFO 23140 --- [ragent-service] [val_executor_35] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=7
+2026-06-18T11:51:40.158+08:00  INFO 23140 --- [ragent-service] [val_executor_34] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:40.158+08:00  INFO 23140 --- [ragent-service] [val_executor_34] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=102
+2026-06-18T11:51:40.717+08:00  INFO 23140 --- [ragent-service] [val_executor_37] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=7
+2026-06-18T11:51:40.809+08:00  INFO 23140 --- [ragent-service] [val_executor_36] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:40.810+08:00  INFO 23140 --- [ragent-service] [val_executor_36] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=102
+2026-06-18T11:51:41.416+08:00  INFO 23140 --- [ragent-service] [val_executor_39] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=2, latencyMs=12
+2026-06-18T11:51:41.528+08:00  INFO 23140 --- [ragent-service] [val_executor_38] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:41.529+08:00  INFO 23140 --- [ragent-service] [val_executor_38] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=123
+2026-06-18T11:51:42.595+08:00  INFO 23140 --- [ragent-service] [val_executor_41] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=2, latencyMs=9
+2026-06-18T11:51:42.684+08:00  INFO 23140 --- [ragent-service] [val_executor_40] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:42.685+08:00  INFO 23140 --- [ragent-service] [val_executor_40] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=100
+2026-06-18T11:51:43.248+08:00  INFO 23140 --- [ragent-service] [val_executor_43] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=15
+2026-06-18T11:51:43.365+08:00  INFO 23140 --- [ragent-service] [val_executor_42] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:43.366+08:00  INFO 23140 --- [ragent-service] [val_executor_42] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=135
+2026-06-18T11:51:44.002+08:00  INFO 23140 --- [ragent-service] [val_executor_45] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=14
+2026-06-18T11:51:44.089+08:00  INFO 23140 --- [ragent-service] [val_executor_44] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:44.089+08:00  INFO 23140 --- [ragent-service] [val_executor_44] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=100
+2026-06-18T11:51:44.656+08:00  INFO 23140 --- [ragent-service] [val_executor_47] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=8
+2026-06-18T11:51:44.729+08:00  INFO 23140 --- [ragent-service] [val_executor_46] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:44.730+08:00  INFO 23140 --- [ragent-service] [val_executor_46] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=84
+2026-06-18T11:51:45.301+08:00  INFO 23140 --- [ragent-service] [val_executor_49] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=7
+2026-06-18T11:51:45.382+08:00  INFO 23140 --- [ragent-service] [val_executor_48] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:45.383+08:00  INFO 23140 --- [ragent-service] [val_executor_48] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=89
+2026-06-18T11:51:45.933+08:00  INFO 23140 --- [ragent-service] [val_executor_51] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=7
+2026-06-18T11:51:46.027+08:00  INFO 23140 --- [ragent-service] [val_executor_50] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:46.027+08:00  INFO 23140 --- [ragent-service] [val_executor_50] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=104
+2026-06-18T11:51:46.589+08:00  INFO 23140 --- [ragent-service] [val_executor_53] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=7
+2026-06-18T11:51:46.675+08:00  INFO 23140 --- [ragent-service] [val_executor_52] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:46.676+08:00  INFO 23140 --- [ragent-service] [val_executor_52] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=95
+2026-06-18T11:51:47.275+08:00  INFO 23140 --- [ragent-service] [val_executor_55] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=10
+2026-06-18T11:51:47.379+08:00  INFO 23140 --- [ragent-service] [val_executor_54] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:47.380+08:00  INFO 23140 --- [ragent-service] [val_executor_54] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=114
+2026-06-18T11:51:47.963+08:00  INFO 23140 --- [ragent-service] [val_executor_57] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=10
+2026-06-18T11:51:48.044+08:00  INFO 23140 --- [ragent-service] [val_executor_56] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:48.045+08:00  INFO 23140 --- [ragent-service] [val_executor_56] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=91
+2026-06-18T11:51:48.623+08:00  INFO 23140 --- [ragent-service] [val_executor_59] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=8
+2026-06-18T11:51:48.703+08:00  INFO 23140 --- [ragent-service] [val_executor_58] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:48.704+08:00  INFO 23140 --- [ragent-service] [val_executor_58] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=90
+2026-06-18T11:51:49.253+08:00  INFO 23140 --- [ragent-service] [val_executor_61] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=7
+2026-06-18T11:51:49.352+08:00  INFO 23140 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:49.353+08:00  INFO 23140 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=106
+2026-06-18T11:51:49.926+08:00  INFO 23140 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=5
+2026-06-18T11:51:50.040+08:00  INFO 23140 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T11:51:50.041+08:00  INFO 23140 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=119
+2026-06-18T11:51:50.611+08:00  INFO 23140 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=6
+2026-06-18T11:51:50.696+08:00  INFO 23140 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:50.697+08:00  INFO 23140 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=92
+2026-06-18T11:51:51.266+08:00  INFO 23140 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=5
+2026-06-18T11:51:51.350+08:00  INFO 23140 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:51.350+08:00  INFO 23140 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=88
+2026-06-18T11:51:51.901+08:00  INFO 23140 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=20, identifiers=0, latencyMs=5
+2026-06-18T11:51:51.994+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 全局检索 检索统计 - 总目标数: 5, 成功: 5, 失败: 0, 检索到 Chunk 总数: 92
+2026-06-18T11:51:51.995+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.VectorGlobalSearchChannel : Global vector retrieval completed, chunks=92, latencyMs=100
+2026-06-18T11:51:52.597+08:00  INFO 23140 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=3
+2026-06-18T11:51:52.667+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T11:51:52.668+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=76
+2026-06-18T11:51:53.300+08:00  INFO 23140 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=4
+2026-06-18T11:51:53.406+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:53.407+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=113
+2026-06-18T11:51:54.090+08:00  INFO 23140 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=8
+2026-06-18T11:51:54.167+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T11:51:54.168+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=87
+2026-06-18T11:51:54.732+08:00  INFO 23140 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=5
+2026-06-18T11:51:54.861+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:54.862+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=136
+2026-06-18T11:51:55.433+08:00  INFO 23140 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=5
+2026-06-18T11:51:55.529+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T11:51:55.529+08:00  INFO 23140 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=102

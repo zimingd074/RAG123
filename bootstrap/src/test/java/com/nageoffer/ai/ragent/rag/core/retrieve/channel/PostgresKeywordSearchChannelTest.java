@@ -46,22 +46,75 @@ class PostgresKeywordSearchChannelTest {
     }
 
     @Test
-    void detectsAsciiKeywordsForConditionalFts() {
+    void detectsAsciiKeywordsForConditionalKeywordTextSearch() {
         assertTrue(PostgresKeywordSearchChannel.hasAsciiKeyword("APP 里怎么查清扫记录"));
         assertTrue(PostgresKeywordSearchChannel.hasAsciiKeyword("RedmiBook Pro 14 适合剪视频吗"));
         assertFalse(PostgresKeywordSearchChannel.hasAsciiKeyword("现在买和等双十一买哪个划算"));
     }
 
     @Test
-    void conditionalFtsSkipsPureChineseQueries() {
+    void conditionalKeywordTextSearchSkipsPureChineseQueries() {
         SearchChannelProperties properties = new SearchChannelProperties();
-        properties.getChannels().getKeywordPg().setOrdinaryFtsConditional(true);
+        properties.getChannels().getKeywordPg().setKeywordTextSearchConditional(true);
         PostgresKeywordSearchChannel channel = new PostgresKeywordSearchChannel(
                 new JdbcTemplate(),
                 properties
         );
 
-        assertFalse(channel.shouldRunOrdinaryFts("现在买和等双十一买哪个划算"));
-        assertTrue(channel.shouldRunOrdinaryFts("APP 里怎么查清扫记录"));
+        assertFalse(channel.shouldRunKeywordTextSearch("现在买和等双十一买哪个划算"));
+        assertTrue(channel.shouldRunKeywordTextSearch("APP 里怎么查清扫记录"));
+    }
+
+    @Test
+    void defaultKeywordSearchRunsForPureChineseQueries() {
+        PostgresKeywordSearchChannel channel = new PostgresKeywordSearchChannel(
+                new JdbcTemplate(),
+                new SearchChannelProperties()
+        );
+
+        assertTrue(channel.shouldRunKeywordTextSearch("现在买和等双十一买哪个划算"));
+    }
+
+    @Test
+    void keywordSearchSqlUsesParadeDbBm25() {
+        String sql = PostgresKeywordSearchChannel.searchSql();
+
+        assertTrue(sql.contains("pdb.score(id) AS rank_score"));
+        assertTrue(sql.contains("content ||| ?"));
+        assertFalse(sql.contains("ts_rank_cd"));
+        assertFalse(sql.contains("websearch_to_tsquery"));
+    }
+
+    @Test
+    void legacyKeywordSearchSqlUsesPostgresFts() {
+        String sql = PostgresKeywordSearchChannel.ftsSearchSql();
+
+        assertTrue(sql.contains("ts_rank_cd"));
+        assertTrue(sql.contains("websearch_to_tsquery('simple', ?)"));
+        assertTrue(sql.contains("search_vector @@ q.query"));
+        assertFalse(sql.contains("pdb.score"));
+        assertFalse(sql.contains("content ||| ?"));
+    }
+
+    @Test
+    void defaultsToBm25Ranking() {
+        PostgresKeywordSearchChannel channel = new PostgresKeywordSearchChannel(
+                new JdbcTemplate(),
+                new SearchChannelProperties()
+        );
+
+        assertEquals("bm25", channel.keywordRanking());
+    }
+
+    @Test
+    void canSwitchToLegacyFtsRanking() {
+        SearchChannelProperties properties = new SearchChannelProperties();
+        properties.getChannels().getKeywordPg().setRanking("fts");
+        PostgresKeywordSearchChannel channel = new PostgresKeywordSearchChannel(
+                new JdbcTemplate(),
+                properties
+        );
+
+        assertEquals("fts", channel.keywordRanking());
     }
 }

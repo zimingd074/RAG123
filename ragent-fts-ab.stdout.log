@@ -1,0 +1,2219 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.7)
+
+2026-06-18T12:00:12.136+08:00  INFO 6680 --- [ragent-service] [           main] c.nageoffer.ai.ragent.RagentApplication  : Starting RagentApplication using Java 17.0.18 with PID 6680 (D:\JavaPackage\repository\ragent\bootstrap\target\bootstrap-0.0.1-SNAPSHOT.jar started by 23589 in D:\JavaPackage\repository\ragent)
+2026-06-18T12:00:12.143+08:00  INFO 6680 --- [ragent-service] [           main] c.nageoffer.ai.ragent.RagentApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-06-18T12:00:15.126+08:00  INFO 6680 --- [ragent-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-06-18T12:00:15.131+08:00  INFO 6680 --- [ragent-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-06-18T12:00:15.213+08:00  INFO 6680 --- [ragent-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 45 ms. Found 0 Redis repository interfaces.
+2026-06-18T12:00:19.060+08:00  INFO 6680 --- [ragent-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9090 (http)
+2026-06-18T12:00:19.127+08:00  INFO 6680 --- [ragent-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-18T12:00:19.129+08:00  INFO 6680 --- [ragent-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2026-06-18T12:00:19.251+08:00  INFO 6680 --- [ragent-service] [           main] o.a.c.c.C.[.[localhost].[/api/ragent]    : Initializing Spring embedded WebApplicationContext
+2026-06-18T12:00:19.254+08:00  INFO 6680 --- [ragent-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6985 ms
+2026-06-18T12:00:19.529+08:00  INFO 6680 --- [ragent-service] [           main] org.redisson.Version                     : Redisson 4.0.0
+2026-06-18T12:00:20.913+08:00  INFO 6680 --- [ragent-service] [isson-netty-1-4] o.redisson.connection.ConnectionsHolder  : 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+2026-06-18T12:00:21.015+08:00  INFO 6680 --- [ragent-service] [sson-netty-1-19] o.redisson.connection.ConnectionsHolder  : 24 connections initialized for 127.0.0.1/127.0.0.1:6379
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.14 
+2026-06-18T12:00:27.615+08:00  INFO 6680 --- [ragent-service] [           main] com.zaxxer.hikari.HikariDataSource       : RagentHikariPool - Starting...
+2026-06-18T12:00:28.088+08:00  INFO 6680 --- [ragent-service] [           main] com.zaxxer.hikari.pool.HikariPool        : RagentHikariPool - Added connection org.postgresql.jdbc.PgConnection@1dfadb7
+2026-06-18T12:00:28.096+08:00  INFO 6680 --- [ragent-service] [           main] com.zaxxer.hikari.HikariDataSource       : RagentHikariPool - Start completed.
+2026-06-18T12:00:29.149+08:00  INFO 6680 --- [ragent-service] [           main] c.n.a.r.k.config.SemaphoreInitializer    : Initialized document upload semaphore: name=rag:document:upload, maxConcurrent=10
+2026-06-18T12:00:31.254+08:00  INFO 6680 --- [ragent-service] [           main] o.a.r.s.a.RocketMQAutoConfiguration      : a producer (ragent-producer_pg) init on namesrv 127.0.0.1:9876
+2026-06-18T12:00:34.547+08:00  INFO 6680 --- [ragent-service] [           main] ocketMQMessageListenerContainerRegistrar : Register the listener to container, listenerBeanName:knowledgeDocumentChunkConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2026-06-18T12:00:35.117+08:00  INFO 6680 --- [ragent-service] [           main] c.n.a.r.r.c.mcp.DefaultMcpToolRegistry   : MCP 工具注册跳过, 未发现任何工具执行器
+2026-06-18T12:00:35.118+08:00  INFO 6680 --- [ragent-service] [           main] c.n.a.r.r.c.mcp.DefaultMcpToolRegistry   : MCP 工具自动注册完成, 共注册 0 个工具
+2026-06-18T12:00:35.350+08:00  INFO 6680 --- [ragent-service] [           main] c.n.a.r.r.c.m.McpClientAutoConfiguration : 连接 MCP Server: name=default, url=http://localhost:9099
+2026-06-18T12:00:36.494+08:00  WARN 6680 --- [ragent-service] [onPool-worker-1] i.m.client.LifecycleInitializer          : Handling exception
+
+java.net.ConnectException: null
+	at java.net.http/jdk.internal.net.http.common.Utils.toConnectException(Utils.java:1107) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:203) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.checkRetryConnect(PlainHttpConnection.java:238) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.lambda$connectAsync$1(PlainHttpConnection.java:214) ~[java.net.http:na]
+	at java.base/java.util.concurrent.CompletableFuture.uniHandle(CompletableFuture.java:934) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture$UniHandle.tryFire(CompletableFuture.java:911) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1773) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+Caused by: java.nio.channels.ClosedChannelException: null
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpen(SocketChannelImpl.java:195) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.beginConnect(SocketChannelImpl.java:760) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:848) ~[na:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.lambda$connectAsync$0(PlainHttpConnection.java:187) ~[java.net.http:na]
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569) ~[na:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:189) ~[java.net.http:na]
+	... 9 common frames omitted
+
+2026-06-18T12:00:36.508+08:00 ERROR 6680 --- [ragent-service] [           main] c.n.a.r.r.c.m.McpClientAutoConfiguration : 连接 MCP Server [default] 失败，跳过工具注册，reason=Client failed to initialize by explicit API call
+2026-06-18T12:00:37.356+08:00  INFO 6680 --- [ragent-service] [           main] ocketMQMessageListenerContainerRegistrar : Register the listener to container, listenerBeanName:messageFeedbackConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2026-06-18T12:00:37.466+08:00  INFO 6680 --- [ragent-service] [           main] c.n.a.r.f.d.SnowflakeIdInitializer       : 分布式Snowflake初始化完成, workerId: 5, datacenterId: 0
+2026-06-18T12:00:38.306+08:00  INFO 6680 --- [ragent-service] [           main] m.e.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@4204541c
+2026-06-18T12:00:38.794+08:00  INFO 6680 --- [ragent-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9090 (http) with context path '/api/ragent'
+2026-06-18T12:00:39.923+08:00  INFO 6680 --- [ragent-service] [nio-9090-exec-1] o.a.c.c.C.[.[localhost].[/api/ragent]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-18T12:00:39.924+08:00  INFO 6680 --- [ragent-service] [nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-18T12:00:39.927+08:00  INFO 6680 --- [ragent-service] [nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-18T12:00:42.727+08:00  INFO 6680 --- [ragent-service] [           main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='knowledge-document-chunk_cg', namespace='', namespaceV2='', nameServer='127.0.0.1:9876', topic='knowledge-document-chunk_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false, instanceName=DEFAULT}
+2026-06-18T12:00:46.043+08:00  INFO 6680 --- [ragent-service] [           main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='message-feedback_cg', namespace='', namespaceV2='', nameServer='127.0.0.1:9876', topic='message-feedback_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false, instanceName=DEFAULT}
+2026-06-18T12:00:46.064+08:00  INFO 6680 --- [ragent-service] [           main] c.nageoffer.ai.ragent.RagentApplication  : Started RagentApplication in 35.342 seconds (process running for 36.875)
+2026-06-18T12:01:05.422+08:00  INFO 6680 --- [ragent-service] [eval_executor_0] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=110
+2026-06-18T12:01:05.850+08:00  INFO 6680 --- [ragent-service] [eval_executor_1] .n.a.r.r.c.r.c.AbstractParallelRetriever : 全局检索 检索统计 - 总目标数: 5, 成功: 5, 失败: 0, 检索到 Chunk 总数: 92
+2026-06-18T12:01:05.851+08:00  INFO 6680 --- [ragent-service] [eval_executor_1] .n.a.r.r.c.r.c.VectorGlobalSearchChannel : Global vector retrieval completed, chunks=92, latencyMs=533
+2026-06-18T12:01:06.725+08:00  INFO 6680 --- [ragent-service] [eval_executor_3] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=5
+2026-06-18T12:01:06.812+08:00  INFO 6680 --- [ragent-service] [eval_executor_2] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:06.813+08:00  INFO 6680 --- [ragent-service] [eval_executor_2] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=96
+2026-06-18T12:01:07.453+08:00  INFO 6680 --- [ragent-service] [eval_executor_5] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=6
+2026-06-18T12:01:07.597+08:00  INFO 6680 --- [ragent-service] [eval_executor_4] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:07.599+08:00  INFO 6680 --- [ragent-service] [eval_executor_4] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=149
+2026-06-18T12:01:07.798+08:00  INFO 6680 --- [ragent-service] [eval_executor_7] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=2, latencyMs=11
+2026-06-18T12:01:07.891+08:00  INFO 6680 --- [ragent-service] [eval_executor_6] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:07.893+08:00  INFO 6680 --- [ragent-service] [eval_executor_6] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=105
+2026-06-18T12:01:08.281+08:00  INFO 6680 --- [ragent-service] [eval_executor_9] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=5
+2026-06-18T12:01:08.455+08:00  INFO 6680 --- [ragent-service] [eval_executor_8] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:08.456+08:00  INFO 6680 --- [ragent-service] [eval_executor_8] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=179
+2026-06-18T12:01:08.548+08:00  INFO 6680 --- [ragent-service] [val_executor_11] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=3, identifiers=1, latencyMs=8
+2026-06-18T12:01:08.654+08:00  INFO 6680 --- [ragent-service] [val_executor_10] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:08.655+08:00  INFO 6680 --- [ragent-service] [val_executor_10] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=116
+2026-06-18T12:01:09.142+08:00  INFO 6680 --- [ragent-service] [val_executor_13] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=5
+2026-06-18T12:01:09.281+08:00  INFO 6680 --- [ragent-service] [val_executor_12] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:09.282+08:00  INFO 6680 --- [ragent-service] [val_executor_12] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=146
+2026-06-18T12:01:09.291+08:00  INFO 6680 --- [ragent-service] [val_executor_15] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=7, identifiers=1, latencyMs=10
+2026-06-18T12:01:09.372+08:00  INFO 6680 --- [ragent-service] [val_executor_14] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:09.373+08:00  INFO 6680 --- [ragent-service] [val_executor_14] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=93
+2026-06-18T12:01:09.869+08:00  INFO 6680 --- [ragent-service] [val_executor_17] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:01:09.953+08:00  INFO 6680 --- [ragent-service] [val_executor_19] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=2, identifiers=1, latencyMs=4
+2026-06-18T12:01:09.973+08:00  INFO 6680 --- [ragent-service] [val_executor_16] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T12:01:09.974+08:00  INFO 6680 --- [ragent-service] [val_executor_16] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=110
+2026-06-18T12:01:10.058+08:00  INFO 6680 --- [ragent-service] [val_executor_18] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:10.059+08:00  INFO 6680 --- [ragent-service] [val_executor_18] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=110
+2026-06-18T12:01:10.565+08:00  INFO 6680 --- [ragent-service] [val_executor_21] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=6
+2026-06-18T12:01:10.630+08:00  INFO 6680 --- [ragent-service] [val_executor_23] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=7
+2026-06-18T12:01:10.684+08:00  INFO 6680 --- [ragent-service] [val_executor_20] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:10.685+08:00  INFO 6680 --- [ragent-service] [val_executor_20] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=126
+2026-06-18T12:01:10.724+08:00  INFO 6680 --- [ragent-service] [val_executor_22] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:10.724+08:00  INFO 6680 --- [ragent-service] [val_executor_22] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=100
+2026-06-18T12:01:11.282+08:00  INFO 6680 --- [ragent-service] [val_executor_25] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=4
+2026-06-18T12:01:11.291+08:00  INFO 6680 --- [ragent-service] [val_executor_27] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=5
+2026-06-18T12:01:11.383+08:00  INFO 6680 --- [ragent-service] [val_executor_24] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:11.383+08:00  INFO 6680 --- [ragent-service] [val_executor_24] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=107
+2026-06-18T12:01:11.401+08:00  INFO 6680 --- [ragent-service] [val_executor_26] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:11.402+08:00  INFO 6680 --- [ragent-service] [val_executor_26] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=115
+2026-06-18T12:01:12.039+08:00  INFO 6680 --- [ragent-service] [val_executor_30] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=5
+2026-06-18T12:01:12.039+08:00  INFO 6680 --- [ragent-service] [val_executor_31] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=9
+2026-06-18T12:01:12.118+08:00  INFO 6680 --- [ragent-service] [val_executor_28] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:12.118+08:00  INFO 6680 --- [ragent-service] [val_executor_28] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=86
+2026-06-18T12:01:12.143+08:00  INFO 6680 --- [ragent-service] [val_executor_29] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:12.143+08:00  INFO 6680 --- [ragent-service] [val_executor_29] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=109
+2026-06-18T12:01:12.718+08:00  INFO 6680 --- [ragent-service] [val_executor_33] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=4
+2026-06-18T12:01:12.753+08:00  INFO 6680 --- [ragent-service] [val_executor_35] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=1, latencyMs=6
+2026-06-18T12:01:12.795+08:00  INFO 6680 --- [ragent-service] [val_executor_32] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:12.796+08:00  INFO 6680 --- [ragent-service] [val_executor_32] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=83
+2026-06-18T12:01:12.872+08:00  INFO 6680 --- [ragent-service] [val_executor_34] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:12.873+08:00  INFO 6680 --- [ragent-service] [val_executor_34] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=127
+2026-06-18T12:01:13.377+08:00  INFO 6680 --- [ragent-service] [val_executor_37] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:01:13.467+08:00  INFO 6680 --- [ragent-service] [val_executor_39] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=5
+2026-06-18T12:01:13.478+08:00  INFO 6680 --- [ragent-service] [val_executor_36] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:13.479+08:00  INFO 6680 --- [ragent-service] [val_executor_36] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=104
+2026-06-18T12:01:13.588+08:00  INFO 6680 --- [ragent-service] [val_executor_38] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:13.588+08:00  INFO 6680 --- [ragent-service] [val_executor_38] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=126
+2026-06-18T12:01:14.052+08:00  INFO 6680 --- [ragent-service] [val_executor_41] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:01:14.151+08:00  INFO 6680 --- [ragent-service] [val_executor_43] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=8, identifiers=1, latencyMs=5
+2026-06-18T12:01:14.182+08:00  INFO 6680 --- [ragent-service] [val_executor_40] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:14.183+08:00  INFO 6680 --- [ragent-service] [val_executor_40] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=133
+2026-06-18T12:01:14.240+08:00  INFO 6680 --- [ragent-service] [val_executor_42] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:14.241+08:00  INFO 6680 --- [ragent-service] [val_executor_42] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=95
+2026-06-18T12:01:14.781+08:00  INFO 6680 --- [ragent-service] [val_executor_45] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:01:14.852+08:00  INFO 6680 --- [ragent-service] [val_executor_47] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=4
+2026-06-18T12:01:14.884+08:00  INFO 6680 --- [ragent-service] [val_executor_44] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:14.885+08:00  INFO 6680 --- [ragent-service] [val_executor_44] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=113
+2026-06-18T12:01:14.949+08:00  INFO 6680 --- [ragent-service] [val_executor_46] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:14.950+08:00  INFO 6680 --- [ragent-service] [val_executor_46] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=104
+2026-06-18T12:01:15.450+08:00  INFO 6680 --- [ragent-service] [val_executor_49] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:01:15.506+08:00  INFO 6680 --- [ragent-service] [val_executor_51] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:01:15.541+08:00  INFO 6680 --- [ragent-service] [val_executor_48] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:15.542+08:00  INFO 6680 --- [ragent-service] [val_executor_48] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=95
+2026-06-18T12:01:15.592+08:00  INFO 6680 --- [ragent-service] [val_executor_50] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T12:01:15.593+08:00  INFO 6680 --- [ragent-service] [val_executor_50] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=90
+2026-06-18T12:01:16.122+08:00  INFO 6680 --- [ragent-service] [val_executor_53] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=4
+2026-06-18T12:01:16.215+08:00  INFO 6680 --- [ragent-service] [val_executor_55] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=5
+2026-06-18T12:01:16.222+08:00  INFO 6680 --- [ragent-service] [val_executor_52] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:16.223+08:00  INFO 6680 --- [ragent-service] [val_executor_52] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=106
+2026-06-18T12:01:16.304+08:00  INFO 6680 --- [ragent-service] [val_executor_54] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:16.305+08:00  INFO 6680 --- [ragent-service] [val_executor_54] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=96
+2026-06-18T12:01:16.829+08:00  INFO 6680 --- [ragent-service] [val_executor_57] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:01:16.897+08:00  INFO 6680 --- [ragent-service] [val_executor_59] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:01:16.923+08:00  INFO 6680 --- [ragent-service] [val_executor_56] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:16.924+08:00  INFO 6680 --- [ragent-service] [val_executor_56] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=97
+2026-06-18T12:01:16.987+08:00  INFO 6680 --- [ragent-service] [val_executor_58] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:16.988+08:00  INFO 6680 --- [ragent-service] [val_executor_58] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=94
+2026-06-18T12:01:17.477+08:00  INFO 6680 --- [ragent-service] [val_executor_61] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:01:17.551+08:00  INFO 6680 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:01:17.695+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:17.696+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=221
+2026-06-18T12:01:17.719+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 全局检索 检索统计 - 总目标数: 5, 成功: 5, 失败: 0, 检索到 Chunk 总数: 92
+2026-06-18T12:01:17.720+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.VectorGlobalSearchChannel : Global vector retrieval completed, chunks=92, latencyMs=173
+2026-06-18T12:01:18.258+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:01:18.323+08:00  INFO 6680 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=1, identifiers=0, latencyMs=3
+2026-06-18T12:01:18.342+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:18.342+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=85
+2026-06-18T12:01:18.401+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T12:01:18.402+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=82
+2026-06-18T12:01:18.905+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=4
+2026-06-18T12:01:18.998+08:00  INFO 6680 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:01:19.036+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:19.036+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=135
+2026-06-18T12:01:19.099+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:19.100+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=106
+2026-06-18T12:01:19.627+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=2, latencyMs=6
+2026-06-18T12:01:19.697+08:00  INFO 6680 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=7
+2026-06-18T12:01:19.719+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:19.719+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=99
+2026-06-18T12:01:19.805+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:01:19.805+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=116
+2026-06-18T12:01:20.391+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=4
+2026-06-18T12:01:20.511+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:20.512+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=124
+2026-06-18T12:01:21.095+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=5
+2026-06-18T12:01:21.223+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:01:21.224+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=133
+2026-06-18T12:24:03.054+08:00  INFO 6680 --- [ragent-service] [ntry_executor_0] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射缓存不存在，需要从数据库加载
+2026-06-18T12:24:03.062+08:00  INFO 6680 --- [ragent-service] [ntry_executor_0] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:24:03.062+08:00  INFO 6680 --- [ragent-service] [ntry_executor_0] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:24:04.176+08:00  INFO 6680 --- [ragent-service] [ntry_executor_0] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：这手机用了 3 个月就卡
+归一化后：这手机用了 3 个月就卡
+改写结果：手机使用3个月后变卡
+子问题：[手机使用3个月后变卡]
+
+2026-06-18T12:24:05.395+08:00  INFO 6680 --- [ragent-service] [sify_executor_0] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：手机使用3个月后变卡
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "F3_投诉吐槽",
+            "kbIds": [
+            ],
+            "name": "投诉吐槽",
+            "description": "用户的投诉吐槽相关问题，例如：客服态度太差了",
+            "level": "TOPIC",
+            "parentId": "FEEDBACK_ALL",
+            "examples": [
+                "\"客服态度太差了\"",
+                "\"等了一周还没发货，太慢了！\"",
+                "\"这手机用了 3 个月就卡\"",
+                "\"我要投诉你们，准备消协见！\"",
+                "\"你们这是欺骗消费者！\""
+            ],
+            "fullPath": "用户反馈 > 反馈处理 > 投诉吐槽",
+            "kind": "SYSTEM",
+            "collectionNames": [
+            ],
+            "promptTemplate": "你是比特严选客服助手。先简短共情并确认用户诉求。纯情绪投诉应记录问题并说明可转人工处理；不要争辩、不要作法律定性。若问题同时涉及物流、故障或售后事实，应结合并列知识意图提供的证据处理，不得编造政策。"
+        },
+        "score": 0.85
+    }
+]
+
+2026-06-18T12:24:07.574+08:00  INFO 6680 --- [ragent-service] [io-9090-exec-10] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:24:07.574+08:00  INFO 6680 --- [ragent-service] [io-9090-exec-10] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:24:08.533+08:00  INFO 6680 --- [ragent-service] [io-9090-exec-10] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：这手机用了 3 个月就卡
+归一化后：这手机用了 3 个月就卡
+改写结果：手机使用3个月后变卡
+子问题：[手机使用3个月后变卡]
+
+2026-06-18T12:24:10.043+08:00  INFO 6680 --- [ragent-service] [sify_executor_1] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：手机使用3个月后变卡
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "F3_投诉吐槽",
+            "kbIds": [
+            ],
+            "name": "投诉吐槽",
+            "description": "用户的投诉吐槽相关问题，例如：客服态度太差了",
+            "level": "TOPIC",
+            "parentId": "FEEDBACK_ALL",
+            "examples": [
+                "\"客服态度太差了\"",
+                "\"等了一周还没发货，太慢了！\"",
+                "\"这手机用了 3 个月就卡\"",
+                "\"我要投诉你们，准备消协见！\"",
+                "\"你们这是欺骗消费者！\""
+            ],
+            "fullPath": "用户反馈 > 反馈处理 > 投诉吐槽",
+            "kind": "SYSTEM",
+            "collectionNames": [
+            ],
+            "promptTemplate": "你是比特严选客服助手。先简短共情并确认用户诉求。纯情绪投诉应记录问题并说明可转人工处理；不要争辩、不要作法律定性。若问题同时涉及物流、故障或售后事实，应结合并列知识意图提供的证据处理，不得编造政策。"
+        },
+        "score": 0.85
+    }
+]
+
+2026-06-18T12:24:10.073+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=1, latencyMs=8
+2026-06-18T12:24:10.311+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 全局检索 检索统计 - 总目标数: 5, 成功: 5, 失败: 0, 检索到 Chunk 总数: 92
+2026-06-18T12:24:10.311+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.VectorGlobalSearchChannel : Global vector retrieval completed, chunks=92, latencyMs=245
+2026-06-18T12:24:11.603+08:00  INFO 6680 --- [ragent-service] [ntry_executor_1] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:24:11.603+08:00  INFO 6680 --- [ragent-service] [ntry_executor_1] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:24:12.481+08:00  INFO 6680 --- [ragent-service] [ntry_executor_1] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：新款手表什么时候上市？
+归一化后：新款手表什么时候上市？
+改写结果：新款手表的上市时间
+子问题：[新款手表的上市时间]
+
+2026-06-18T12:24:13.980+08:00  INFO 6680 --- [ragent-service] [sify_executor_2] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：新款手表的上市时间
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S5_库存到货",
+            "kbId": "2062065735202508800",
+            "kbIds": [
+                "2062065735202508800",
+                "2062065732585263104"
+            ],
+            "name": "库存到货",
+            "description": "用户的库存到货相关问题，例如：小米 14 Pro 黑色款有货吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 黑色款有货吗？\"",
+                "\"什么时候能发货？\"",
+                "\"小米 14 Pro 512G 蓝色现在缺货吗？\"",
+                "\"新款手表什么时候上市？\"",
+                "\"上次缺货那款补货了吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 库存到货",
+            "kind": "KB",
+            "collectionName": "kb-policy",
+            "collectionNames": [
+                "kb-policy",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:24:14.010+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:24:14.097+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:24:14.099+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=93
+2026-06-18T12:24:17.334+08:00  INFO 6680 --- [ragent-service] [ntry_executor_2] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:24:17.335+08:00  INFO 6680 --- [ragent-service] [ntry_executor_2] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:24:18.395+08:00  INFO 6680 --- [ragent-service] [ntry_executor_2] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：小米平板 6 看视频能撑多久？
+归一化后：小米平板 6 看视频能撑多久？
+改写结果：小米平板 6 看视频的续航时间
+子问题：[小米平板 6 看视频的续航时间]
+
+2026-06-18T12:24:19.929+08:00  INFO 6680 --- [ragent-service] [sify_executor_3] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米平板 6 看视频的续航时间
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S2_参数咨询",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "参数咨询",
+            "description": "用户的参数咨询相关问题，例如：小米 14 Pro 的屏幕尺寸和刷新率是多少？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 的屏幕尺寸和刷新率是多少？\"",
+                "\"Redmi K70 电池容量多大，支持多少瓦快充？\"",
+                "\"米家空气净化器 4 Pro 适合多大面积？\"",
+                "\"小米平板 6 支持手写笔吗？\"",
+                "\"小米智能门锁 E10 支持几种开锁方式？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 参数咨询",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:24:19.957+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:24:20.049+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:24:20.049+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=95
+2026-06-18T12:24:23.520+08:00  INFO 6680 --- [ragent-service] [ntry_executor_3] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:24:23.521+08:00  INFO 6680 --- [ragent-service] [ntry_executor_3] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:24:24.460+08:00  INFO 6680 --- [ragent-service] [ntry_executor_3] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：手表充电时发烫得厉害
+归一化后：手表充电时发烫得厉害
+改写结果：手表充电时发烫得厉害
+子问题：[手表充电时发烫得厉害]
+
+2026-06-18T12:24:25.730+08:00  INFO 6680 --- [ragent-service] [sify_executor_4] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：手表充电时发烫得厉害
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "F1_故障报告",
+            "kbId": "2062065735332532224",
+            "kbIds": [
+                "2062065735332532224",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "故障报告",
+            "description": "用户的故障报告相关问题，例如：我的扫地机充不进电了",
+            "level": "TOPIC",
+            "parentId": "FEEDBACK_ALL",
+            "examples": [
+                "\"我的扫地机充不进电了\"",
+                "\"净化器开机后没反应\"",
+                "\"智能门锁指纹突然识别不了了\"",
+                "\"扫地机扫一会就停，提示故障 E5\"",
+                "\"手表充电时发烫得厉害\""
+            ],
+            "fullPath": "用户反馈 > 反馈处理 > 故障报告",
+            "kind": "KB",
+            "collectionName": "kb-faq",
+            "collectionNames": [
+                "kb-faq",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:24:25.765+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:24:25.862+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:24:25.862+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=101
+2026-06-18T12:24:31.871+08:00  INFO 6680 --- [ragent-service] [ntry_executor_4] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:24:31.871+08:00  INFO 6680 --- [ragent-service] [ntry_executor_4] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:24:32.980+08:00  INFO 6680 --- [ragent-service] [ntry_executor_4] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：蓝牙连上了但 APP 显示离线
+归一化后：蓝牙连上了但 APP 显示离线
+改写结果：蓝牙连上了但 APP 显示离线
+子问题：[蓝牙连上了但 APP 显示离线]
+
+2026-06-18T12:24:34.560+08:00  INFO 6680 --- [ragent-service] [sify_executor_5] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：蓝牙连上了但 APP 显示离线
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S10_APP功能",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600"
+            ],
+            "name": "APP 功能",
+            "description": "用户的APP 功能相关问题，例如：比特APP 怎么查订单？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"比特APP 怎么查订单？\"",
+                "\"怎么修改收货地址？\"",
+                "\"APP 里怎么查扫地机的清扫记录？\"",
+                "\"怎么把账号关联给家人共用？\"",
+                "\"APP 推送太多怎么关闭？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > APP 功能",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:24:34.587+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:24:34.663+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T12:24:34.664+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=80
+2026-06-18T12:24:40.541+08:00  INFO 6680 --- [ragent-service] [ntry_executor_5] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:24:40.541+08:00  INFO 6680 --- [ragent-service] [ntry_executor_5] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:24:41.578+08:00  INFO 6680 --- [ragent-service] [ntry_executor_5] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：APP 里怎么查扫地机的清扫记录？
+归一化后：APP 里怎么查扫地机的清扫记录？
+改写结果：APP里查询扫地机的清扫记录的方法
+子问题：[APP里查询扫地机的清扫记录的方法]
+
+2026-06-18T12:24:43.089+08:00  INFO 6680 --- [ragent-service] [sify_executor_6] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：APP里查询扫地机的清扫记录的方法
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S10_APP功能",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600"
+            ],
+            "name": "APP 功能",
+            "description": "用户的APP 功能相关问题，例如：比特APP 怎么查订单？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"比特APP 怎么查订单？\"",
+                "\"怎么修改收货地址？\"",
+                "\"APP 里怎么查扫地机的清扫记录？\"",
+                "\"怎么把账号关联给家人共用？\"",
+                "\"APP 推送太多怎么关闭？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > APP 功能",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:24:43.114+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:24:43.199+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T12:24:43.200+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=88
+2026-06-18T12:24:48.613+08:00  INFO 6680 --- [ragent-service] [ntry_executor_6] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:24:48.613+08:00  INFO 6680 --- [ragent-service] [ntry_executor_6] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:24:50.205+08:00  INFO 6680 --- [ragent-service] [ntry_executor_6] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：石头 G10 在地毯上吸力会下降吗？
+归一化后：石头 G10 在地毯上吸力会下降吗？
+改写结果：石头 G10 在地毯上吸力是否会下降
+子问题：[石头 G10 在地毯上吸力是否会下降]
+
+2026-06-18T12:24:51.610+08:00  INFO 6680 --- [ragent-service] [sify_executor_7] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：石头 G10 在地毯上吸力是否会下降
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S7_适用场景",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "适用场景",
+            "description": "用户的适用场景相关问题，例如：扫地机能扫地毯吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"扫地机能扫地毯吗？\"",
+                "\"智能门锁停电了能用吗？\"",
+                "\"家里养猫，扫地机选哪款不容易卡毛？\"",
+                "\"150 平的房子用哪个净化器够？\"",
+                "\"我家是长条户型，扫地机会乱跑吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 适用场景",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:24:51.644+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=8
+2026-06-18T12:24:51.735+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:24:51.736+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=101
+2026-06-18T12:24:55.225+08:00  INFO 6680 --- [ragent-service] [ntry_executor_7] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:24:55.226+08:00  INFO 6680 --- [ragent-service] [ntry_executor_7] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:24:56.962+08:00  INFO 6680 --- [ragent-service] [ntry_executor_7] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：我家是长条户型，扫地机会乱跑吗？
+归一化后：我家是长条户型，扫地机会乱跑吗？
+改写结果：长条户型扫地机会乱跑吗
+子问题：[长条户型扫地机会乱跑吗]
+
+2026-06-18T12:24:58.564+08:00  INFO 6680 --- [ragent-service] [sify_executor_8] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：长条户型扫地机会乱跑吗
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S7_适用场景",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "适用场景",
+            "description": "用户的适用场景相关问题，例如：扫地机能扫地毯吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"扫地机能扫地毯吗？\"",
+                "\"智能门锁停电了能用吗？\"",
+                "\"家里养猫，扫地机选哪款不容易卡毛？\"",
+                "\"150 平的房子用哪个净化器够？\"",
+                "\"我家是长条户型，扫地机会乱跑吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 适用场景",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.94
+    }
+]
+
+2026-06-18T12:24:58.592+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:24:58.686+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:24:58.686+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=98
+2026-06-18T12:25:05.362+08:00  INFO 6680 --- [ragent-service] [ntry_executor_8] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:25:05.363+08:00  INFO 6680 --- [ragent-service] [ntry_executor_8] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:25:06.866+08:00  INFO 6680 --- [ragent-service] [ntry_executor_8] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：比特设备能接入苹果家庭吗？
+归一化后：比特设备能接入苹果家庭吗？
+改写结果：比特设备能否接入苹果家庭
+子问题：[比特设备能否接入苹果家庭]
+
+2026-06-18T12:25:08.180+08:00  INFO 6680 --- [ragent-service] [sify_executor_9] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：比特设备能否接入苹果家庭
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S12_生态联动",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065732585263104"
+            ],
+            "name": "生态联动",
+            "description": "用户的生态联动相关问题，例如：智能音箱能控制扫地机吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"智能音箱能控制扫地机吗？\"",
+                "\"怎么让灯和门锁联动？\"",
+                "\"回家自动开灯开空调怎么设置？\"",
+                "\"门锁开门后扫地机自动暂停能实现吗？\"",
+                "\"想做个离家模式，关灯关空调启动扫地机\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 生态联动",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:25:08.212+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=4
+2026-06-18T12:25:08.400+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:25:08.400+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=193
+2026-06-18T12:25:11.379+08:00  INFO 6680 --- [ragent-service] [ntry_executor_9] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:25:11.380+08:00  INFO 6680 --- [ragent-service] [ntry_executor_9] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:25:13.683+08:00  INFO 6680 --- [ragent-service] [ntry_executor_9] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：扫地机刷头掉毛了还能用吗？要换吗？
+归一化后：扫地机刷头掉毛了还能用吗？要换吗？
+改写结果：扫地机刷头掉毛了还能用吗，是否需要更换
+子问题：[扫地机刷头掉毛了还能用吗, 扫地机刷头掉毛了要换吗]
+
+2026-06-18T12:25:15.198+08:00  INFO 6680 --- [ragent-service] [ify_executor_11] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：扫地机刷头掉毛了要换吗
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S13_保养维护",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224",
+                "2062065732585263104"
+            ],
+            "name": "保养维护",
+            "description": "用户的保养维护相关问题，例如：净化器滤芯多久换一次？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"净化器滤芯多久换一次？\"",
+                "\"扫地机滚刷怎么清洗？\"",
+                "\"电动牙刷刷头多久换？\"",
+                "\"净化器滤芯怎么换？步骤是什么？\"",
+                "\"扫地机的水箱可以用洗洁精洗吗？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 保养维护",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:25:15.199+08:00  INFO 6680 --- [ragent-service] [ify_executor_10] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：扫地机刷头掉毛了还能用吗
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S13_保养维护",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224",
+                "2062065732585263104"
+            ],
+            "name": "保养维护",
+            "description": "用户的保养维护相关问题，例如：净化器滤芯多久换一次？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"净化器滤芯多久换一次？\"",
+                "\"扫地机滚刷怎么清洗？\"",
+                "\"电动牙刷刷头多久换？\"",
+                "\"净化器滤芯怎么换？步骤是什么？\"",
+                "\"扫地机的水箱可以用洗洁精洗吗？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 保养维护",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:25:15.230+08:00  INFO 6680 --- [ragent-service] [val_executor_61] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:25:15.230+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:25:15.352+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:25:15.352+08:00  INFO 6680 --- [ragent-service] [val_executor_63] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=127
+2026-06-18T12:25:15.398+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:25:15.398+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=172
+2026-06-18T12:25:23.353+08:00  INFO 6680 --- [ragent-service] [try_executor_10] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:25:23.354+08:00  INFO 6680 --- [ragent-service] [try_executor_10] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:25:24.868+08:00  INFO 6680 --- [ragent-service] [try_executor_10] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：现在买和等双十一买哪个划算？
+归一化后：现在买和等双十一买哪个划算？
+改写结果：现在买和等双十一买哪个划算
+子问题：[现在买和等双十一买哪个划算]
+
+2026-06-18T12:25:26.328+08:00  INFO 6680 --- [ragent-service] [ify_executor_12] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：现在买和等双十一买哪个划算
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S4_价格活动",
+            "kbId": "2062065735202508800",
+            "kbIds": [
+                "2062065735202508800",
+                "2062065732585263104"
+            ],
+            "name": "价格活动",
+            "description": "用户的价格活动相关问题，例如：小米 14 Pro 现在有什么优惠活动？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 现在有什么优惠活动？\"",
+                "\"小米 14 Pro 多少钱？\"",
+                "\"学生有优惠吗？\"",
+                "\"200 元的优惠券能用在扫地机上吗？\"",
+                "\"现在买和等双十一买哪个划算？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 价格活动",
+            "kind": "KB",
+            "collectionName": "kb-policy",
+            "collectionNames": [
+                "kb-policy",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:25:26.355+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:25:26.448+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:25:26.449+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=96
+2026-06-18T12:25:30.046+08:00  INFO 6680 --- [ragent-service] [try_executor_11] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:25:30.046+08:00  INFO 6680 --- [ragent-service] [try_executor_11] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:25:32.020+08:00  INFO 6680 --- [ragent-service] [try_executor_11] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：租房想低成本做智能家居，哪些设备适合带走？
+归一化后：租房想低成本做智能家居，哪些设备适合带走？
+改写结果：租房低成本智能家居中适合带走的设备
+子问题：[租房低成本智能家居中适合带走的设备]
+
+2026-06-18T12:25:33.658+08:00  INFO 6680 --- [ragent-service] [ify_executor_13] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：租房低成本智能家居中适合带走的设备
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S1_选购推荐",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "选购推荐",
+            "description": "用户的选购推荐相关问题，例如：预算 3000 元左右，想买一台拍照还不错的手机，推荐哪款？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"预算 3000 元左右，想买一台拍照还不错的手机，推荐哪款？\"",
+                "\"送父母礼物，想实用一点，买什么比较合适？\"",
+                "\"学生党买手机，主要上课拍 PPT、刷视频和续航，怎么选？\"",
+                "\"家里养猫，想买扫地机器人，哪款不容易缠毛？\"",
+                "\"想给女朋友买礼物，预算 1000 左右，有没有不踩雷的？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 选购推荐",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:25:33.684+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:25:33.805+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:25:33.805+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=122
+2026-06-18T12:25:41.258+08:00  INFO 6680 --- [ragent-service] [try_executor_12] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:25:41.259+08:00  INFO 6680 --- [ragent-service] [try_executor_12] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:25:42.994+08:00  INFO 6680 --- [ragent-service] [try_executor_12] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：智能门锁离路由器太远连不上怎么办？
+归一化后：智能门锁离路由器太远连不上怎么办？
+改写结果：智能门锁离路由器太远无法连接的解决方法
+子问题：[智能门锁离路由器太远无法连接的解决方法]
+
+2026-06-18T12:25:44.695+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：智能门锁离路由器太远无法连接的解决方法
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S9_配网连接",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "配网连接",
+            "description": "用户的配网连接相关问题，例如：扫地机怎么连 WiFi？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"扫地机怎么连 WiFi？\"",
+                "\"智能门锁配网失败怎么办？\"",
+                "\"我家是 5G WiFi，扫地机连不上\"",
+                "\"换了路由器，所有设备都要重新配网吗？\"",
+                "\"智能门锁离路由器太远连不上怎么办？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 配网连接",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:25:44.718+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:25:44.804+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:25:44.804+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=88
+2026-06-18T12:25:50.493+08:00  INFO 6680 --- [ragent-service] [try_executor_13] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:25:50.493+08:00  INFO 6680 --- [ragent-service] [try_executor_13] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:25:52.330+08:00  INFO 6680 --- [ragent-service] [try_executor_13] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：想做个离家模式，关灯关空调启动扫地机
+归一化后：想做个离家模式，关灯关空调启动扫地机
+改写结果：离家模式如何实现关灯、关空调和启动扫地机
+子问题：[离家模式如何实现关灯、关空调和启动扫地机]
+
+2026-06-18T12:25:53.926+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：离家模式如何实现关灯、关空调和启动扫地机
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S12_生态联动",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065732585263104"
+            ],
+            "name": "生态联动",
+            "description": "用户的生态联动相关问题，例如：智能音箱能控制扫地机吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"智能音箱能控制扫地机吗？\"",
+                "\"怎么让灯和门锁联动？\"",
+                "\"回家自动开灯开空调怎么设置？\"",
+                "\"门锁开门后扫地机自动暂停能实现吗？\"",
+                "\"想做个离家模式，关灯关空调启动扫地机\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 生态联动",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:25:53.961+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:25:54.050+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:25:54.052+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=92
+2026-06-18T12:26:02.299+08:00  INFO 6680 --- [ragent-service] [try_executor_14] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:26:02.300+08:00  INFO 6680 --- [ragent-service] [try_executor_14] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:26:05.306+08:00  INFO 6680 --- [ragent-service] [try_executor_14] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：门锁开门后扫地机自动暂停能实现吗？
+归一化后：门锁开门后扫地机自动暂停能实现吗？
+改写结果：门锁开门后扫地机自动暂停能否实现
+子问题：[门锁开门后扫地机自动暂停能否实现]
+
+2026-06-18T12:26:06.596+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：门锁开门后扫地机自动暂停能否实现
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S12_生态联动",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065732585263104"
+            ],
+            "name": "生态联动",
+            "description": "用户的生态联动相关问题，例如：智能音箱能控制扫地机吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"智能音箱能控制扫地机吗？\"",
+                "\"怎么让灯和门锁联动？\"",
+                "\"回家自动开灯开空调怎么设置？\"",
+                "\"门锁开门后扫地机自动暂停能实现吗？\"",
+                "\"想做个离家模式，关灯关空调启动扫地机\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 生态联动",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:26:06.621+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:26:06.713+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:26:06.713+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=93
+2026-06-18T12:26:11.942+08:00  INFO 6680 --- [ragent-service] [try_executor_15] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:26:11.943+08:00  INFO 6680 --- [ragent-service] [try_executor_15] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:26:13.771+08:00  INFO 6680 --- [ragent-service] [try_executor_15] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：RedmiBook Pro 14 适合剪视频吗？
+归一化后：RedmiBook Pro 14 适合剪视频吗？
+改写结果：RedmiBook Pro 14 是否适合剪视频
+子问题：[RedmiBook Pro 14 是否适合剪视频]
+
+2026-06-18T12:26:15.402+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：RedmiBook Pro 14 是否适合剪视频
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S7_适用场景",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "适用场景",
+            "description": "用户的适用场景相关问题，例如：扫地机能扫地毯吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"扫地机能扫地毯吗？\"",
+                "\"智能门锁停电了能用吗？\"",
+                "\"家里养猫，扫地机选哪款不容易卡毛？\"",
+                "\"150 平的房子用哪个净化器够？\"",
+                "\"我家是长条户型，扫地机会乱跑吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 适用场景",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:26:15.429+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:26:15.521+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:26:15.522+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=94
+2026-06-18T12:26:19.843+08:00  INFO 6680 --- [ragent-service] [try_executor_16] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:26:19.844+08:00  INFO 6680 --- [ragent-service] [try_executor_16] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:26:21.539+08:00  INFO 6680 --- [ragent-service] [try_executor_16] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：智能门锁配网失败怎么办？
+归一化后：智能门锁配网失败怎么办？
+改写结果：智能门锁配网失败的解决方法
+子问题：[智能门锁配网失败的解决方法]
+
+2026-06-18T12:26:22.922+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：智能门锁配网失败的解决方法
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S9_配网连接",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "配网连接",
+            "description": "用户的配网连接相关问题，例如：扫地机怎么连 WiFi？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"扫地机怎么连 WiFi？\"",
+                "\"智能门锁配网失败怎么办？\"",
+                "\"我家是 5G WiFi，扫地机连不上\"",
+                "\"换了路由器，所有设备都要重新配网吗？\"",
+                "\"智能门锁离路由器太远连不上怎么办？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 配网连接",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:26:22.948+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=4
+2026-06-18T12:26:23.032+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:26:23.033+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=86
+2026-06-18T12:26:30.023+08:00  INFO 6680 --- [ragent-service] [try_executor_17] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:26:30.023+08:00  INFO 6680 --- [ragent-service] [try_executor_17] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:26:31.617+08:00  INFO 6680 --- [ragent-service] [try_executor_17] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：回家自动开灯开空调怎么设置？
+归一化后：回家自动开灯开空调怎么设置？
+改写结果：回家自动开灯开空调的设置方法
+子问题：[回家自动开灯开空调的设置方法]
+
+2026-06-18T12:26:33.293+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：回家自动开灯开空调的设置方法
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S12_生态联动",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065732585263104"
+            ],
+            "name": "生态联动",
+            "description": "用户的生态联动相关问题，例如：智能音箱能控制扫地机吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"智能音箱能控制扫地机吗？\"",
+                "\"怎么让灯和门锁联动？\"",
+                "\"回家自动开灯开空调怎么设置？\"",
+                "\"门锁开门后扫地机自动暂停能实现吗？\"",
+                "\"想做个离家模式，关灯关空调启动扫地机\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 生态联动",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:26:33.317+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:26:33.414+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:26:33.414+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=98
+2026-06-18T12:26:39.857+08:00  INFO 6680 --- [ragent-service] [try_executor_18] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:26:39.858+08:00  INFO 6680 --- [ragent-service] [try_executor_18] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:26:41.395+08:00  INFO 6680 --- [ragent-service] [try_executor_18] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：小米手表 S2 和苹果手表哪个好？
+归一化后：小米手表 S2 和苹果手表哪个好？
+改写结果：小米手表 S2 和苹果手表的对比
+子问题：[小米手表 S2 和苹果手表的对比]
+
+2026-06-18T12:26:42.841+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米手表 S2 和苹果手表的对比
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S3_对比选购",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "对比选购",
+            "description": "用户的对比选购相关问题，例如：小米 14 和小米 14 Pro 有什么区别？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 和小米 14 Pro 有什么区别？\"",
+                "\"石头 T7 和 T7S Plus 区别？\"",
+                "\"小米 13 和小米 14 哪个值得买？\"",
+                "\"Redmi Buds 3 Pro 和小米 Buds 4 哪个降噪好？\"",
+                "\"米家空气净化器 4 和 4 Pro 的滤芯能通用吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 对比选购",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:26:42.877+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=6
+2026-06-18T12:26:42.966+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:26:42.967+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=94
+2026-06-18T12:26:46.431+08:00  INFO 6680 --- [ragent-service] [try_executor_19] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:26:46.432+08:00  INFO 6680 --- [ragent-service] [try_executor_19] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:26:48.061+08:00  INFO 6680 --- [ragent-service] [try_executor_19] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：T7 的滤芯能用在 G10S Pro 上吗？
+归一化后：T7 的滤芯能用在 G10S Pro 上吗？
+改写结果：T7的滤芯能否用于G10S Pro
+子问题：[T7的滤芯能否用于G10S Pro]
+
+2026-06-18T12:26:49.448+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：T7的滤芯能否用于G10S Pro
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S6_配件兼容",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "配件兼容",
+            "description": "用户的配件兼容相关问题，例如：小米 14 Pro 用什么充电器？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 用什么充电器？\"",
+                "\"石头 T7 的滤芯型号是什么？\"",
+                "\"我的旧充电线还能给小米 14 用吗？\"",
+                "\"T7 的滤芯能用在 G10S Pro 上吗？\"",
+                "\"我有小米 13 的 67W 充电器，给小米 14 Pro 用会慢吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 配件兼容",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:26:49.478+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=1, latencyMs=3
+2026-06-18T12:26:49.599+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:26:49.600+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=125
+2026-06-18T12:27:10.390+08:00  INFO 6680 --- [ragent-service] [try_executor_20] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:27:10.391+08:00  INFO 6680 --- [ragent-service] [try_executor_20] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:27:12.201+08:00  INFO 6680 --- [ragent-service] [try_executor_20] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：T7 的滤芯能用在 G10S Pro 上吗？
+归一化后：T7 的滤芯能用在 G10S Pro 上吗？
+改写结果：T7的滤芯能否用于G10S Pro
+子问题：[T7的滤芯能否用于G10S Pro]
+
+2026-06-18T12:27:13.533+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：T7的滤芯能否用于G10S Pro
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S6_配件兼容",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "配件兼容",
+            "description": "用户的配件兼容相关问题，例如：小米 14 Pro 用什么充电器？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 用什么充电器？\"",
+                "\"石头 T7 的滤芯型号是什么？\"",
+                "\"我的旧充电线还能给小米 14 用吗？\"",
+                "\"T7 的滤芯能用在 G10S Pro 上吗？\"",
+                "\"我有小米 13 的 67W 充电器，给小米 14 Pro 用会慢吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 配件兼容",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:27:13.568+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=1, latencyMs=5
+2026-06-18T12:27:13.657+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:27:13.658+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=94
+2026-06-18T12:27:17.081+08:00  INFO 6680 --- [ragent-service] [try_executor_21] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:27:17.082+08:00  INFO 6680 --- [ragent-service] [try_executor_21] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:27:19.121+08:00  INFO 6680 --- [ragent-service] [try_executor_21] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：我有小米 13 的 67W 充电器，给小米 14 Pro 用会慢吗？
+归一化后：我有小米 13 的 67W 充电器，给小米 14 Pro 用会慢吗？
+改写结果：小米13的67W充电器给小米14 Pro充电是否会变慢
+子问题：[小米13的67W充电器给小米14 Pro充电是否会变慢]
+
+2026-06-18T12:27:20.622+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米13的67W充电器给小米14 Pro充电是否会变慢
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S6_配件兼容",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "配件兼容",
+            "description": "用户的配件兼容相关问题，例如：小米 14 Pro 用什么充电器？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 用什么充电器？\"",
+                "\"石头 T7 的滤芯型号是什么？\"",
+                "\"我的旧充电线还能给小米 14 用吗？\"",
+                "\"T7 的滤芯能用在 G10S Pro 上吗？\"",
+                "\"我有小米 13 的 67W 充电器，给小米 14 Pro 用会慢吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 配件兼容",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:27:20.652+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=1, latencyMs=4
+2026-06-18T12:27:20.750+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:27:20.751+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=102
+2026-06-18T12:27:24.405+08:00  INFO 6680 --- [ragent-service] [try_executor_22] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:27:24.406+08:00  INFO 6680 --- [ragent-service] [try_executor_22] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:27:25.305+08:00  INFO 6680 --- [ragent-service] [try_executor_22] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：我家是 5G WiFi，扫地机连不上
+归一化后：我家是 5G WiFi，扫地机连不上
+改写结果：5G WiFi下扫地机连不上
+子问题：[5G WiFi下扫地机连不上]
+
+2026-06-18T12:27:26.910+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：5G WiFi下扫地机连不上
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S9_配网连接",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "配网连接",
+            "description": "用户的配网连接相关问题，例如：扫地机怎么连 WiFi？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"扫地机怎么连 WiFi？\"",
+                "\"智能门锁配网失败怎么办？\"",
+                "\"我家是 5G WiFi，扫地机连不上\"",
+                "\"换了路由器，所有设备都要重新配网吗？\"",
+                "\"智能门锁离路由器太远连不上怎么办？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 配网连接",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:27:26.935+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=7, identifiers=1, latencyMs=3
+2026-06-18T12:27:27.054+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:27:27.054+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=120
+2026-06-18T12:27:32.090+08:00  INFO 6680 --- [ragent-service] [try_executor_23] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:27:32.090+08:00  INFO 6680 --- [ragent-service] [try_executor_23] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:27:33.779+08:00  INFO 6680 --- [ragent-service] [try_executor_23] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：我的小米手表 S3 怎么升级系统？
+归一化后：我的小米手表 S3 怎么升级系统？
+改写结果：小米手表 S3 升级系统的方法
+子问题：[小米手表 S3 升级系统的方法]
+
+2026-06-18T12:27:35.299+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米手表 S3 升级系统的方法
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S11_固件升级",
+            "kbId": "2062065735332532224",
+            "kbIds": [
+                "2062065735332532224",
+                "2062065734992793600"
+            ],
+            "name": "固件升级",
+            "description": "用户的固件升级相关问题，例如：我的小米手表 S3 怎么升级系统？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"我的小米手表 S3 怎么升级系统？\"",
+                "\"扫地机能升级固件吗？\"",
+                "\"升级失败了卡在 50% 了\"",
+                "\"升级新固件后续航变差了怎么办？\"",
+                "\"可以回退到旧版本吗？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 固件升级",
+            "kind": "KB",
+            "collectionName": "kb-faq",
+            "collectionNames": [
+                "kb-faq",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:27:35.333+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=2, identifiers=1, latencyMs=3
+2026-06-18T12:27:35.423+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:27:35.424+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=95
+2026-06-18T12:27:41.898+08:00  INFO 6680 --- [ragent-service] [try_executor_24] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:27:41.902+08:00  INFO 6680 --- [ragent-service] [try_executor_24] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:27:43.999+08:00  INFO 6680 --- [ragent-service] [try_executor_24] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：小米手表 S2 防水吗？能游泳戴吗？
+归一化后：小米手表 S2 防水吗？能游泳戴吗？
+改写结果：小米手表 S2 防水吗，能游泳戴吗
+子问题：[小米手表 S2 防水吗, 小米手表 S2 能游泳戴吗]
+
+2026-06-18T12:27:45.505+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米手表 S2 能游泳戴吗
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S7_适用场景",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "适用场景",
+            "description": "用户的适用场景相关问题，例如：扫地机能扫地毯吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"扫地机能扫地毯吗？\"",
+                "\"智能门锁停电了能用吗？\"",
+                "\"家里养猫，扫地机选哪款不容易卡毛？\"",
+                "\"150 平的房子用哪个净化器够？\"",
+                "\"我家是长条户型，扫地机会乱跑吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 适用场景",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.94
+    }
+]
+
+2026-06-18T12:27:45.572+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米手表 S2 防水吗
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S7_适用场景",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "适用场景",
+            "description": "用户的适用场景相关问题，例如：扫地机能扫地毯吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"扫地机能扫地毯吗？\"",
+                "\"智能门锁停电了能用吗？\"",
+                "\"家里养猫，扫地机选哪款不容易卡毛？\"",
+                "\"150 平的房子用哪个净化器够？\"",
+                "\"我家是长条户型，扫地机会乱跑吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 适用场景",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:27:45.607+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=11
+2026-06-18T12:27:45.608+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=10
+2026-06-18T12:27:45.715+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:27:45.716+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=122
+2026-06-18T12:27:45.723+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:27:45.723+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=129
+2026-06-18T12:27:49.288+08:00  INFO 6680 --- [ragent-service] [try_executor_25] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:27:49.288+08:00  INFO 6680 --- [ragent-service] [try_executor_25] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:27:50.878+08:00  INFO 6680 --- [ragent-service] [try_executor_25] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：小米手表 S2 和苹果手表哪个好？
+归一化后：小米手表 S2 和苹果手表哪个好？
+改写结果：小米手表 S2 和苹果手表的对比
+子问题：[小米手表 S2 和苹果手表的对比]
+
+2026-06-18T12:27:52.274+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米手表 S2 和苹果手表的对比
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S3_对比选购",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "对比选购",
+            "description": "用户的对比选购相关问题，例如：小米 14 和小米 14 Pro 有什么区别？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 和小米 14 Pro 有什么区别？\"",
+                "\"石头 T7 和 T7S Plus 区别？\"",
+                "\"小米 13 和小米 14 哪个值得买？\"",
+                "\"Redmi Buds 3 Pro 和小米 Buds 4 哪个降噪好？\"",
+                "\"米家空气净化器 4 和 4 Pro 的滤芯能通用吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 对比选购",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:27:52.306+08:00  INFO 6680 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=5
+2026-06-18T12:27:52.452+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:27:52.453+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=151
+2026-06-18T12:27:55.348+08:00  INFO 6680 --- [ragent-service] [try_executor_26] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:27:55.348+08:00  INFO 6680 --- [ragent-service] [try_executor_26] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:27:57.172+08:00  INFO 6680 --- [ragent-service] [try_executor_26] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：小米手表 S2 怎么自定义表盘？
+归一化后：小米手表 S2 怎么自定义表盘？
+改写结果：小米手表 S2 自定义表盘的方法
+子问题：[小米手表 S2 自定义表盘的方法]
+
+2026-06-18T12:27:59.183+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米手表 S2 自定义表盘的方法
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S10_APP功能",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600"
+            ],
+            "name": "APP 功能",
+            "description": "用户的APP 功能相关问题，例如：比特APP 怎么查订单？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"比特APP 怎么查订单？\"",
+                "\"怎么修改收货地址？\"",
+                "\"APP 里怎么查扫地机的清扫记录？\"",
+                "\"怎么把账号关联给家人共用？\"",
+                "\"APP 推送太多怎么关闭？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > APP 功能",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:27:59.208+08:00  INFO 6680 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=1, latencyMs=2
+2026-06-18T12:27:59.288+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T12:27:59.288+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=82
+2026-06-18T12:28:04.478+08:00  INFO 6680 --- [ragent-service] [try_executor_27] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:28:04.478+08:00  INFO 6680 --- [ragent-service] [try_executor_27] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:28:05.477+08:00  INFO 6680 --- [ragent-service] [try_executor_27] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：扫地机扫一会就停，提示故障 E5
+归一化后：扫地机扫一会就停，提示故障 E5
+改写结果：扫地机提示故障 E5，扫一会就停
+子问题：[扫地机提示故障 E5，扫一会就停]
+
+2026-06-18T12:28:07.008+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：扫地机提示故障 E5，扫一会就停
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "F1_故障报告",
+            "kbId": "2062065735332532224",
+            "kbIds": [
+                "2062065735332532224",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "故障报告",
+            "description": "用户的故障报告相关问题，例如：我的扫地机充不进电了",
+            "level": "TOPIC",
+            "parentId": "FEEDBACK_ALL",
+            "examples": [
+                "\"我的扫地机充不进电了\"",
+                "\"净化器开机后没反应\"",
+                "\"智能门锁指纹突然识别不了了\"",
+                "\"扫地机扫一会就停，提示故障 E5\"",
+                "\"手表充电时发烫得厉害\""
+            ],
+            "fullPath": "用户反馈 > 反馈处理 > 故障报告",
+            "kind": "KB",
+            "collectionName": "kb-faq",
+            "collectionNames": [
+                "kb-faq",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:28:07.037+08:00  INFO 6680 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=1, latencyMs=5
+2026-06-18T12:28:07.116+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:28:07.116+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=83
+2026-06-18T12:28:12.513+08:00  INFO 6680 --- [ragent-service] [try_executor_28] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:28:12.513+08:00  INFO 6680 --- [ragent-service] [try_executor_28] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:28:14.504+08:00  INFO 6680 --- [ragent-service] [try_executor_28] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：Redmi K70 电池容量多大，支持多少瓦快充？
+归一化后：Redmi K70 电池容量多大，支持多少瓦快充？
+改写结果：Redmi K70 电池容量和快充功率
+子问题：[Redmi K70 电池容量多大, Redmi K70 支持多少瓦快充]
+
+2026-06-18T12:28:17.348+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：Redmi K70 电池容量多大
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S2_参数咨询",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "参数咨询",
+            "description": "用户的参数咨询相关问题，例如：小米 14 Pro 的屏幕尺寸和刷新率是多少？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 的屏幕尺寸和刷新率是多少？\"",
+                "\"Redmi K70 电池容量多大，支持多少瓦快充？\"",
+                "\"米家空气净化器 4 Pro 适合多大面积？\"",
+                "\"小米平板 6 支持手写笔吗？\"",
+                "\"小米智能门锁 E10 支持几种开锁方式？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 参数咨询",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:28:17.564+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：Redmi K70 支持多少瓦快充
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S2_参数咨询",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "参数咨询",
+            "description": "用户的参数咨询相关问题，例如：小米 14 Pro 的屏幕尺寸和刷新率是多少？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 的屏幕尺寸和刷新率是多少？\"",
+                "\"Redmi K70 电池容量多大，支持多少瓦快充？\"",
+                "\"米家空气净化器 4 Pro 适合多大面积？\"",
+                "\"小米平板 6 支持手写笔吗？\"",
+                "\"小米智能门锁 E10 支持几种开锁方式？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 参数咨询",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:28:17.599+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=8
+2026-06-18T12:28:17.600+08:00  INFO 6680 --- [ragent-service] [val_executor_62] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=7
+2026-06-18T12:28:17.675+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:28:17.676+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=83
+2026-06-18T12:28:17.681+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:28:17.682+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=92
+2026-06-18T12:28:20.646+08:00  INFO 6680 --- [ragent-service] [try_executor_29] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:28:20.647+08:00  INFO 6680 --- [ragent-service] [try_executor_29] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:28:22.469+08:00  INFO 6680 --- [ragent-service] [try_executor_29] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：小米智能门锁 E10 支持几种开锁方式？
+归一化后：小米智能门锁 E10 支持几种开锁方式？
+改写结果：小米智能门锁 E10 支持的开锁方式
+子问题：[小米智能门锁 E10 支持的开锁方式]
+
+2026-06-18T12:28:23.756+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米智能门锁 E10 支持的开锁方式
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S2_参数咨询",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "参数咨询",
+            "description": "用户的参数咨询相关问题，例如：小米 14 Pro 的屏幕尺寸和刷新率是多少？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 的屏幕尺寸和刷新率是多少？\"",
+                "\"Redmi K70 电池容量多大，支持多少瓦快充？\"",
+                "\"米家空气净化器 4 Pro 适合多大面积？\"",
+                "\"小米平板 6 支持手写笔吗？\"",
+                "\"小米智能门锁 E10 支持几种开锁方式？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 参数咨询",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:28:23.789+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=8, identifiers=1, latencyMs=6
+2026-06-18T12:28:23.880+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:28:23.881+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=99
+2026-06-18T12:28:28.096+08:00  INFO 6680 --- [ragent-service] [try_executor_30] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:28:28.096+08:00  INFO 6680 --- [ragent-service] [try_executor_30] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:28:29.128+08:00  INFO 6680 --- [ragent-service] [try_executor_30] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：石头 T7 的滤芯型号是什么？
+归一化后：石头 T7 的滤芯型号是什么？
+改写结果：石头 T7 的滤芯型号
+子问题：[石头 T7 的滤芯型号]
+
+2026-06-18T12:28:30.358+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：石头 T7 的滤芯型号
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S6_配件兼容",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "配件兼容",
+            "description": "用户的配件兼容相关问题，例如：小米 14 Pro 用什么充电器？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 用什么充电器？\"",
+                "\"石头 T7 的滤芯型号是什么？\"",
+                "\"我的旧充电线还能给小米 14 用吗？\"",
+                "\"T7 的滤芯能用在 G10S Pro 上吗？\"",
+                "\"我有小米 13 的 67W 充电器，给小米 14 Pro 用会慢吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 配件兼容",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:28:30.385+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=4
+2026-06-18T12:28:30.468+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:28:30.469+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=89
+2026-06-18T12:28:34.019+08:00  INFO 6680 --- [ragent-service] [try_executor_31] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:28:34.019+08:00  INFO 6680 --- [ragent-service] [try_executor_31] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:28:35.645+08:00  INFO 6680 --- [ragent-service] [try_executor_31] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：小米 14 Pro 保修期多久？
+归一化后：小米 14 Pro 保修期多久？
+改写结果：小米 14 Pro 保修期
+子问题：[小米 14 Pro 保修期]
+
+2026-06-18T12:28:38.142+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米 14 Pro 保修期
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S14_售后政策",
+            "kbId": "2062065735202508800",
+            "kbIds": [
+                "2062065735202508800"
+            ],
+            "name": "售后政策",
+            "description": "用户的售后政策相关问题，例如：小米 14 Pro 保修期多久？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_AFTERSALES",
+            "examples": [
+                "\"小米 14 Pro 保修期多久？\"",
+                "\"屏幕碎了保修吗？\"",
+                "\"进水了能保修吗？\"",
+                "\"换屏多少钱？\"",
+                "\"电池衰减算保修吗？\""
+            ],
+            "fullPath": "产品咨询 > 售后咨询 > 售后政策",
+            "kind": "KB",
+            "collectionName": "kb-policy",
+            "collectionNames": [
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:28:38.166+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:28:38.242+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T12:28:38.243+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=80
+2026-06-18T12:28:42.111+08:00  INFO 6680 --- [ragent-service] [try_executor_32] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:28:42.112+08:00  INFO 6680 --- [ragent-service] [try_executor_32] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:28:44.009+08:00  INFO 6680 --- [ragent-service] [try_executor_32] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：Redmi Buds 3 Pro 的耳塞套小米 Buds 4 能用吗？
+归一化后：Redmi Buds 3 Pro 的耳塞套小米 Buds 4 能用吗？
+改写结果：Redmi Buds 3 Pro 的耳塞套是否适用于小米 Buds 4
+子问题：[Redmi Buds 3 Pro 的耳塞套是否适用于小米 Buds 4]
+
+2026-06-18T12:28:45.355+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：Redmi Buds 3 Pro 的耳塞套是否适用于小米 Buds 4
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S6_配件兼容",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "配件兼容",
+            "description": "用户的配件兼容相关问题，例如：小米 14 Pro 用什么充电器？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 用什么充电器？\"",
+                "\"石头 T7 的滤芯型号是什么？\"",
+                "\"我的旧充电线还能给小米 14 用吗？\"",
+                "\"T7 的滤芯能用在 G10S Pro 上吗？\"",
+                "\"我有小米 13 的 67W 充电器，给小米 14 Pro 用会慢吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 配件兼容",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:28:45.378+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:28:45.463+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:28:45.464+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=89
+2026-06-18T12:28:49.257+08:00  INFO 6680 --- [ragent-service] [try_executor_33] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:28:49.258+08:00  INFO 6680 --- [ragent-service] [try_executor_33] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:28:50.784+08:00  INFO 6680 --- [ragent-service] [try_executor_33] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：扫地机怎么连 WiFi？
+归一化后：扫地机怎么连 WiFi？
+改写结果：扫地机连接 WiFi 的方法
+子问题：[扫地机连接 WiFi 的方法]
+
+2026-06-18T12:28:52.345+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：扫地机连接 WiFi 的方法
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S9_配网连接",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "配网连接",
+            "description": "用户的配网连接相关问题，例如：扫地机怎么连 WiFi？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"扫地机怎么连 WiFi？\"",
+                "\"智能门锁配网失败怎么办？\"",
+                "\"我家是 5G WiFi，扫地机连不上\"",
+                "\"换了路由器，所有设备都要重新配网吗？\"",
+                "\"智能门锁离路由器太远连不上怎么办？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 配网连接",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:28:52.374+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:28:52.444+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:28:52.444+08:00  INFO 6680 --- [ragent-service] [val_executor_61] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=74
+2026-06-18T12:29:00.327+08:00  INFO 6680 --- [ragent-service] [try_executor_34] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:29:00.328+08:00  INFO 6680 --- [ragent-service] [try_executor_34] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:29:01.306+08:00  INFO 6680 --- [ragent-service] [try_executor_34] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：这手机用了 3 个月就卡
+归一化后：这手机用了 3 个月就卡
+改写结果：手机使用3个月后变卡
+子问题：[手机使用3个月后变卡]
+
+2026-06-18T12:29:02.719+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：手机使用3个月后变卡
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "F3_投诉吐槽",
+            "kbIds": [
+            ],
+            "name": "投诉吐槽",
+            "description": "用户的投诉吐槽相关问题，例如：客服态度太差了",
+            "level": "TOPIC",
+            "parentId": "FEEDBACK_ALL",
+            "examples": [
+                "\"客服态度太差了\"",
+                "\"等了一周还没发货，太慢了！\"",
+                "\"这手机用了 3 个月就卡\"",
+                "\"我要投诉你们，准备消协见！\"",
+                "\"你们这是欺骗消费者！\""
+            ],
+            "fullPath": "用户反馈 > 反馈处理 > 投诉吐槽",
+            "kind": "SYSTEM",
+            "collectionNames": [
+            ],
+            "promptTemplate": "你是比特严选客服助手。先简短共情并确认用户诉求。纯情绪投诉应记录问题并说明可转人工处理；不要争辩、不要作法律定性。若问题同时涉及物流、故障或售后事实，应结合并列知识意图提供的证据处理，不得编造政策。"
+        },
+        "score": 0.85
+    }
+]
+
+2026-06-18T12:29:06.948+08:00  INFO 6680 --- [ragent-service] [nio-9090-exec-8] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:29:06.949+08:00  INFO 6680 --- [ragent-service] [nio-9090-exec-8] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:29:08.644+08:00  INFO 6680 --- [ragent-service] [nio-9090-exec-8] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：这手机用了 3 个月就卡
+归一化后：这手机用了 3 个月就卡
+改写结果：手机使用3个月后变卡
+子问题：[手机使用3个月后变卡]
+
+2026-06-18T12:29:09.847+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：手机使用3个月后变卡
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "F3_投诉吐槽",
+            "kbIds": [
+            ],
+            "name": "投诉吐槽",
+            "description": "用户的投诉吐槽相关问题，例如：客服态度太差了",
+            "level": "TOPIC",
+            "parentId": "FEEDBACK_ALL",
+            "examples": [
+                "\"客服态度太差了\"",
+                "\"等了一周还没发货，太慢了！\"",
+                "\"这手机用了 3 个月就卡\"",
+                "\"我要投诉你们，准备消协见！\"",
+                "\"你们这是欺骗消费者！\""
+            ],
+            "fullPath": "用户反馈 > 反馈处理 > 投诉吐槽",
+            "kind": "SYSTEM",
+            "collectionNames": [
+            ],
+            "promptTemplate": "你是比特严选客服助手。先简短共情并确认用户诉求。纯情绪投诉应记录问题并说明可转人工处理；不要争辩、不要作法律定性。若问题同时涉及物流、故障或售后事实，应结合并列知识意图提供的证据处理，不得编造政策。"
+        },
+        "score": 0.85
+    }
+]
+
+2026-06-18T12:29:09.884+08:00  INFO 6680 --- [ragent-service] [val_executor_61] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=1, latencyMs=8
+2026-06-18T12:29:09.986+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 全局检索 检索统计 - 总目标数: 5, 成功: 5, 失败: 0, 检索到 Chunk 总数: 92
+2026-06-18T12:29:09.987+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.VectorGlobalSearchChannel : Global vector retrieval completed, chunks=92, latencyMs=109
+2026-06-18T12:29:11.609+08:00  INFO 6680 --- [ragent-service] [try_executor_35] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:29:11.610+08:00  INFO 6680 --- [ragent-service] [try_executor_35] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:29:13.308+08:00  INFO 6680 --- [ragent-service] [try_executor_35] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：可以 7 天无理由退货吗？
+归一化后：可以 7 天无理由退货吗？
+改写结果：是否支持7天无理由退货
+子问题：[是否支持7天无理由退货]
+
+2026-06-18T12:29:14.711+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：是否支持7天无理由退货
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S15_退换货",
+            "kbId": "2062065735202508800",
+            "kbIds": [
+                "2062065735202508800"
+            ],
+            "name": "退换货",
+            "description": "用户的退换货相关问题，例如：可以 7 天无理由退货吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_AFTERSALES",
+            "examples": [
+                "\"可以 7 天无理由退货吗？\"",
+                "\"怎么申请退货？\"",
+                "\"已经拆封了还能退吗？\"",
+                "\"用了一周发现不喜欢能退吗？\"",
+                "\"退货运费谁出？\""
+            ],
+            "fullPath": "产品咨询 > 售后咨询 > 退换货",
+            "kind": "KB",
+            "collectionName": "kb-policy",
+            "collectionNames": [
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:29:14.734+08:00  INFO 6680 --- [ragent-service] [val_executor_61] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=1, latencyMs=3
+2026-06-18T12:29:14.811+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-18T12:29:14.811+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=79
+2026-06-18T12:29:19.637+08:00  INFO 6680 --- [ragent-service] [try_executor_36] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:29:19.638+08:00  INFO 6680 --- [ragent-service] [try_executor_36] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:29:21.370+08:00  INFO 6680 --- [ragent-service] [try_executor_36] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：米家空气净化器 4 Pro 适合多大面积？
+归一化后：米家空气净化器 4 Pro 适合多大面积？
+改写结果：米家空气净化器 4 Pro 适用面积
+子问题：[米家空气净化器 4 Pro 适用面积]
+
+2026-06-18T12:29:22.975+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：米家空气净化器 4 Pro 适用面积
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S7_适用场景",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "适用场景",
+            "description": "用户的适用场景相关问题，例如：扫地机能扫地毯吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"扫地机能扫地毯吗？\"",
+                "\"智能门锁停电了能用吗？\"",
+                "\"家里养猫，扫地机选哪款不容易卡毛？\"",
+                "\"150 平的房子用哪个净化器够？\"",
+                "\"我家是长条户型，扫地机会乱跑吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 适用场景",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:29:23.000+08:00  INFO 6680 --- [ragent-service] [val_executor_61] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=5, identifiers=0, latencyMs=4
+2026-06-18T12:29:23.088+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:29:23.088+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=91
+2026-06-18T12:29:25.697+08:00  INFO 6680 --- [ragent-service] [try_executor_37] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:29:25.698+08:00  INFO 6680 --- [ragent-service] [try_executor_37] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:29:27.501+08:00  INFO 6680 --- [ragent-service] [try_executor_37] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：石头 G10 在地毯上吸力会下降吗？
+归一化后：石头 G10 在地毯上吸力会下降吗？
+改写结果：石头 G10 在地毯上吸力是否会下降
+子问题：[石头 G10 在地毯上吸力是否会下降]
+
+2026-06-18T12:29:29.133+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：石头 G10 在地毯上吸力是否会下降
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S7_适用场景",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "适用场景",
+            "description": "用户的适用场景相关问题，例如：扫地机能扫地毯吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"扫地机能扫地毯吗？\"",
+                "\"智能门锁停电了能用吗？\"",
+                "\"家里养猫，扫地机选哪款不容易卡毛？\"",
+                "\"150 平的房子用哪个净化器够？\"",
+                "\"我家是长条户型，扫地机会乱跑吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 适用场景",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:29:29.169+08:00  INFO 6680 --- [ragent-service] [val_executor_61] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=7
+2026-06-18T12:29:29.282+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-18T12:29:29.282+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=119
+2026-06-18T12:29:33.351+08:00  INFO 6680 --- [ragent-service] [try_executor_38] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:29:33.351+08:00  INFO 6680 --- [ragent-service] [try_executor_38] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:29:36.261+08:00  INFO 6680 --- [ragent-service] [try_executor_38] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：小米平板 6 Pro 现在参考价是多少，活动价会变吗？
+归一化后：小米平板 6 Pro 现在参考价是多少，活动价会变吗？
+改写结果：小米平板 6 Pro 的参考价和活动价变化情况
+子问题：[小米平板 6 Pro 现在参考价是多少, 小米平板 6 Pro 活动价会变吗]
+
+2026-06-18T12:29:37.591+08:00  INFO 6680 --- [ragent-service] [ify_executor_14] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米平板 6 Pro 现在参考价是多少
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S4_价格活动",
+            "kbId": "2062065735202508800",
+            "kbIds": [
+                "2062065735202508800",
+                "2062065732585263104"
+            ],
+            "name": "价格活动",
+            "description": "用户的价格活动相关问题，例如：小米 14 Pro 现在有什么优惠活动？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 现在有什么优惠活动？\"",
+                "\"小米 14 Pro 多少钱？\"",
+                "\"学生有优惠吗？\"",
+                "\"200 元的优惠券能用在扫地机上吗？\"",
+                "\"现在买和等双十一买哪个划算？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 价格活动",
+            "kind": "KB",
+            "collectionName": "kb-policy",
+            "collectionNames": [
+                "kb-policy",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:29:37.697+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米平板 6 Pro 活动价会变吗
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S4_价格活动",
+            "kbId": "2062065735202508800",
+            "kbIds": [
+                "2062065735202508800",
+                "2062065732585263104"
+            ],
+            "name": "价格活动",
+            "description": "用户的价格活动相关问题，例如：小米 14 Pro 现在有什么优惠活动？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 现在有什么优惠活动？\"",
+                "\"小米 14 Pro 多少钱？\"",
+                "\"学生有优惠吗？\"",
+                "\"200 元的优惠券能用在扫地机上吗？\"",
+                "\"现在买和等双十一买哪个划算？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 价格活动",
+            "kind": "KB",
+            "collectionName": "kb-policy",
+            "collectionNames": [
+                "kb-policy",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-18T12:29:37.720+08:00  INFO 6680 --- [ragent-service] [val_executor_61] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=2
+2026-06-18T12:29:37.725+08:00  INFO 6680 --- [ragent-service] [val_executor_63] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=4
+2026-06-18T12:29:37.819+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:29:37.820+08:00  INFO 6680 --- [ragent-service] [val_executor_60] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=101
+2026-06-18T12:29:37.828+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:29:37.828+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=108
+2026-06-18T12:29:43.688+08:00  INFO 6680 --- [ragent-service] [try_executor_39] n.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-18T12:29:43.689+08:00  INFO 6680 --- [ragent-service] [try_executor_39] c.n.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-18T12:29:44.792+08:00  INFO 6680 --- [ragent-service] [try_executor_39] .n.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：想做个离家模式，关灯关空调启动扫地机
+归一化后：想做个离家模式，关灯关空调启动扫地机
+改写结果：离家模式如何实现关灯、关空调和启动扫地机
+子问题：[离家模式如何实现关灯、关空调和启动扫地机]
+
+2026-06-18T12:29:47.455+08:00  INFO 6680 --- [ragent-service] [ify_executor_15] c.n.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：离家模式如何实现关灯、关空调和启动扫地机
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S12_生态联动",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065732585263104"
+            ],
+            "name": "生态联动",
+            "description": "用户的生态联动相关问题，例如：智能音箱能控制扫地机吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"智能音箱能控制扫地机吗？\"",
+                "\"怎么让灯和门锁联动？\"",
+                "\"回家自动开灯开空调怎么设置？\"",
+                "\"门锁开门后扫地机自动暂停能实现吗？\"",
+                "\"想做个离家模式，关灯关空调启动扫地机\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 生态联动",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-18T12:29:47.484+08:00  INFO 6680 --- [ragent-service] [val_executor_60] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=0, identifiers=0, latencyMs=3
+2026-06-18T12:29:47.581+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .n.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-18T12:29:47.581+08:00  INFO 6680 --- [ragent-service] [val_executor_62] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=101

@@ -110,11 +110,26 @@ public class SearchChannelProperties {
 
         private int topKMultiplier = 3;
 
+        private String ranking = "bm25";
+
         /**
-         * 仅在查询包含型号、版本号、错误码或 ASCII 关键词时启用普通 FTS。
-         * 精确标识符检索不受此开关影响。
+         * Only run free-text keyword search for ASCII-like queries.
+         * Identifier token lookup is always allowed.
          */
-        private boolean ordinaryFtsConditional = false;
+        private Boolean keywordTextSearchConditional;
+
+        /**
+         * @deprecated use keywordTextSearchConditional instead.
+         */
+        @Deprecated
+        private Boolean ordinaryFtsConditional;
+
+        public boolean isKeywordTextSearchConditional() {
+            if (keywordTextSearchConditional != null) {
+                return keywordTextSearchConditional;
+            }
+            return ordinaryFtsConditional != null && ordinaryFtsConditional;
+        }
     }
 
     private Fusion fusion = new Fusion();

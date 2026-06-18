@@ -4,6 +4,9 @@
 -- Enable pgvector extension
 CREATE EXTENSION IF NOT EXISTS vector;
 
+-- Enable ParadeDB BM25 full-text search extension
+CREATE EXTENSION IF NOT EXISTS pg_search;
+
 -- ============================================
 -- User & Conversation Tables
 -- ============================================
@@ -452,6 +455,13 @@ CREATE INDEX idx_kv_embedding ON t_knowledge_vector USING hnsw (embedding vector
 CREATE INDEX idx_kv_search_vector ON t_knowledge_vector USING gin(search_vector);
 CREATE INDEX idx_kv_identifier_tokens ON t_knowledge_vector USING gin(identifier_tokens);
 CREATE INDEX idx_kv_collection_name ON t_knowledge_vector ((metadata->>'collection_name'));
+CREATE INDEX idx_kv_bm25 ON t_knowledge_vector
+    USING bm25 (
+        id,
+        (content::pdb.jieba),
+        ((metadata->>'collection_name')::pdb.literal('alias=collection_name'))
+    )
+    WITH (key_field='id');
 COMMENT ON TABLE t_knowledge_vector IS '知识库向量存储表';
 COMMENT ON COLUMN t_knowledge_vector.id IS '分块ID';
 COMMENT ON COLUMN t_knowledge_vector.content IS '分块文本内容';

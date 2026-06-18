@@ -54,9 +54,10 @@ public class PgRetrieverService implements RetrieverService {
 
     @Override
     public List<RetrievedChunk> retrieveByVector(float[] vector, RetrieveRequest request) {
-        // 设置ef_search提升召回率
+        int efSearch = resolveHnswEfSearch();
+        // Configure pgvector HNSW search breadth for this session.
         // noinspection SqlDialectInspection,SqlNoDataSourceInspection
-        jdbcTemplate.execute("SET hnsw.ef_search = 200");
+        jdbcTemplate.execute("SET hnsw.ef_search = " + efSearch);
 
         String vectorLiteral = toVectorLiteral(vector);
         // noinspection SqlDialectInspection,SqlNoDataSourceInspection
@@ -68,6 +69,14 @@ public class PgRetrieverService implements RetrieverService {
                         .build(),
                 vectorLiteral, request.getCollectionName(), vectorLiteral, request.getTopK()
         );
+    }
+
+    int resolveHnswEfSearch() {
+        Integer efSearch = ragConfigProperties.getPgHnswEfSearch();
+        if (efSearch == null || efSearch <= 0) {
+            throw new IllegalArgumentException("rag.vector.pg.hnsw-ef-search must be a positive integer");
+        }
+        return efSearch;
     }
 
     private float[] normalize(float[] vector) {

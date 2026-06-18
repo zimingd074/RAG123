@@ -46,16 +46,42 @@ public class PostgresKeywordSearchChannel implements SearchChannel {
     private static final Pattern LETTER_OR_SEPARATOR_PATTERN = Pattern.compile("[\\p{L}_.-]");
     private static final Pattern ASCII_KEYWORD_PATTERN = Pattern.compile("(?i)(?<![A-Z0-9])[A-Z][A-Z0-9_.-]*(?![A-Z0-9])");
     private static final Pattern TRAILING_SEPARATOR_PATTERN = Pattern.compile("[_.-]+$");
-    private static final String SEARCH_SQL = """
+    private static final String BM25_SEARCH_SQL = """
             SELECT id,
                    content,
                    CASE WHEN ? AND identifier_tokens && ?::text[] THEN 1 ELSE 0 END AS exact_match,
-                   ts_rank_cd(search_vector, websearch_to_tsquery('simple', ?), 32) AS text_rank
+                   pdb.score(id) AS rank_score
               FROM t_knowledge_vector
              WHERE metadata->>'collection_name' = ANY (?::text[])
                AND ((? AND identifier_tokens && ?::text[])
-                    OR search_vector @@ websearch_to_tsquery('simple', ?))
-             ORDER BY exact_match DESC, text_rank DESC, id
+                    OR (? AND content ||| ?))
+             ORDER BY exact_match DESC, rank_score DESC, id
+             LIMIT ?
+            """;
+    private static final String FTS_SEARCH_SQL = """
+            WITH q AS (
+                SELECT websearch_to_tsquery('simple', ?) AS query
+            )
+            SELECT kv.id,
+                   kv.content,
+                   CASE WHEN ? AND kv.identifier_tokens && ?::text[] THEN 1 ELSE 0 END AS exact_match,
+                   ts_rank_cd(kv.search_vector, q.query) AS rank_score
+              FROM t_knowledge_vector kv, q
+             WHERE kv.metadata->>'collection_name' = ANY (?::text[])
+               AND ((? AND kv.identifier_tokens && ?::text[])
+                    OR (? AND kv.search_vector @@ q.query))
+             ORDER BY exact_match DESC, rank_score DESC, kv.id
+             LIMIT ?
+            """;
+    private static final String IDENTIFIER_ONLY_SQL = """
+            SELECT id,
+                   content,
+                   1 AS exact_match,
+                   0.0 AS rank_score
+              FROM t_knowledge_vector
+             WHERE metadata->>'collection_name' = ANY (?::text[])
+               AND identifier_tokens && ?::text[]
+             ORDER BY id
              LIMIT ?
             """;
 
@@ -87,9 +113,10 @@ public class PostgresKeywordSearchChannel implements SearchChannel {
             List<String> identifiers = extractIdentifierTokens(query);
             List<String> collections = context.getRetrievalScope().collectionNames();
             int topK = context.getTopK() * properties.getChannels().getKeywordPg().getTopKMultiplier();
-            boolean ordinaryFtsEnabled = shouldRunOrdinaryFts(query);
-            List<RetrievedChunk> chunks = ordinaryFtsEnabled || !identifiers.isEmpty()
-                    ? executeSearch(query, identifiers, collections, topK)
+            boolean keywordTextSearchEnabled = shouldRunKeywordTextSearch(query);
+            String ranking = keywordRanking();
+            List<RetrievedChunk> chunks = keywordTextSearchEnabled || !identifiers.isEmpty()
+                    ? executeSearch(query, identifiers, collections, topK, keywordTextSearchEnabled)
                     : List.of();
             long latency = System.currentTimeMillis() - startTime;
             log.info("PostgreSQL keyword retrieval completed, chunks={}, identifiers={}, latencyMs={}",
@@ -109,7 +136,9 @@ public class PostgresKeywordSearchChannel implements SearchChannel {
                             "identifierCount", identifiers.size(),
                             "exactIdentifierChunkIds", exactChunkIds,
                             "collectionCount", collections.size(),
-                            "ordinaryFtsEnabled", ordinaryFtsEnabled
+                            "keywordTextSearchEnabled", keywordTextSearchEnabled,
+                            "ranking", ranking,
+                            "tokenizer", "bm25".equals(ranking) ? "pdb.jieba" : "postgres.simple"
                     ))
                     .build();
         } catch (Exception e) {
@@ -133,26 +162,78 @@ public class PostgresKeywordSearchChannel implements SearchChannel {
     private List<RetrievedChunk> executeSearch(String query,
                                                List<String> identifiers,
                                                List<String> collections,
-                                               int topK) {
+                                               int topK,
+                                               boolean keywordTextSearchEnabled) {
+        if (!keywordTextSearchEnabled) {
+            return executeIdentifierSearch(identifiers, collections, topK);
+        }
         return jdbcTemplate.query(connection -> {
-            PreparedStatement statement = connection.prepareStatement(SEARCH_SQL);
+            boolean bm25 = "bm25".equals(keywordRanking());
+            PreparedStatement statement = connection.prepareStatement(bm25 ? BM25_SEARCH_SQL : FTS_SEARCH_SQL);
             boolean hasIdentifiers = !identifiers.isEmpty();
             Array identifierArray = connection.createArrayOf("text", identifiers.toArray());
             Array collectionArray = connection.createArrayOf("text", collections.toArray());
-            statement.setBoolean(1, hasIdentifiers);
-            statement.setArray(2, identifierArray);
-            statement.setString(3, query);
-            statement.setArray(4, collectionArray);
-            statement.setBoolean(5, hasIdentifiers);
-            statement.setArray(6, identifierArray);
-            statement.setString(7, query);
-            statement.setInt(8, topK);
+            if (bm25) {
+                statement.setBoolean(1, hasIdentifiers);
+                statement.setArray(2, identifierArray);
+                statement.setArray(3, collectionArray);
+                statement.setBoolean(4, hasIdentifiers);
+                statement.setArray(5, identifierArray);
+                statement.setBoolean(6, keywordTextSearchEnabled);
+                statement.setString(7, query);
+                statement.setInt(8, topK);
+            } else {
+                statement.setString(1, query);
+                statement.setBoolean(2, hasIdentifiers);
+                statement.setArray(3, identifierArray);
+                statement.setArray(4, collectionArray);
+                statement.setBoolean(5, hasIdentifiers);
+                statement.setArray(6, identifierArray);
+                statement.setBoolean(7, keywordTextSearchEnabled);
+                statement.setInt(8, topK);
+            }
             return statement;
         }, (rs, rowNum) -> RetrievedChunk.builder()
                 .id(rs.getString("id"))
                 .text(rs.getString("content"))
-                .score(rs.getFloat("exact_match") * 1000.0F + rs.getFloat("text_rank"))
+                .score(rs.getFloat("exact_match") * 1000.0F + rs.getFloat("rank_score"))
                 .build());
+    }
+
+    private List<RetrievedChunk> executeIdentifierSearch(List<String> identifiers,
+                                                         List<String> collections,
+                                                         int topK) {
+        if (identifiers.isEmpty()) {
+            return List.of();
+        }
+        return jdbcTemplate.query(connection -> {
+            PreparedStatement statement = connection.prepareStatement(IDENTIFIER_ONLY_SQL);
+            Array collectionArray = connection.createArrayOf("text", collections.toArray());
+            Array identifierArray = connection.createArrayOf("text", identifiers.toArray());
+            statement.setArray(1, collectionArray);
+            statement.setArray(2, identifierArray);
+            statement.setInt(3, topK);
+            return statement;
+        }, (rs, rowNum) -> RetrievedChunk.builder()
+                .id(rs.getString("id"))
+                .text(rs.getString("content"))
+                .score(rs.getFloat("exact_match") * 1000.0F + rs.getFloat("rank_score"))
+                .build());
+    }
+
+    static String searchSql() {
+        return BM25_SEARCH_SQL;
+    }
+
+    static String ftsSearchSql() {
+        return FTS_SEARCH_SQL;
+    }
+
+    String keywordRanking() {
+        String ranking = properties.getChannels().getKeywordPg().getRanking();
+        return ranking == null || ranking.isBlank()
+                ? "bm25"
+                : ranking.trim().toLowerCase(Locale.ROOT);
     }
 
     static List<String> extractIdentifierTokens(String query) {
@@ -173,8 +254,8 @@ public class PostgresKeywordSearchChannel implements SearchChannel {
         return List.copyOf(tokens);
     }
 
-    boolean shouldRunOrdinaryFts(String query) {
-        return !properties.getChannels().getKeywordPg().isOrdinaryFtsConditional()
+    boolean shouldRunKeywordTextSearch(String query) {
+        return !properties.getChannels().getKeywordPg().isKeywordTextSearchConditional()
                 || hasAsciiKeyword(query);
     }
 
