@@ -3,6 +3,10 @@
 {chunks_body}
 </content>
 
+--- section: kb-evidence-item ---
+[{evidence_id} | doc_id={doc_id} | doc_name={doc_name} | chunk_id={chunk_id} | chunk_index={chunk_index}]
+{text}
+
 --- section: snippet-rules ---
 <rules>
 {rules}

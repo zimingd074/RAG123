@@ -29,8 +29,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -41,6 +43,7 @@ import static com.zimingd.ai.ragent.rag.constant.RAGConstant.CONTEXT_FORMAT_PATH
 public class DefaultContextFormatter implements ContextFormatter {
 
     private final PromptTemplateLoader templateLoader;
+    private final EvidenceMetadataResolver evidenceMetadataResolver;
 
     @Override
     public String formatKbContext(List<NodeScore> kbIntents, Map<String, List<RetrievedChunk>> rerankedByIntent, int topK) {
@@ -60,12 +63,14 @@ public class DefaultContextFormatter implements ContextFormatter {
      * 格式化单意图上下文
      */
     private String formatSingleIntentContext(NodeScore nodeScore, Map<String, List<RetrievedChunk>> rerankedByIntent, int topK) {
-        List<RetrievedChunk> chunks = rerankedByIntent.get(nodeScore.getNode().getId());
+        IntentNode node = nodeScore == null ? null : nodeScore.getNode();
+        String nodeId = node == null ? null : node.getId();
+        List<RetrievedChunk> chunks = rerankedByIntent.get(nodeId);
         if (CollUtil.isEmpty(chunks)) {
             return "";
         }
-        String snippet = StrUtil.emptyIfNull(nodeScore.getNode().getPromptSnippet()).trim();
-        String body = joinChunkTexts(chunks, topK);
+        String snippet = StrUtil.emptyIfNull(node == null ? null : node.getPromptSnippet()).trim();
+        String body = formatEvidenceItems(chunks, topK);
         return renderKbSection(renderSnippetRules(snippet), body);
     }
 
@@ -75,7 +80,9 @@ public class DefaultContextFormatter implements ContextFormatter {
     private String formatMultiIntentContext(List<NodeScore> kbIntents, Map<String, List<RetrievedChunk>> rerankedByIntent, int topK) {
         // 1. 合并所有意图的回答规则
         List<String> snippets = kbIntents.stream()
-                .map(ns -> ns.getNode().getPromptSnippet())
+                .map(NodeScore::getNode)
+                .filter(node -> node != null)
+                .map(IntentNode::getPromptSnippet)
                 .filter(StrUtil::isNotBlank)
                 .map(String::trim)
                 .distinct()
@@ -90,24 +97,17 @@ public class DefaultContextFormatter implements ContextFormatter {
         }
 
         // 2. 合并所有意图的文档片段（去重）
-        List<RetrievedChunk> allChunks = rerankedByIntent.values().stream()
-                .flatMap(List::stream)
-                .distinct()
-                .limit(topK)
-                .toList();
+        List<RetrievedChunk> allChunks = flattenByIntentOrder(kbIntents, rerankedByIntent);
 
         if (allChunks.isEmpty()) {
             return snippetSection;
         }
 
-        String body = allChunks.stream()
-                .map(RetrievedChunk::getText)
-                .collect(Collectors.joining("\n"));
+        String body = formatEvidenceItems(allChunks, topK);
         return renderKbSection(snippetSection, body);
     }
 
     private String formatChunksWithoutIntent(Map<String, List<RetrievedChunk>> rerankedByIntent, int topK) {
-        int limit = topK > 0 ? topK : Integer.MAX_VALUE;
         List<RetrievedChunk> chunks = new ArrayList<>();
         for (List<RetrievedChunk> list : rerankedByIntent.values()) {
             if (CollUtil.isEmpty(list)) {
@@ -115,22 +115,44 @@ public class DefaultContextFormatter implements ContextFormatter {
             }
             for (RetrievedChunk chunk : list) {
                 chunks.add(chunk);
-                if (chunks.size() >= limit) {
-                    break;
-                }
-            }
-            if (chunks.size() >= limit) {
-                break;
             }
         }
         if (chunks.isEmpty()) {
             return "";
         }
 
-        String body = chunks.stream()
-                .map(RetrievedChunk::getText)
-                .collect(Collectors.joining("\n"));
+        String body = formatEvidenceItems(chunks, topK);
         return renderKbSection("", body);
+    }
+
+    private List<RetrievedChunk> flattenByIntentOrder(List<NodeScore> kbIntents,
+                                                      Map<String, List<RetrievedChunk>> rerankedByIntent) {
+        List<RetrievedChunk> chunks = new ArrayList<>();
+        Set<String> visitedKeys = new LinkedHashSet<>();
+        if (CollUtil.isNotEmpty(kbIntents)) {
+            for (NodeScore score : kbIntents) {
+                IntentNode node = score == null ? null : score.getNode();
+                String key = node == null ? null : node.getId();
+                if (StrUtil.isBlank(key) || !visitedKeys.add(key)) {
+                    continue;
+                }
+                List<RetrievedChunk> list = rerankedByIntent.get(key);
+                if (CollUtil.isNotEmpty(list)) {
+                    chunks.addAll(list);
+                }
+            }
+        }
+        rerankedByIntent.keySet().stream()
+                .filter(StrUtil::isNotBlank)
+                .filter(key -> !visitedKeys.contains(key))
+                .sorted()
+                .forEach(key -> {
+                    List<RetrievedChunk> list = rerankedByIntent.get(key);
+                    if (CollUtil.isNotEmpty(list)) {
+                        chunks.addAll(list);
+                    }
+                });
+        return chunks;
     }
 
     @Override
@@ -192,11 +214,63 @@ public class DefaultContextFormatter implements ContextFormatter {
         return templateLoader.renderSection(CONTEXT_FORMAT_PATH, "snippet-rules", Map.of("rules", snippet));
     }
 
-    private String joinChunkTexts(List<RetrievedChunk> chunks, int topK) {
-        return chunks.stream()
-                .limit(topK)
-                .map(RetrievedChunk::getText)
-                .collect(Collectors.joining("\n"));
+    private String formatEvidenceItems(List<RetrievedChunk> chunks, int topK) {
+        List<RetrievedChunk> limitedChunks = deduplicateAndLimit(chunks, topK);
+        if (CollUtil.isEmpty(limitedChunks)) {
+            return "";
+        }
+        List<EvidenceMetadata> metadata = evidenceMetadataResolver.resolve(limitedChunks);
+        return IntStream.range(0, limitedChunks.size())
+                .mapToObj(index -> renderEvidenceItem(limitedChunks.get(index), metadataAt(metadata, index)))
+                .collect(Collectors.joining("\n\n"));
+    }
+
+    private EvidenceMetadata metadataAt(List<EvidenceMetadata> metadata, int index) {
+        if (metadata == null || index >= metadata.size() || metadata.get(index) == null) {
+            return EvidenceMetadata.unknown(index + 1, null);
+        }
+        return metadata.get(index);
+    }
+
+    private String renderEvidenceItem(RetrievedChunk chunk, EvidenceMetadata metadata) {
+        return templateLoader.renderSection(CONTEXT_FORMAT_PATH, "kb-evidence-item", Map.of(
+                "evidence_id", EvidenceMetadata.blankToUnknown(metadata.evidenceId()),
+                "doc_id", EvidenceMetadata.blankToUnknown(metadata.docId()),
+                "doc_name", EvidenceMetadata.blankToUnknown(metadata.docName()),
+                "chunk_id", EvidenceMetadata.blankToUnknown(metadata.chunkId()),
+                "chunk_index", metadata.chunkIndex() == null ? EvidenceMetadata.UNKNOWN : String.valueOf(metadata.chunkIndex()),
+                "text", StrUtil.emptyIfNull(chunk == null ? null : chunk.getText())
+        ));
+    }
+
+    private List<RetrievedChunk> deduplicateAndLimit(List<RetrievedChunk> chunks, int topK) {
+        if (CollUtil.isEmpty(chunks)) {
+            return List.of();
+        }
+        int limit = topK > 0 ? topK : Integer.MAX_VALUE;
+        Set<String> seen = new LinkedHashSet<>();
+        List<RetrievedChunk> output = new ArrayList<>();
+        for (RetrievedChunk chunk : chunks) {
+            if (chunk == null) {
+                continue;
+            }
+            String key = chunkKey(chunk);
+            if (!seen.add(key)) {
+                continue;
+            }
+            output.add(chunk);
+            if (output.size() >= limit) {
+                break;
+            }
+        }
+        return output;
+    }
+
+    private String chunkKey(RetrievedChunk chunk) {
+        if (StrUtil.isNotBlank(chunk.getId())) {
+            return "id:" + chunk.getId();
+        }
+        return "text:" + StrUtil.emptyIfNull(chunk.getText());
     }
 
     private String mergeAllResultsToText(Map<String, List<CallToolResult>> toolResults) {
