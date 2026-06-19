@@ -1,0 +1,1242 @@
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.zimingd.ai:bootstrap:jar:0.0.1-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-compiler-plugin is missing. @ com.zimingd.ai:ragent:0.0.1-SNAPSHOT, D:\JavaPackage\repository\ragent\pom.xml, line 205, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ com.zimingd.ai:ragent:0.0.1-SNAPSHOT, D:\JavaPackage\repository\ragent\pom.xml, line 228, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.zimingd.ai:framework:jar:0.0.1-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-compiler-plugin is missing. @ com.zimingd.ai:ragent:0.0.1-SNAPSHOT, D:\JavaPackage\repository\ragent\pom.xml, line 205, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ com.zimingd.ai:ragent:0.0.1-SNAPSHOT, D:\JavaPackage\repository\ragent\pom.xml, line 228, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.zimingd.ai:infra-ai:jar:0.0.1-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-compiler-plugin is missing. @ com.zimingd.ai:ragent:0.0.1-SNAPSHOT, D:\JavaPackage\repository\ragent\pom.xml, line 205, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ com.zimingd.ai:ragent:0.0.1-SNAPSHOT, D:\JavaPackage\repository\ragent\pom.xml, line 228, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.zimingd.ai:mcp-server:jar:0.0.1-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-compiler-plugin is missing. @ com.zimingd.ai:ragent:0.0.1-SNAPSHOT, D:\JavaPackage\repository\ragent\pom.xml, line 205, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ com.zimingd.ai:ragent:0.0.1-SNAPSHOT, D:\JavaPackage\repository\ragent\pom.xml, line 228, column 21
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for com.zimingd.ai:ragent:pom:0.0.1-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-compiler-plugin is missing. @ line 205, column 21
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-surefire-plugin is missing. @ line 228, column 21
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] 
+[INFO] ----------------------< com.zimingd.ai:bootstrap >----------------------
+[INFO] Building bootstrap 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.5.7:run (default-cli) > test-compile @ bootstrap >>>
+[WARNING] 1 problem was encountered while building the effective model for org.javassist:javassist:jar:3.21.0-GA during dependency collection step for project (use -X to see details)
+[INFO] 
+[INFO] --- dependency:3.7.0:properties (default) @ bootstrap ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ bootstrap ---
+[WARNING] Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 22 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ bootstrap ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- spotless:2.22.1:apply (default) @ bootstrap ---
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ bootstrap ---
+[WARNING] Using platform encoding (GBK actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ bootstrap ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] <<< spring-boot:3.5.7:run (default-cli) < test-compile @ bootstrap <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.5.7:run (default-cli) @ bootstrap ---
+[INFO] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.7)
+
+2026-06-19T17:36:14.765+08:00  INFO 10528 --- [ragent-service] [           main] c.zimingd.ai.ragent.RagentApplication    : Starting RagentApplication using Java 17.0.18 with PID 10528 (D:\JavaPackage\repository\ragent\bootstrap\target\classes started by 23589 in D:\JavaPackage\repository\ragent\bootstrap)
+2026-06-19T17:36:14.772+08:00  INFO 10528 --- [ragent-service] [           main] c.zimingd.ai.ragent.RagentApplication    : No active profile set, falling back to 1 default profile: "default"
+2026-06-19T17:36:17.617+08:00  INFO 10528 --- [ragent-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-06-19T17:36:17.624+08:00  INFO 10528 --- [ragent-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-06-19T17:36:17.849+08:00  INFO 10528 --- [ragent-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 192 ms. Found 0 Redis repository interfaces.
+2026-06-19T17:36:21.398+08:00  INFO 10528 --- [ragent-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9090 (http)
+2026-06-19T17:36:21.448+08:00  INFO 10528 --- [ragent-service] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-19T17:36:21.450+08:00  INFO 10528 --- [ragent-service] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2026-06-19T17:36:21.894+08:00  INFO 10528 --- [ragent-service] [           main] o.a.c.c.C.[.[localhost].[/api/ragent]    : Initializing Spring embedded WebApplicationContext
+2026-06-19T17:36:21.898+08:00  INFO 10528 --- [ragent-service] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7005 ms
+2026-06-19T17:36:22.062+08:00  INFO 10528 --- [ragent-service] [           main] org.redisson.Version                     : Redisson 4.0.0
+2026-06-19T17:36:23.287+08:00  INFO 10528 --- [ragent-service] [isson-netty-1-4] o.redisson.connection.ConnectionsHolder  : 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+2026-06-19T17:36:23.443+08:00  INFO 10528 --- [ragent-service] [sson-netty-1-19] o.redisson.connection.ConnectionsHolder  : 24 connections initialized for 127.0.0.1/127.0.0.1:6379
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.14 
+2026-06-19T17:36:26.911+08:00  INFO 10528 --- [ragent-service] [           main] com.zaxxer.hikari.HikariDataSource       : RagentHikariPool - Starting...
+2026-06-19T17:36:27.104+08:00  INFO 10528 --- [ragent-service] [           main] com.zaxxer.hikari.pool.HikariPool        : RagentHikariPool - Added connection org.postgresql.jdbc.PgConnection@2f19ab6
+2026-06-19T17:36:27.106+08:00  INFO 10528 --- [ragent-service] [           main] com.zaxxer.hikari.HikariDataSource       : RagentHikariPool - Start completed.
+2026-06-19T17:36:27.535+08:00  INFO 10528 --- [ragent-service] [           main] c.z.a.r.k.config.SemaphoreInitializer    : Initialized document upload semaphore: name=rag:document:upload, maxConcurrent=10
+2026-06-19T17:36:29.164+08:00  INFO 10528 --- [ragent-service] [           main] o.a.r.s.a.RocketMQAutoConfiguration      : a producer (ragent-producer_pg) init on namesrv 127.0.0.1:9876
+2026-06-19T17:36:31.835+08:00  INFO 10528 --- [ragent-service] [           main] ocketMQMessageListenerContainerRegistrar : Register the listener to container, listenerBeanName:knowledgeDocumentChunkConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_1
+2026-06-19T17:36:32.086+08:00  INFO 10528 --- [ragent-service] [           main] c.z.a.r.r.c.mcp.DefaultMcpToolRegistry   : MCP 工具注册跳过, 未发现任何工具执行器
+2026-06-19T17:36:32.087+08:00  INFO 10528 --- [ragent-service] [           main] c.z.a.r.r.c.mcp.DefaultMcpToolRegistry   : MCP 工具自动注册完成, 共注册 0 个工具
+2026-06-19T17:36:32.250+08:00  INFO 10528 --- [ragent-service] [           main] c.z.a.r.r.c.m.McpClientAutoConfiguration : 连接 MCP Server: name=default, url=http://localhost:9099
+2026-06-19T17:36:32.813+08:00  WARN 10528 --- [ragent-service] [onPool-worker-1] i.m.client.LifecycleInitializer          : Handling exception
+
+java.net.ConnectException: null
+	at java.net.http/jdk.internal.net.http.common.Utils.toConnectException(Utils.java:1107) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:203) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.checkRetryConnect(PlainHttpConnection.java:238) ~[java.net.http:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.lambda$connectAsync$1(PlainHttpConnection.java:214) ~[java.net.http:na]
+	at java.base/java.util.concurrent.CompletableFuture.uniHandle(CompletableFuture.java:934) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture$UniHandle.tryFire(CompletableFuture.java:911) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510) ~[na:na]
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1773) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
+Caused by: java.nio.channels.ClosedChannelException: null
+	at java.base/sun.nio.ch.SocketChannelImpl.ensureOpen(SocketChannelImpl.java:195) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.beginConnect(SocketChannelImpl.java:760) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.connect(SocketChannelImpl.java:848) ~[na:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.lambda$connectAsync$0(PlainHttpConnection.java:187) ~[java.net.http:na]
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569) ~[na:na]
+	at java.net.http/jdk.internal.net.http.PlainHttpConnection.connectAsync(PlainHttpConnection.java:189) ~[java.net.http:na]
+	... 9 common frames omitted
+
+2026-06-19T17:36:32.819+08:00 ERROR 10528 --- [ragent-service] [           main] c.z.a.r.r.c.m.McpClientAutoConfiguration : 连接 MCP Server [default] 失败，跳过工具注册，reason=Client failed to initialize by explicit API call
+2026-06-19T17:36:33.428+08:00  INFO 10528 --- [ragent-service] [           main] ocketMQMessageListenerContainerRegistrar : Register the listener to container, listenerBeanName:messageFeedbackConsumer, containerBeanName:org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer_2
+2026-06-19T17:36:33.514+08:00  INFO 10528 --- [ragent-service] [           main] c.z.a.r.f.d.SnowflakeIdInitializer       : 分布式Snowflake初始化完成, workerId: 10, datacenterId: 0
+2026-06-19T17:36:33.927+08:00  INFO 10528 --- [ragent-service] [           main] m.e.s.MybatisPlusApplicationContextAware : Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6f2cb653
+2026-06-19T17:36:34.261+08:00  INFO 10528 --- [ragent-service] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9090 (http) with context path '/api/ragent'
+2026-06-19T17:36:37.748+08:00  INFO 10528 --- [ragent-service] [           main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='knowledge-document-chunk_cg', namespace='', namespaceV2='', nameServer='127.0.0.1:9876', topic='knowledge-document-chunk_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false, instanceName=DEFAULT}
+2026-06-19T17:36:40.123+08:00  INFO 10528 --- [ragent-service] [           main] a.r.s.s.DefaultRocketMQListenerContainer : running container: DefaultRocketMQListenerContainer{consumerGroup='message-feedback_cg', namespace='', namespaceV2='', nameServer='127.0.0.1:9876', topic='message-feedback_topic', consumeMode=CONCURRENTLY, selectorType=TAG, selectorExpression='*', messageModel=CLUSTERING', tlsEnable=false, instanceName=DEFAULT}
+2026-06-19T17:36:40.135+08:00  INFO 10528 --- [ragent-service] [           main] c.zimingd.ai.ragent.RagentApplication    : Started RagentApplication in 26.454 seconds (process running for 27.632)
+2026-06-19T17:36:48.172+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-1] o.a.c.c.C.[.[localhost].[/api/ragent]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-19T17:36:48.172+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-19T17:36:48.176+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-06-19T17:36:48.222+08:00  WARN 10528 --- [ragent-service] [nio-9090-exec-1] c.z.a.r.f.web.GlobalExceptionHandler     : [GET] http://localhost:9090/api/ragent/actuator/health [auth] not-login: 未能读取到有效 token
+2026-06-19T17:37:55.723+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-4] c.z.a.r.k.s.i.KnowledgeBaseServiceImpl   : 成功重命名知识库, kbId=2062065734992793600, newName=????-?????
+2026-06-19T17:37:55.739+08:00 ERROR 10528 --- [ragent-service] [nio-9090-exec-5] c.z.a.r.f.web.GlobalExceptionHandler     : [PUT] http://localhost:9090/api/ragent/knowledge-base/2062065735202508800 [ex] ServiceException{code='B000001',message='知识库名称已存在：????-?????'} 
+
+com.zimingd.ai.ragent.framework.exception.ServiceException: 知识库名称已存在：????-?????
+	at com.zimingd.ai.ragent.knowledge.service.impl.KnowledgeBaseServiceImpl.rename(KnowledgeBaseServiceImpl.java:176)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+
+2026-06-19T17:37:55.757+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-6] c.z.a.r.k.s.i.KnowledgeBaseServiceImpl   : 成功重命名知识库, kbId=2062065735332532224, newName=????-FAQ?
+2026-06-19T17:37:55.774+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-7] c.z.a.r.k.s.i.KnowledgeBaseServiceImpl   : 成功重命名知识库, kbId=2062065732585263104, newName=????-???
+2026-06-19T17:37:55.974+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-8] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-manual, docId=2062065896028901376, deleted=1
+2026-06-19T17:37:56.534+08:00 ERROR 10528 --- [ragent-service] [nio-9090-exec-9] c.z.a.r.f.web.GlobalExceptionHandler     : [POST] http://localhost:9090/api/ragent/knowledge-base/2062065734992793600/docs/upload [ex] ClientException{code='A000001',message='分块参数JSON格式不合法'} 
+
+com.zimingd.ai.ragent.framework.exception.ClientException: 分块参数JSON格式不合法
+	at com.zimingd.ai.ragent.knowledge.service.impl.KnowledgeDocumentServiceImpl.validateAndNormalizeChunkConfig(KnowledgeDocumentServiceImpl.java:817)
+	at com.zimingd.ai.ragent.knowledge.service.impl.KnowledgeDocumentServiceImpl.resolveProcessModeConfig(KnowledgeDocumentServiceImpl.java:776)
+	at com.zimingd.ai.ragent.knowledge.service.impl.KnowledgeDocumentServiceImpl.upload(KnowledgeDocumentServiceImpl.java:134)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+
+2026-06-19T17:38:28.486+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-2] c.z.a.r.k.s.i.KnowledgeBaseServiceImpl   : 成功重命名知识库, kbId=2062065732585263104, newName=小米生态-商品库
+2026-06-19T17:38:28.515+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-3] c.z.a.r.k.s.i.KnowledgeBaseServiceImpl   : 成功重命名知识库, kbId=2062065734992793600, newName=小米生态-使用手册库
+2026-06-19T17:38:28.552+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-5] c.z.a.r.k.s.i.KnowledgeBaseServiceImpl   : 成功重命名知识库, kbId=2062065735202508800, newName=小米商城-模拟政策库
+2026-06-19T17:38:28.571+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-7] c.z.a.r.k.s.i.KnowledgeBaseServiceImpl   : 成功重命名知识库, kbId=2062065735332532224, newName=小米生态-FAQ库
+2026-06-19T17:38:28.590+08:00 ERROR 10528 --- [ragent-service] [nio-9090-exec-9] c.z.a.r.f.web.GlobalExceptionHandler     : [GET] http://localhost:9090/api/ragent/knowledge-base/docs/2062065896028901376 [ex] ClientException{code='A000001',message='文档不存在'} 
+
+com.zimingd.ai.ragent.framework.exception.ClientException: 文档不存在
+	at com.zimingd.ai.ragent.knowledge.service.impl.KnowledgeDocumentServiceImpl.lambda$get$7(KnowledgeDocumentServiceImpl.java:448)
+	at cn.hutool.core.lang.Assert.notNull(Assert.java:197)
+	at com.zimingd.ai.ragent.knowledge.service.impl.KnowledgeDocumentServiceImpl.get(KnowledgeDocumentServiceImpl.java:448)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+
+2026-06-19T17:38:30.129+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-1] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B8BAB0000, Keys: 2067904841312673792
+2026-06-19T17:38:30.169+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_1] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904841312673792, keys=2067904841312673792
+2026-06-19T17:38:30.194+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-5] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-manual, docId=2062065897186529280, deleted=1
+2026-06-19T17:38:30.334+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-7] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B8F230001, Keys: 2067904848136806400
+2026-06-19T17:38:30.341+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_2] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904848136806400, keys=2067904848136806400
+2026-06-19T17:38:30.421+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-1] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-manual, docId=2062065898323185664, deleted=1
+2026-06-19T17:38:30.534+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-4] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B8FF50002, Keys: 2067904849088913408
+2026-06-19T17:38:30.542+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_3] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904849088913408, keys=2067904849088913408
+2026-06-19T17:38:30.585+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-8] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-manual, docId=2062065899392733184, deleted=1
+2026-06-19T17:38:30.678+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-1] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B90880003, Keys: 2067904849701281792
+2026-06-19T17:38:30.684+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_4] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904849701281792, keys=2067904849701281792
+2026-06-19T17:38:30.748+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-5] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-manual, docId=2062065900592304128, deleted=1
+2026-06-19T17:38:30.858+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-8] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B913E0004, Keys: 2067904850389147648
+2026-06-19T17:38:30.865+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_5] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904850389147648, keys=2067904850389147648
+2026-06-19T17:38:30.953+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-2] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065924353036288, deleted=1
+2026-06-19T17:38:31.112+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-5] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B923A0005, Keys: 2067904851261562880
+2026-06-19T17:38:31.119+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_6] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904851261562880, keys=2067904851261562880
+2026-06-19T17:38:31.181+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-9] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065925451943936, deleted=1
+2026-06-19T17:38:31.222+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_5] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-manual, docId=2067904850389147648, deleted=0
+2026-06-19T17:38:31.222+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_1] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-manual, docId=2067904841312673792, deleted=0
+2026-06-19T17:38:31.222+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_3] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-manual, docId=2067904849088913408, deleted=0
+2026-06-19T17:38:31.224+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_4] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-manual, docId=2067904849701281792, deleted=0
+2026-06-19T17:38:31.224+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_2] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-manual, docId=2067904848136806400, deleted=0
+2026-06-19T17:38:31.281+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_6] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904851261562880, deleted=0
+2026-06-19T17:38:31.303+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-2] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B92EB0006, Keys: 2067904852238835712
+2026-06-19T17:38:31.312+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_7] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904852238835712, keys=2067904852238835712
+2026-06-19T17:38:31.330+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_3] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-manual, docId=2067904849088913408, count=1
+2026-06-19T17:38:31.330+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_1] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-manual, docId=2067904841312673792, count=1
+2026-06-19T17:38:31.331+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_6] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904851261562880, count=1
+2026-06-19T17:38:31.330+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_5] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-manual, docId=2067904850389147648, count=1
+2026-06-19T17:38:31.330+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_2] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-manual, docId=2067904848136806400, count=1
+2026-06-19T17:38:31.331+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_4] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-manual, docId=2067904849701281792, count=1
+2026-06-19T17:38:31.363+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-6] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065926542462976, deleted=1
+2026-06-19T17:38:31.458+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-9] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B93980007, Keys: 2067904853002199040
+2026-06-19T17:38:31.464+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_8] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904853002199040, keys=2067904853002199040
+2026-06-19T17:38:31.467+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_7] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904852238835712, deleted=0
+2026-06-19T17:38:31.478+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_7] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904852238835712, count=1
+2026-06-19T17:38:31.502+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-3] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065927746228224, deleted=1
+2026-06-19T17:38:31.611+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-6] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B942F0008, Keys: 2067904853530681344
+2026-06-19T17:38:31.617+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_9] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904853530681344, keys=2067904853530681344
+2026-06-19T17:38:31.620+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_8] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904853002199040, deleted=0
+2026-06-19T17:38:31.628+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_8] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904853002199040, count=1
+2026-06-19T17:38:31.644+08:00  INFO 10528 --- [ragent-service] [io-9090-exec-10] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065928861913088, deleted=1
+2026-06-19T17:38:31.713+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-3] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B94980009, Keys: 2067904854096912384
+2026-06-19T17:38:31.719+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_10] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904854096912384, keys=2067904854096912384
+2026-06-19T17:38:31.765+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_9] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904853530681344, deleted=0
+2026-06-19T17:38:31.774+08:00  INFO 10528 --- [ragent-service] [ment-chunk_cg_9] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904853530681344, count=1
+2026-06-19T17:38:31.778+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-7] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065929977597952, deleted=1
+2026-06-19T17:38:31.860+08:00  INFO 10528 --- [ragent-service] [io-9090-exec-10] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B952B000A, Keys: 2067904854688309248
+2026-06-19T17:38:31.868+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_11] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904854688309248, keys=2067904854688309248
+2026-06-19T17:38:31.869+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_10] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904854096912384, deleted=0
+2026-06-19T17:38:31.876+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_10] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904854096912384, count=1
+2026-06-19T17:38:31.901+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-4] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065931084894208, deleted=1
+2026-06-19T17:38:31.990+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-7] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B95AB000B, Keys: 2067904855237763072
+2026-06-19T17:38:31.996+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_12] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904855237763072, keys=2067904855237763072
+2026-06-19T17:38:32.000+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_11] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904854688309248, deleted=0
+2026-06-19T17:38:32.008+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_11] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904854688309248, count=1
+2026-06-19T17:38:32.057+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-1] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065932280270848, deleted=1
+2026-06-19T17:38:32.158+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-4] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B9655000C, Keys: 2067904855938211840
+2026-06-19T17:38:32.164+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_13] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904855938211840, keys=2067904855938211840
+2026-06-19T17:38:32.193+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-8] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065933416927232, deleted=1
+2026-06-19T17:38:32.276+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-1] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B96CA000D, Keys: 2067904856416362496
+2026-06-19T17:38:32.282+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_14] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904856416362496, keys=2067904856416362496
+2026-06-19T17:38:32.291+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_12] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904855237763072, deleted=0
+2026-06-19T17:38:32.299+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_12] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904855237763072, count=1
+2026-06-19T17:38:32.343+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-5] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065934528417792, deleted=1
+2026-06-19T17:38:32.391+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_13] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904855938211840, deleted=0
+2026-06-19T17:38:32.398+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_13] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904855938211840, count=1
+2026-06-19T17:38:32.412+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_14] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904856416362496, deleted=0
+2026-06-19T17:38:32.421+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_14] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904856416362496, count=1
+2026-06-19T17:38:32.433+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-8] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B9766000E, Keys: 2067904857095839744
+2026-06-19T17:38:32.440+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_15] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904857095839744, keys=2067904857095839744
+2026-06-19T17:38:32.492+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-2] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065935660879872, deleted=1
+2026-06-19T17:38:32.577+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_15] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904857095839744, deleted=0
+2026-06-19T17:38:32.583+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-5] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B97FC000F, Keys: 2067904857666265088
+2026-06-19T17:38:32.584+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_15] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904857095839744, count=1
+2026-06-19T17:38:32.591+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_16] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904857666265088, keys=2067904857666265088
+2026-06-19T17:38:32.617+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-9] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065936818507776, deleted=1
+2026-06-19T17:38:32.704+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-2] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B98760010, Keys: 2067904858186358784
+2026-06-19T17:38:32.710+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_17] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904858186358784, keys=2067904858186358784
+2026-06-19T17:38:32.750+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-6] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065937992912896, deleted=1
+2026-06-19T17:38:32.790+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_16] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904857666265088, deleted=0
+2026-06-19T17:38:32.796+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_16] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904857666265088, count=1
+2026-06-19T17:38:32.843+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_17] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904858186358784, deleted=0
+2026-06-19T17:38:32.851+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_17] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904858186358784, count=1
+2026-06-19T17:38:32.857+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-9] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B99100011, Keys: 2067904858807115776
+2026-06-19T17:38:32.862+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_18] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904858807115776, keys=2067904858807115776
+2026-06-19T17:38:32.897+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-3] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065939200872448, deleted=1
+2026-06-19T17:38:32.975+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_18] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904858807115776, deleted=0
+2026-06-19T17:38:32.982+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_18] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904858807115776, count=1
+2026-06-19T17:38:32.998+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-6] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B999C0012, Keys: 2067904859394318336
+2026-06-19T17:38:33.004+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_19] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904859394318336, keys=2067904859394318336
+2026-06-19T17:38:33.044+08:00  INFO 10528 --- [ragent-service] [io-9090-exec-10] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2062065940341723136, deleted=1
+2026-06-19T17:38:33.120+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-3] c.z.a.r.f.m.p.RocketMQProducerAdapter    : [生产者] 文档分块 - 事务消息发送结果: SEND_OK, 本地事务状态: COMMIT_MESSAGE, 消息ID: 1C0000012920070DEA4E607B9A170013, Keys: 2067904859985715200
+2026-06-19T17:38:33.120+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_19] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904859394318336, deleted=0
+2026-06-19T17:38:33.127+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_20] z.a.r.k.m.KnowledgeDocumentChunkConsumer : [消费者] 开始消费文档分块任务，docId=2067904859985715200, keys=2067904859985715200
+2026-06-19T17:38:33.130+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_19] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904859394318336, count=1
+2026-06-19T17:38:33.283+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_20] c.z.a.r.r.c.vector.PgVectorStoreService  : 删除文档向量，collectionName=kb-policy, docId=2067904859985715200, deleted=0
+2026-06-19T17:38:33.291+08:00  INFO 10528 --- [ragent-service] [ent-chunk_cg_20] c.z.a.r.r.c.vector.PgVectorStoreService  : 批量写入向量到 PostgreSQL，collectionName=kb-policy, docId=2067904859985715200, count=1
+2026-06-19T17:41:52.349+08:00  INFO 10528 --- [ragent-service] [ntry_executor_0] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:41:52.350+08:00  INFO 10528 --- [ragent-service] [ntry_executor_0] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:41:53.498+08:00  INFO 10528 --- [ragent-service] [ntry_executor_0] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：这手机用了 3 个月就卡
+归一化后：这手机用了 3 个月就卡
+改写结果：手机使用3个月后变卡
+子问题：[手机使用3个月后变卡]
+
+2026-06-19T17:41:57.604+08:00  INFO 10528 --- [ragent-service] [sify_executor_0] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：手机使用3个月后变卡
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "F3_投诉吐槽",
+            "kbIds": [
+            ],
+            "name": "投诉吐槽",
+            "description": "用户的投诉吐槽相关问题，例如：客服态度太差了",
+            "level": "TOPIC",
+            "parentId": "FEEDBACK_ALL",
+            "examples": [
+                "\"客服态度太差了\"",
+                "\"等了一周还没发货，太慢了！\"",
+                "\"这手机用了 3 个月就卡\"",
+                "\"我要投诉你们，准备消协见！\"",
+                "\"你们这是欺骗消费者！\""
+            ],
+            "fullPath": "用户反馈 > 反馈处理 > 投诉吐槽",
+            "kind": "SYSTEM",
+            "collectionNames": [
+            ],
+            "promptTemplate": "你是比特严选客服助手。先简短共情并确认用户诉求。纯情绪投诉应记录问题并说明可转人工处理；不要争辩、不要作法律定性。若问题同时涉及物流、故障或售后事实，应结合并列知识意图提供的证据处理，不得编造政策。"
+        },
+        "score": 0.85
+    }
+]
+
+2026-06-19T17:42:01.805+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-8] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:42:01.805+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-8] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:42:04.939+08:00  INFO 10528 --- [ragent-service] [nio-9090-exec-8] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：这手机用了 3 个月就卡
+归一化后：这手机用了 3 个月就卡
+改写结果：手机使用3个月后变卡
+子问题：[手机使用3个月后变卡]
+
+2026-06-19T17:42:06.161+08:00  INFO 10528 --- [ragent-service] [sify_executor_1] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：手机使用3个月后变卡
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "F3_投诉吐槽",
+            "kbIds": [
+            ],
+            "name": "投诉吐槽",
+            "description": "用户的投诉吐槽相关问题，例如：客服态度太差了",
+            "level": "TOPIC",
+            "parentId": "FEEDBACK_ALL",
+            "examples": [
+                "\"客服态度太差了\"",
+                "\"等了一周还没发货，太慢了！\"",
+                "\"这手机用了 3 个月就卡\"",
+                "\"我要投诉你们，准备消协见！\"",
+                "\"你们这是欺骗消费者！\""
+            ],
+            "fullPath": "用户反馈 > 反馈处理 > 投诉吐槽",
+            "kind": "SYSTEM",
+            "collectionNames": [
+            ],
+            "promptTemplate": "你是比特严选客服助手。先简短共情并确认用户诉求。纯情绪投诉应记录问题并说明可转人工处理；不要争辩、不要作法律定性。若问题同时涉及物流、故障或售后事实，应结合并列知识意图提供的证据处理，不得编造政策。"
+        },
+        "score": 0.85
+    }
+]
+
+2026-06-19T17:42:06.325+08:00  INFO 10528 --- [ragent-service] [eval_executor_1] .z.a.r.r.c.r.c.AbstractParallelRetriever : 全局检索 检索统计 - 总目标数: 5, 成功: 5, 失败: 0, 检索到 Chunk 总数: 92
+2026-06-19T17:42:06.326+08:00  INFO 10528 --- [ragent-service] [eval_executor_1] .z.a.r.r.c.r.c.VectorGlobalSearchChannel : Global vector retrieval completed, chunks=92, latencyMs=128
+2026-06-19T17:42:06.564+08:00  INFO 10528 --- [ragent-service] [eval_executor_0] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=20, identifiers=1, latencyMs=365
+2026-06-19T17:42:08.120+08:00  INFO 10528 --- [ragent-service] [ntry_executor_1] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:42:08.121+08:00  INFO 10528 --- [ragent-service] [ntry_executor_1] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:42:09.668+08:00  INFO 10528 --- [ragent-service] [ntry_executor_1] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：新款手表什么时候上市？
+归一化后：新款手表什么时候上市？
+改写结果：新款手表的上市时间
+子问题：[新款手表的上市时间]
+
+2026-06-19T17:42:11.046+08:00  INFO 10528 --- [ragent-service] [sify_executor_2] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：新款手表的上市时间
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S5_库存到货",
+            "kbId": "2062065735202508800",
+            "kbIds": [
+                "2062065735202508800",
+                "2062065732585263104"
+            ],
+            "name": "库存到货",
+            "description": "用户的库存到货相关问题，例如：小米 14 Pro 黑色款有货吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 黑色款有货吗？\"",
+                "\"什么时候能发货？\"",
+                "\"小米 14 Pro 512G 蓝色现在缺货吗？\"",
+                "\"新款手表什么时候上市？\"",
+                "\"上次缺货那款补货了吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 库存到货",
+            "kind": "KB",
+            "collectionName": "kb-policy",
+            "collectionNames": [
+                "kb-policy",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-19T17:42:11.168+08:00  INFO 10528 --- [ragent-service] [eval_executor_2] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:42:11.168+08:00  INFO 10528 --- [ragent-service] [eval_executor_2] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=94
+2026-06-19T17:42:11.701+08:00  INFO 10528 --- [ragent-service] [eval_executor_3] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=629
+2026-06-19T17:42:14.857+08:00  INFO 10528 --- [ragent-service] [ntry_executor_2] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:42:14.858+08:00  INFO 10528 --- [ragent-service] [ntry_executor_2] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:42:16.257+08:00  INFO 10528 --- [ragent-service] [ntry_executor_2] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：小米平板 6 看视频能撑多久？
+归一化后：小米平板 6 看视频能撑多久？
+改写结果：小米平板 6 看视频的续航时间
+子问题：[小米平板 6 看视频的续航时间]
+
+2026-06-19T17:42:18.206+08:00  INFO 10528 --- [ragent-service] [sify_executor_3] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米平板 6 看视频的续航时间
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S2_参数咨询",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "参数咨询",
+            "description": "用户的参数咨询相关问题，例如：小米 14 Pro 的屏幕尺寸和刷新率是多少？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 的屏幕尺寸和刷新率是多少？\"",
+                "\"Redmi K70 电池容量多大，支持多少瓦快充？\"",
+                "\"米家空气净化器 4 Pro 适合多大面积？\"",
+                "\"小米平板 6 支持手写笔吗？\"",
+                "\"小米智能门锁 E10 支持几种开锁方式？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 参数咨询",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-19T17:42:18.340+08:00  INFO 10528 --- [ragent-service] [eval_executor_4] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-19T17:42:18.342+08:00  INFO 10528 --- [ragent-service] [eval_executor_4] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=101
+2026-06-19T17:42:18.613+08:00  INFO 10528 --- [ragent-service] [eval_executor_5] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=374
+2026-06-19T17:42:23.815+08:00  INFO 10528 --- [ragent-service] [ntry_executor_3] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:42:23.816+08:00  INFO 10528 --- [ragent-service] [ntry_executor_3] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:42:25.034+08:00  INFO 10528 --- [ragent-service] [ntry_executor_3] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：手表充电时发烫得厉害
+归一化后：手表充电时发烫得厉害
+改写结果：手表充电时发烫得厉害
+子问题：[手表充电时发烫得厉害]
+
+2026-06-19T17:42:27.398+08:00  INFO 10528 --- [ragent-service] [sify_executor_4] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：手表充电时发烫得厉害
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "F1_故障报告",
+            "kbId": "2062065735332532224",
+            "kbIds": [
+                "2062065735332532224",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "故障报告",
+            "description": "用户的故障报告相关问题，例如：我的扫地机充不进电了",
+            "level": "TOPIC",
+            "parentId": "FEEDBACK_ALL",
+            "examples": [
+                "\"我的扫地机充不进电了\"",
+                "\"净化器开机后没反应\"",
+                "\"智能门锁指纹突然识别不了了\"",
+                "\"扫地机扫一会就停，提示故障 E5\"",
+                "\"手表充电时发烫得厉害\""
+            ],
+            "fullPath": "用户反馈 > 反馈处理 > 故障报告",
+            "kind": "KB",
+            "collectionName": "kb-faq",
+            "collectionNames": [
+                "kb-faq",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-19T17:42:27.516+08:00  INFO 10528 --- [ragent-service] [eval_executor_6] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-19T17:42:27.517+08:00  INFO 10528 --- [ragent-service] [eval_executor_6] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=95
+2026-06-19T17:42:27.767+08:00  INFO 10528 --- [ragent-service] [eval_executor_7] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=347
+2026-06-19T17:42:35.668+08:00  INFO 10528 --- [ragent-service] [ntry_executor_4] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:42:35.669+08:00  INFO 10528 --- [ragent-service] [ntry_executor_4] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:42:37.069+08:00  INFO 10528 --- [ragent-service] [ntry_executor_4] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：蓝牙连上了但米家 APP 显示离线
+归一化后：蓝牙连上了但米家 APP 显示离线
+改写结果：蓝牙连上了但米家 APP 显示离线
+子问题：[蓝牙连上了但米家 APP 显示离线]
+
+2026-06-19T17:42:38.810+08:00  INFO 10528 --- [ragent-service] [sify_executor_5] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：蓝牙连上了但米家 APP 显示离线
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S9_配网连接",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "配网连接",
+            "description": "用户的配网连接相关问题，例如：扫地机怎么连 WiFi？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"扫地机怎么连 WiFi？\"",
+                "\"智能门锁配网失败怎么办？\"",
+                "\"我家是 5G WiFi，扫地机连不上\"",
+                "\"换了路由器，所有设备都要重新配网吗？\"",
+                "\"智能门锁离路由器太远连不上怎么办？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 配网连接",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-19T17:42:38.938+08:00  INFO 10528 --- [ragent-service] [eval_executor_8] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:42:38.939+08:00  INFO 10528 --- [ragent-service] [eval_executor_8] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=94
+2026-06-19T17:42:39.239+08:00  INFO 10528 --- [ragent-service] [eval_executor_9] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=392
+2026-06-19T17:42:46.859+08:00  INFO 10528 --- [ragent-service] [ntry_executor_5] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:42:46.859+08:00  INFO 10528 --- [ragent-service] [ntry_executor_5] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:42:48.215+08:00  INFO 10528 --- [ragent-service] [ntry_executor_5] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：米家 APP 里怎么查扫地机的清扫记录？
+归一化后：米家 APP 里怎么查扫地机的清扫记录？
+改写结果：米家 APP 查扫地机的清扫记录
+子问题：[米家 APP 查扫地机的清扫记录]
+
+2026-06-19T17:42:50.453+08:00  INFO 10528 --- [ragent-service] [sify_executor_6] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：米家 APP 查扫地机的清扫记录
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S10_APP功能",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600"
+            ],
+            "name": "APP 功能",
+            "description": "用户的APP 功能相关问题，例如：比特APP 怎么查订单？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"比特APP 怎么查订单？\"",
+                "\"怎么修改收货地址？\"",
+                "\"APP 里怎么查扫地机的清扫记录？\"",
+                "\"怎么把账号关联给家人共用？\"",
+                "\"APP 推送太多怎么关闭？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > APP 功能",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-19T17:42:50.587+08:00  INFO 10528 --- [ragent-service] [val_executor_10] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 1, 成功: 1, 失败: 0, 检索到 Chunk 总数: 10
+2026-06-19T17:42:50.588+08:00  INFO 10528 --- [ragent-service] [val_executor_10] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=10, latencyMs=103
+2026-06-19T17:42:50.799+08:00  INFO 10528 --- [ragent-service] [val_executor_11] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=313
+2026-06-19T17:42:55.601+08:00  INFO 10528 --- [ragent-service] [ntry_executor_6] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:42:55.602+08:00  INFO 10528 --- [ragent-service] [ntry_executor_6] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:42:56.877+08:00  INFO 10528 --- [ragent-service] [ntry_executor_6] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：石头 G10 在地毯上吸力会下降吗？
+归一化后：石头 G10 在地毯上吸力会下降吗？
+改写结果：石头 G10 在地毯上的吸力是否下降
+子问题：[石头 G10 在地毯上的吸力是否下降]
+
+2026-06-19T17:43:01.043+08:00  INFO 10528 --- [ragent-service] [sify_executor_7] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：石头 G10 在地毯上的吸力是否下降
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S7_适用场景",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "适用场景",
+            "description": "用户的适用场景相关问题，例如：扫地机能扫地毯吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"扫地机能扫地毯吗？\"",
+                "\"智能门锁停电了能用吗？\"",
+                "\"家里养猫，扫地机选哪款不容易卡毛？\"",
+                "\"150 平的房子用哪个净化器够？\"",
+                "\"我家是长条户型，扫地机会乱跑吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 适用场景",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.94
+    }
+]
+
+2026-06-19T17:43:01.118+08:00  INFO 10528 --- [ragent-service] [val_executor_13] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=46
+2026-06-19T17:43:01.183+08:00  INFO 10528 --- [ragent-service] [val_executor_12] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-19T17:43:01.183+08:00  INFO 10528 --- [ragent-service] [val_executor_12] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=112
+2026-06-19T17:43:04.605+08:00  INFO 10528 --- [ragent-service] [ntry_executor_7] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:43:04.605+08:00  INFO 10528 --- [ragent-service] [ntry_executor_7] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:43:05.964+08:00  INFO 10528 --- [ragent-service] [ntry_executor_7] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：我家是长条户型，扫地机会乱跑吗？
+归一化后：我家是长条户型，扫地机会乱跑吗？
+改写结果：长条户型扫地机会乱跑吗
+子问题：[长条户型扫地机会乱跑吗]
+
+2026-06-19T17:43:07.862+08:00  INFO 10528 --- [ragent-service] [sify_executor_8] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：长条户型扫地机会乱跑吗
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S7_适用场景",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "适用场景",
+            "description": "用户的适用场景相关问题，例如：扫地机能扫地毯吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"扫地机能扫地毯吗？\"",
+                "\"智能门锁停电了能用吗？\"",
+                "\"家里养猫，扫地机选哪款不容易卡毛？\"",
+                "\"150 平的房子用哪个净化器够？\"",
+                "\"我家是长条户型，扫地机会乱跑吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 适用场景",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.94
+    }
+]
+
+2026-06-19T17:43:07.985+08:00  INFO 10528 --- [ragent-service] [val_executor_14] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-19T17:43:07.985+08:00  INFO 10528 --- [ragent-service] [val_executor_14] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=93
+2026-06-19T17:43:08.211+08:00  INFO 10528 --- [ragent-service] [val_executor_15] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=319
+2026-06-19T17:43:15.663+08:00  INFO 10528 --- [ragent-service] [ntry_executor_8] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:43:15.663+08:00  INFO 10528 --- [ragent-service] [ntry_executor_8] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:43:16.971+08:00  INFO 10528 --- [ragent-service] [ntry_executor_8] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：米家设备能接入苹果家庭吗？
+归一化后：米家设备能接入苹果家庭吗？
+改写结果：米家设备能否接入苹果家庭
+子问题：[米家设备能否接入苹果家庭]
+
+2026-06-19T17:43:18.429+08:00  INFO 10528 --- [ragent-service] [sify_executor_9] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：米家设备能否接入苹果家庭
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S12_生态联动",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065732585263104"
+            ],
+            "name": "生态联动",
+            "description": "用户的生态联动相关问题，例如：智能音箱能控制扫地机吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"智能音箱能控制扫地机吗？\"",
+                "\"怎么让灯和门锁联动？\"",
+                "\"回家自动开灯开空调怎么设置？\"",
+                "\"门锁开门后扫地机自动暂停能实现吗？\"",
+                "\"想做个离家模式，关灯关空调启动扫地机\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 生态联动",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.94
+    }
+]
+
+2026-06-19T17:43:18.559+08:00  INFO 10528 --- [ragent-service] [val_executor_16] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:43:18.560+08:00  INFO 10528 --- [ragent-service] [val_executor_16] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=105
+2026-06-19T17:43:18.786+08:00  INFO 10528 --- [ragent-service] [val_executor_17] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=330
+2026-06-19T17:43:21.480+08:00  INFO 10528 --- [ragent-service] [ntry_executor_9] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:43:21.480+08:00  INFO 10528 --- [ragent-service] [ntry_executor_9] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:43:23.635+08:00  INFO 10528 --- [ragent-service] [ntry_executor_9] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：扫地机刷头掉毛了还能用吗？要换吗？
+归一化后：扫地机刷头掉毛了还能用吗？要换吗？
+改写结果：扫地机刷头掉毛了还能用吗，是否需要更换
+子问题：[扫地机刷头掉毛了还能用吗, 扫地机刷头掉毛了要换吗]
+
+2026-06-19T17:43:25.241+08:00  INFO 10528 --- [ragent-service] [ify_executor_11] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：扫地机刷头掉毛了要换吗
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S13_保养维护",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224",
+                "2062065732585263104"
+            ],
+            "name": "保养维护",
+            "description": "用户的保养维护相关问题，例如：净化器滤芯多久换一次？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"净化器滤芯多久换一次？\"",
+                "\"扫地机滚刷怎么清洗？\"",
+                "\"电动牙刷刷头多久换？\"",
+                "\"净化器滤芯怎么换？步骤是什么？\"",
+                "\"扫地机的水箱可以用洗洁精洗吗？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 保养维护",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-19T17:43:25.275+08:00  INFO 10528 --- [ragent-service] [ify_executor_10] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：扫地机刷头掉毛了还能用吗
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S13_保养维护",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224",
+                "2062065732585263104"
+            ],
+            "name": "保养维护",
+            "description": "用户的保养维护相关问题，例如：净化器滤芯多久换一次？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"净化器滤芯多久换一次？\"",
+                "\"扫地机滚刷怎么清洗？\"",
+                "\"电动牙刷刷头多久换？\"",
+                "\"净化器滤芯怎么换？步骤是什么？\"",
+                "\"扫地机的水箱可以用洗洁精洗吗？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 保养维护",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-19T17:43:25.399+08:00  INFO 10528 --- [ragent-service] [val_executor_18] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-19T17:43:25.400+08:00  INFO 10528 --- [ragent-service] [val_executor_18] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=97
+2026-06-19T17:43:25.415+08:00  INFO 10528 --- [ragent-service] [val_executor_20] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-19T17:43:25.415+08:00  INFO 10528 --- [ragent-service] [val_executor_20] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=109
+2026-06-19T17:43:25.651+08:00  INFO 10528 --- [ragent-service] [val_executor_19] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=348
+2026-06-19T17:43:25.892+08:00  INFO 10528 --- [ragent-service] [val_executor_21] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=588
+2026-06-19T17:43:32.627+08:00  INFO 10528 --- [ragent-service] [try_executor_10] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:43:32.628+08:00  INFO 10528 --- [ragent-service] [try_executor_10] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:43:33.941+08:00  INFO 10528 --- [ragent-service] [try_executor_10] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：现在买和等双十一买哪个划算？
+归一化后：现在买和等双十一买哪个划算？
+改写结果：现在买和等双十一买哪个划算
+子问题：[现在买和等双十一买哪个划算]
+
+2026-06-19T17:43:35.123+08:00  INFO 10528 --- [ragent-service] [ify_executor_12] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：现在买和等双十一买哪个划算
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S4_价格活动",
+            "kbId": "2062065735202508800",
+            "kbIds": [
+                "2062065735202508800",
+                "2062065732585263104"
+            ],
+            "name": "价格活动",
+            "description": "用户的价格活动相关问题，例如：小米 14 Pro 现在有什么优惠活动？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 现在有什么优惠活动？\"",
+                "\"小米 14 Pro 多少钱？\"",
+                "\"学生有优惠吗？\"",
+                "\"200 元的优惠券能用在扫地机上吗？\"",
+                "\"现在买和等双十一买哪个划算？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 价格活动",
+            "kind": "KB",
+            "collectionName": "kb-policy",
+            "collectionNames": [
+                "kb-policy",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-19T17:43:35.257+08:00  INFO 10528 --- [ragent-service] [val_executor_22] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:43:35.257+08:00  INFO 10528 --- [ragent-service] [val_executor_22] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=103
+2026-06-19T17:43:35.513+08:00  INFO 10528 --- [ragent-service] [val_executor_23] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=358
+2026-06-19T17:43:39.248+08:00  INFO 10528 --- [ragent-service] [try_executor_11] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:43:39.249+08:00  INFO 10528 --- [ragent-service] [try_executor_11] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:43:40.670+08:00  INFO 10528 --- [ragent-service] [try_executor_11] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：租房想低成本做智能家居，哪些设备适合带走？
+归一化后：租房想低成本做智能家居，哪些设备适合带走？
+改写结果：租房低成本智能家居中适合带走的设备
+子问题：[租房低成本智能家居中适合带走的设备]
+
+2026-06-19T17:43:41.983+08:00  INFO 10528 --- [ragent-service] [ify_executor_13] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：租房低成本智能家居中适合带走的设备
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S1_选购推荐",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "选购推荐",
+            "description": "用户的选购推荐相关问题，例如：预算 3000 元左右，想买一台拍照还不错的手机，推荐哪款？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"预算 3000 元左右，想买一台拍照还不错的手机，推荐哪款？\"",
+                "\"送父母礼物，想实用一点，买什么比较合适？\"",
+                "\"学生党买手机，主要上课拍 PPT、刷视频和续航，怎么选？\"",
+                "\"家里养猫，想买扫地机器人，哪款不容易缠毛？\"",
+                "\"想给女朋友买礼物，预算 1000 左右，有没有不踩雷的？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 选购推荐",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.92
+    }
+]
+
+2026-06-19T17:43:42.138+08:00  INFO 10528 --- [ragent-service] [val_executor_24] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:43:42.139+08:00  INFO 10528 --- [ragent-service] [val_executor_24] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=125
+2026-06-19T17:43:42.347+08:00  INFO 10528 --- [ragent-service] [val_executor_25] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=334
+2026-06-19T17:43:48.513+08:00  INFO 10528 --- [ragent-service] [try_executor_12] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:43:48.513+08:00  INFO 10528 --- [ragent-service] [try_executor_12] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:43:50.224+08:00  INFO 10528 --- [ragent-service] [try_executor_12] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：智能门锁离路由器太远连不上怎么办？
+归一化后：智能门锁离路由器太远连不上怎么办？
+改写结果：智能门锁离路由器太远无法连接的解决方法
+子问题：[智能门锁离路由器太远无法连接的解决方法]
+
+2026-06-19T17:43:52.967+08:00  INFO 10528 --- [ragent-service] [ify_executor_14] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：智能门锁离路由器太远无法连接的解决方法
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S9_配网连接",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "配网连接",
+            "description": "用户的配网连接相关问题，例如：扫地机怎么连 WiFi？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"扫地机怎么连 WiFi？\"",
+                "\"智能门锁配网失败怎么办？\"",
+                "\"我家是 5G WiFi，扫地机连不上\"",
+                "\"换了路由器，所有设备都要重新配网吗？\"",
+                "\"智能门锁离路由器太远连不上怎么办？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 配网连接",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.94
+    }
+]
+
+2026-06-19T17:43:53.074+08:00  INFO 10528 --- [ragent-service] [val_executor_26] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:43:53.075+08:00  INFO 10528 --- [ragent-service] [val_executor_26] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=80
+2026-06-19T17:43:53.323+08:00  INFO 10528 --- [ragent-service] [val_executor_27] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=330
+2026-06-19T17:43:58.344+08:00  INFO 10528 --- [ragent-service] [try_executor_13] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:43:58.344+08:00  INFO 10528 --- [ragent-service] [try_executor_13] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:44:00.191+08:00  INFO 10528 --- [ragent-service] [try_executor_13] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：想做个离家模式，关灯关空调启动扫地机
+归一化后：想做个离家模式，关灯关空调启动扫地机
+改写结果：离家模式如何实现关灯、关空调和启动扫地机
+子问题：[离家模式如何实现关灯、关空调和启动扫地机]
+
+2026-06-19T17:44:02.100+08:00  INFO 10528 --- [ragent-service] [ify_executor_15] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：离家模式如何实现关灯、关空调和启动扫地机
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S12_生态联动",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065732585263104"
+            ],
+            "name": "生态联动",
+            "description": "用户的生态联动相关问题，例如：智能音箱能控制扫地机吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"智能音箱能控制扫地机吗？\"",
+                "\"怎么让灯和门锁联动？\"",
+                "\"回家自动开灯开空调怎么设置？\"",
+                "\"门锁开门后扫地机自动暂停能实现吗？\"",
+                "\"想做个离家模式，关灯关空调启动扫地机\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 生态联动",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-19T17:44:02.245+08:00  INFO 10528 --- [ragent-service] [val_executor_28] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:44:02.245+08:00  INFO 10528 --- [ragent-service] [val_executor_28] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=109
+2026-06-19T17:44:02.544+08:00  INFO 10528 --- [ragent-service] [val_executor_29] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=409
+2026-06-19T17:44:11.477+08:00  INFO 10528 --- [ragent-service] [try_executor_14] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:44:11.477+08:00  INFO 10528 --- [ragent-service] [try_executor_14] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:44:13.040+08:00  INFO 10528 --- [ragent-service] [try_executor_14] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：门锁开门后扫地机自动暂停能实现吗？
+归一化后：门锁开门后扫地机自动暂停能实现吗？
+改写结果：门锁开门后扫地机自动暂停能否实现
+子问题：[门锁开门后扫地机自动暂停能否实现]
+
+2026-06-19T17:44:15.543+08:00  INFO 10528 --- [ragent-service] [ify_executor_15] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：门锁开门后扫地机自动暂停能否实现
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S12_生态联动",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065732585263104"
+            ],
+            "name": "生态联动",
+            "description": "用户的生态联动相关问题，例如：智能音箱能控制扫地机吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"智能音箱能控制扫地机吗？\"",
+                "\"怎么让灯和门锁联动？\"",
+                "\"回家自动开灯开空调怎么设置？\"",
+                "\"门锁开门后扫地机自动暂停能实现吗？\"",
+                "\"想做个离家模式，关灯关空调启动扫地机\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 生态联动",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-19T17:44:15.672+08:00  INFO 10528 --- [ragent-service] [val_executor_30] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:44:15.674+08:00  INFO 10528 --- [ragent-service] [val_executor_30] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=103
+2026-06-19T17:44:15.940+08:00  INFO 10528 --- [ragent-service] [val_executor_31] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=367
+2026-06-19T17:44:24.993+08:00  INFO 10528 --- [ragent-service] [try_executor_15] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:44:24.994+08:00  INFO 10528 --- [ragent-service] [try_executor_15] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:44:26.485+08:00  INFO 10528 --- [ragent-service] [try_executor_15] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：RedmiBook Pro 14 适合剪视频吗？
+归一化后：RedmiBook Pro 14 适合剪视频吗？
+改写结果：RedmiBook Pro 14 是否适合剪视频
+子问题：[RedmiBook Pro 14 是否适合剪视频]
+
+2026-06-19T17:44:27.949+08:00  INFO 10528 --- [ragent-service] [ify_executor_15] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：RedmiBook Pro 14 是否适合剪视频
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S7_适用场景",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600",
+                "2062065735202508800"
+            ],
+            "name": "适用场景",
+            "description": "用户的适用场景相关问题，例如：扫地机能扫地毯吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"扫地机能扫地毯吗？\"",
+                "\"智能门锁停电了能用吗？\"",
+                "\"家里养猫，扫地机选哪款不容易卡毛？\"",
+                "\"150 平的房子用哪个净化器够？\"",
+                "\"我家是长条户型，扫地机会乱跑吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 适用场景",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual",
+                "kb-policy"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-19T17:44:28.103+08:00  INFO 10528 --- [ragent-service] [val_executor_32] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 3, 成功: 3, 失败: 0, 检索到 Chunk 总数: 30
+2026-06-19T17:44:28.104+08:00  INFO 10528 --- [ragent-service] [val_executor_32] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=30, latencyMs=129
+2026-06-19T17:44:28.284+08:00  INFO 10528 --- [ragent-service] [val_executor_33] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=309
+2026-06-19T17:44:34.735+08:00  INFO 10528 --- [ragent-service] [try_executor_16] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:44:34.735+08:00  INFO 10528 --- [ragent-service] [try_executor_16] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:44:36.118+08:00  INFO 10528 --- [ragent-service] [try_executor_16] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：智能门锁配网失败怎么办？
+归一化后：智能门锁配网失败怎么办？
+改写结果：智能门锁配网失败的解决方法
+子问题：[智能门锁配网失败的解决方法]
+
+2026-06-19T17:44:37.744+08:00  INFO 10528 --- [ragent-service] [ify_executor_15] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：智能门锁配网失败的解决方法
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S9_配网连接",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065735332532224"
+            ],
+            "name": "配网连接",
+            "description": "用户的配网连接相关问题，例如：扫地机怎么连 WiFi？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"扫地机怎么连 WiFi？\"",
+                "\"智能门锁配网失败怎么办？\"",
+                "\"我家是 5G WiFi，扫地机连不上\"",
+                "\"换了路由器，所有设备都要重新配网吗？\"",
+                "\"智能门锁离路由器太远连不上怎么办？\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 配网连接",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-faq"
+            ],
+            "topK": 5
+        },
+        "score": 0.94
+    }
+]
+
+2026-06-19T17:44:37.868+08:00  INFO 10528 --- [ragent-service] [val_executor_34] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:44:37.868+08:00  INFO 10528 --- [ragent-service] [val_executor_34] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=91
+2026-06-19T17:44:38.116+08:00  INFO 10528 --- [ragent-service] [val_executor_35] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=339
+2026-06-19T17:44:46.112+08:00  INFO 10528 --- [ragent-service] [try_executor_17] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:44:46.112+08:00  INFO 10528 --- [ragent-service] [try_executor_17] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:44:47.631+08:00  INFO 10528 --- [ragent-service] [try_executor_17] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：回家自动开灯开空调怎么设置？
+归一化后：回家自动开灯开空调怎么设置？
+改写结果：回家自动开灯开空调的设置方法
+子问题：[回家自动开灯开空调的设置方法]
+
+2026-06-19T17:44:49.222+08:00  INFO 10528 --- [ragent-service] [ify_executor_15] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：回家自动开灯开空调的设置方法
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S12_生态联动",
+            "kbId": "2062065734992793600",
+            "kbIds": [
+                "2062065734992793600",
+                "2062065732585263104"
+            ],
+            "name": "生态联动",
+            "description": "用户的生态联动相关问题，例如：智能音箱能控制扫地机吗？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_USAGE",
+            "examples": [
+                "\"智能音箱能控制扫地机吗？\"",
+                "\"怎么让灯和门锁联动？\"",
+                "\"回家自动开灯开空调怎么设置？\"",
+                "\"门锁开门后扫地机自动暂停能实现吗？\"",
+                "\"想做个离家模式，关灯关空调启动扫地机\""
+            ],
+            "fullPath": "产品咨询 > 使用咨询 > 生态联动",
+            "kind": "KB",
+            "collectionName": "kb-manual",
+            "collectionNames": [
+                "kb-manual",
+                "kb-product"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-19T17:44:49.374+08:00  INFO 10528 --- [ragent-service] [val_executor_36] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:44:49.374+08:00  INFO 10528 --- [ragent-service] [val_executor_36] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=117
+2026-06-19T17:44:49.607+08:00  INFO 10528 --- [ragent-service] [val_executor_37] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=0, latencyMs=348
+2026-06-19T17:44:58.803+08:00  INFO 10528 --- [ragent-service] [try_executor_18] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:44:58.803+08:00  INFO 10528 --- [ragent-service] [try_executor_18] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:45:00.028+08:00  INFO 10528 --- [ragent-service] [try_executor_18] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：小米手表 S2 和苹果手表哪个好？
+归一化后：小米手表 S2 和苹果手表哪个好？
+改写结果：小米手表 S2 和苹果手表的对比
+子问题：[小米手表 S2 和苹果手表的对比]
+
+2026-06-19T17:45:01.258+08:00  INFO 10528 --- [ragent-service] [ify_executor_15] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：小米手表 S2 和苹果手表的对比
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S3_对比选购",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "对比选购",
+            "description": "用户的对比选购相关问题，例如：小米 14 和小米 14 Pro 有什么区别？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 和小米 14 Pro 有什么区别？\"",
+                "\"石头 T7 和 T7S Plus 区别？\"",
+                "\"小米 13 和小米 14 哪个值得买？\"",
+                "\"Redmi Buds 3 Pro 和小米 Buds 4 哪个降噪好？\"",
+                "\"米家空气净化器 4 和 4 Pro 的滤芯能通用吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 对比选购",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-19T17:45:01.337+08:00  INFO 10528 --- [ragent-service] [val_executor_39] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=1, latencyMs=52
+2026-06-19T17:45:01.412+08:00  INFO 10528 --- [ragent-service] [val_executor_38] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:45:01.413+08:00  INFO 10528 --- [ragent-service] [val_executor_38] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=127
+2026-06-19T17:45:06.527+08:00  INFO 10528 --- [ragent-service] [try_executor_19] z.a.r.r.c.r.QueryTermMappingCacheManager : 术语映射已保存到 Redis 缓存，共 0 条规则
+2026-06-19T17:45:06.528+08:00  INFO 10528 --- [ragent-service] [try_executor_19] c.z.a.r.r.c.r.QueryTermMappingService    : 术语映射规则从数据库加载完成，共 0 条规则
+2026-06-19T17:45:08.227+08:00  INFO 10528 --- [ragent-service] [try_executor_19] .z.a.r.r.c.r.MultiQuestionRewriteService : RAG用户问题查询改写+拆分：
+原始问题：T7 的滤芯能用在 G10S Pro 上吗？
+归一化后：T7 的滤芯能用在 G10S Pro 上吗？
+改写结果：T7 的滤芯能否用于 G10S Pro
+子问题：[T7 的滤芯能否用于 G10S Pro]
+
+2026-06-19T17:45:09.728+08:00  INFO 10528 --- [ragent-service] [ify_executor_15] c.z.a.r.r.c.i.DefaultIntentClassifier    : 当前问题：T7 的滤芯能否用于 G10S Pro
+意图识别树如下所示：[
+    {
+        "node": {
+            "id": "S6_配件兼容",
+            "kbId": "2062065732585263104",
+            "kbIds": [
+                "2062065732585263104",
+                "2062065734992793600"
+            ],
+            "name": "配件兼容",
+            "description": "用户的配件兼容相关问题，例如：小米 14 Pro 用什么充电器？",
+            "level": "TOPIC",
+            "parentId": "SUPPORT_PRESALE",
+            "examples": [
+                "\"小米 14 Pro 用什么充电器？\"",
+                "\"石头 T7 的滤芯型号是什么？\"",
+                "\"我的旧充电线还能给小米 14 用吗？\"",
+                "\"T7 的滤芯能用在 G10S Pro 上吗？\"",
+                "\"我有小米 13 的 67W 充电器，给小米 14 Pro 用会慢吗？\""
+            ],
+            "fullPath": "产品咨询 > 售前咨询 > 配件兼容",
+            "kind": "KB",
+            "collectionName": "kb-product",
+            "collectionNames": [
+                "kb-product",
+                "kb-manual"
+            ],
+            "topK": 5
+        },
+        "score": 0.95
+    }
+]
+
+2026-06-19T17:45:09.786+08:00  INFO 10528 --- [ragent-service] [val_executor_41] a.r.r.c.r.c.PostgresKeywordSearchChannel : PostgreSQL keyword retrieval completed, chunks=10, identifiers=2, latencyMs=35
+2026-06-19T17:45:09.859+08:00  INFO 10528 --- [ragent-service] [val_executor_40] .z.a.r.r.c.r.c.AbstractParallelRetriever : 意图检索 检索统计 - 总目标数: 2, 成功: 2, 失败: 0, 检索到 Chunk 总数: 20
+2026-06-19T17:45:09.859+08:00  INFO 10528 --- [ragent-service] [val_executor_40] .a.r.r.c.r.c.IntentDirectedSearchChannel : Intent-directed retrieval completed, chunks=20, latencyMs=109
