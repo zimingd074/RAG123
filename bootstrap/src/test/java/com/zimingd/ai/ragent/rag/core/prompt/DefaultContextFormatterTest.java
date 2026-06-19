@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.rag.core.prompt;
+package com.zimingd.ai.ragent.rag.core.prompt;
 
-import com.nageoffer.ai.ragent.framework.convention.RetrievedChunk;
-import com.nageoffer.ai.ragent.rag.core.intent.IntentNode;
-import com.nageoffer.ai.ragent.rag.core.intent.NodeScore;
+import com.zimingd.ai.ragent.framework.convention.RetrievedChunk;
+import com.zimingd.ai.ragent.rag.core.intent.IntentNode;
+import com.zimingd.ai.ragent.rag.core.intent.NodeScore;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.DefaultResourceLoader;
 

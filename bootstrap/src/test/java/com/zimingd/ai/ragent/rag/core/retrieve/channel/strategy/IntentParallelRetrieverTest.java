@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.rag.core.retrieve.channel.strategy;
+package com.zimingd.ai.ragent.rag.core.retrieve.channel.strategy;
 
-import com.nageoffer.ai.ragent.framework.convention.RetrievedChunk;
-import com.nageoffer.ai.ragent.rag.core.intent.IntentNode;
-import com.nageoffer.ai.ragent.rag.core.intent.NodeScore;
-import com.nageoffer.ai.ragent.rag.core.retrieve.RetrieveRequest;
-import com.nageoffer.ai.ragent.rag.core.retrieve.RetrieverService;
+import com.zimingd.ai.ragent.framework.convention.RetrievedChunk;
+import com.zimingd.ai.ragent.rag.core.intent.IntentNode;
+import com.zimingd.ai.ragent.rag.core.intent.NodeScore;
+import com.zimingd.ai.ragent.rag.core.retrieve.RetrieveRequest;
+import com.zimingd.ai.ragent.rag.core.retrieve.RetrieverService;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 

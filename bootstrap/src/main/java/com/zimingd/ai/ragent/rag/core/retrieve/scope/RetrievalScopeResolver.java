@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.rag.core.retrieve.scope;
+package com.zimingd.ai.ragent.rag.core.retrieve.scope;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.nageoffer.ai.ragent.knowledge.dao.entity.KnowledgeBaseDO;
-import com.nageoffer.ai.ragent.knowledge.dao.mapper.KnowledgeBaseMapper;
-import com.nageoffer.ai.ragent.rag.config.SearchChannelProperties;
-import com.nageoffer.ai.ragent.rag.core.intent.IntentNode;
-import com.nageoffer.ai.ragent.rag.core.intent.NodeScore;
-import com.nageoffer.ai.ragent.rag.core.intent.NodeScoreFilters;
-import com.nageoffer.ai.ragent.rag.dto.SubQuestionIntent;
+import com.zimingd.ai.ragent.knowledge.dao.entity.KnowledgeBaseDO;
+import com.zimingd.ai.ragent.knowledge.dao.mapper.KnowledgeBaseMapper;
+import com.zimingd.ai.ragent.rag.config.SearchChannelProperties;
+import com.zimingd.ai.ragent.rag.core.intent.IntentNode;
+import com.zimingd.ai.ragent.rag.core.intent.NodeScore;
+import com.zimingd.ai.ragent.rag.core.intent.NodeScoreFilters;
+import com.zimingd.ai.ragent.rag.dto.SubQuestionIntent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

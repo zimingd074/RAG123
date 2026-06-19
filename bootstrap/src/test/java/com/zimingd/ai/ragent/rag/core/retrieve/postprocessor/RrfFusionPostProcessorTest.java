@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.rag.core.retrieve.postprocessor;
+package com.zimingd.ai.ragent.rag.core.retrieve.postprocessor;
 
-import com.nageoffer.ai.ragent.framework.convention.RetrievedChunk;
-import com.nageoffer.ai.ragent.rag.config.SearchChannelProperties;
-import com.nageoffer.ai.ragent.rag.core.retrieve.channel.SearchChannelResult;
-import com.nageoffer.ai.ragent.rag.core.retrieve.channel.SearchChannelType;
-import com.nageoffer.ai.ragent.rag.core.retrieve.channel.SearchContext;
+import com.zimingd.ai.ragent.framework.convention.RetrievedChunk;
+import com.zimingd.ai.ragent.rag.config.SearchChannelProperties;
+import com.zimingd.ai.ragent.rag.core.retrieve.channel.SearchChannelResult;
+import com.zimingd.ai.ragent.rag.core.retrieve.channel.SearchChannelType;
+import com.zimingd.ai.ragent.rag.core.retrieve.channel.SearchContext;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

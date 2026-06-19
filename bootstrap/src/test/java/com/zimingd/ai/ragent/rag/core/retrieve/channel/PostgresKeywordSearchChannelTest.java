@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.rag.core.retrieve.channel;
+package com.zimingd.ai.ragent.rag.core.retrieve.channel;
 
-import com.nageoffer.ai.ragent.rag.config.SearchChannelProperties;
+import com.zimingd.ai.ragent.rag.config.SearchChannelProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 

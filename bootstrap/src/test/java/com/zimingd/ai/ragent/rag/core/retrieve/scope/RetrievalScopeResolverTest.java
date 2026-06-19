@@ -15,14 +15,14 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.rag.core.retrieve.scope;
+package com.zimingd.ai.ragent.rag.core.retrieve.scope;
 
-import com.nageoffer.ai.ragent.knowledge.dao.entity.KnowledgeBaseDO;
-import com.nageoffer.ai.ragent.knowledge.dao.mapper.KnowledgeBaseMapper;
-import com.nageoffer.ai.ragent.rag.config.SearchChannelProperties;
-import com.nageoffer.ai.ragent.rag.core.intent.IntentNode;
-import com.nageoffer.ai.ragent.rag.core.intent.NodeScore;
-import com.nageoffer.ai.ragent.rag.dto.SubQuestionIntent;
+import com.zimingd.ai.ragent.knowledge.dao.entity.KnowledgeBaseDO;
+import com.zimingd.ai.ragent.knowledge.dao.mapper.KnowledgeBaseMapper;
+import com.zimingd.ai.ragent.rag.config.SearchChannelProperties;
+import com.zimingd.ai.ragent.rag.core.intent.IntentNode;
+import com.zimingd.ai.ragent.rag.core.intent.NodeScore;
+import com.zimingd.ai.ragent.rag.dto.SubQuestionIntent;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

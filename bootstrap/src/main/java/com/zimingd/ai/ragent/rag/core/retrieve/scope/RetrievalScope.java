@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.rag.core.retrieve.scope;
+package com.zimingd.ai.ragent.rag.core.retrieve.scope;
 
 import java.util.List;
 

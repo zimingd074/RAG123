@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.rag.core.retrieve;
+package com.zimingd.ai.ragent.rag.core.retrieve;
 
-import com.nageoffer.ai.ragent.infra.embedding.EmbeddingService;
-import com.nageoffer.ai.ragent.rag.config.RAGConfigProperties;
+import com.zimingd.ai.ragent.infra.embedding.EmbeddingService;
+import com.zimingd.ai.ragent.rag.config.RAGConfigProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

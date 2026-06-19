@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.rag.core.prompt;
+package com.zimingd.ai.ragent.rag.core.prompt;
 
-import com.nageoffer.ai.ragent.framework.convention.RetrievedChunk;
-import com.nageoffer.ai.ragent.knowledge.dao.entity.KnowledgeChunkDO;
-import com.nageoffer.ai.ragent.knowledge.dao.entity.KnowledgeDocumentDO;
-import com.nageoffer.ai.ragent.knowledge.dao.mapper.KnowledgeChunkMapper;
-import com.nageoffer.ai.ragent.knowledge.dao.mapper.KnowledgeDocumentMapper;
+import com.zimingd.ai.ragent.framework.convention.RetrievedChunk;
+import com.zimingd.ai.ragent.knowledge.dao.entity.KnowledgeChunkDO;
+import com.zimingd.ai.ragent.knowledge.dao.entity.KnowledgeDocumentDO;
+import com.zimingd.ai.ragent.knowledge.dao.mapper.KnowledgeChunkMapper;
+import com.zimingd.ai.ragent.knowledge.dao.mapper.KnowledgeDocumentMapper;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

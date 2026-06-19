@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-package com.nageoffer.ai.ragent.infra.embedding;
+package com.zimingd.ai.ragent.infra.embedding;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.nageoffer.ai.ragent.infra.config.AIModelProperties;
-import com.nageoffer.ai.ragent.infra.http.ModelClientException;
-import com.nageoffer.ai.ragent.infra.model.ModelTarget;
+import com.zimingd.ai.ragent.infra.config.AIModelProperties;
+import com.zimingd.ai.ragent.infra.http.ModelClientException;
+import com.zimingd.ai.ragent.infra.model.ModelTarget;
 import okhttp3.OkHttpClient;
 import org.junit.jupiter.api.Test;
 
